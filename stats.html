@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>spatial.linkedscience.org</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="sgvizler.chart.css" />
+	<script src="jquery.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>	
+	<script type="text/javascript" src="markerwithlabel.js"></script>
+	<script type="text/javascript" id="sgvzlr_script" src="sgvizler.js"></script>
+	<script type="text/javascript">
+		sgvizler.option.query.endpoint =  "/sparql";
+
+	    $(document).ready(sgvizler.go());
+	</script>
+</head>
+<body>
+	<div id="content">		
+		<div id="head">
+			<h1><a href="index.html">spatial@linkedscience</a> Stats</h1>
+			<p id="about">Some statistics for our data store. <br /><a href="index.html">Back to main page</a>.</p>	
+		</div>
+		
+		<div id="stats">
+			<p id="statsheader">This page shows some sample statistics generated from our data store. The graphs have been generated with <a href="http://code.google.com/p/sgvizler/">sgvizler</a>. The page will be continously update with more examples.</p>
+			<h2>Papers per country</h2>
+			<div id="paperspercountry" 
+			 data-sgvizler-query="prefix bibo: <http://purl.org/ontology/bibo/> 
+			prefix foaf: <http://xmlns.com/foaf/0.1/> 
+			prefix gn: <http://www.geonames.org/ontology#>
+
+			SELECT ?country (COUNT(DISTINCT ?paper) as ?count) WHERE {
+
+			  GRAPH ?g{
+			  	?paper a bibo:Chapter .
+			        ?author foaf:publications ?paper .
+			        ?affiliation foaf:member ?author .
+			  }
+
+			  GRAPH <http://spatial.linkedscience.org/context/geonames> {
+			  	?affiliation foaf:based_near ?place .
+			  }
+
+			  GRAPH <http://spatial.linkedscience.org/context/geonamesplaces> {
+			  	?place gn:parentFeature* ?parent .               
+			    	?parent gn:featureCode gn:A.PCLI ;
+			                gn:name ?country.
+			  }
+			}
+
+			GROUP BY ?country
+			ORDER BY DESC(?count)"
+			 data-sgvizler-chart="gPieChart"
+			 data-sgvizler-log="0"
+			 style="width:800px; height:400px;"
+			 >
+		    </div>
+		
+			<h2>Papers by publication year</h2>
+			<div id="papersperyear" 
+			 data-sgvizler-query="prefix bibo: <http://purl.org/ontology/bibo/> 
+			prefix foaf: <http://xmlns.com/foaf/0.1/> 
+			prefix gn: <http://www.geonames.org/ontology#>
+			prefix dc: <http://purl.org/dc/terms/> 
+
+			SELECT ?year (COUNT(DISTINCT ?paper) as ?papers) WHERE {
+
+			  GRAPH ?g{
+			  	?paper a bibo:Chapter ;
+			               dc:date ?year .
+			  }
+			}
+			GROUP BY ?year 
+			ORDER BY ?year"
+			 data-sgvizler-chart="gLineChart"
+			 data-sgvizler-log="0"
+			 style="width:800px; height:400px;"
+			 >
+		    </div>
+		</div>					
+	</div>
+<script>
+
+
+
+
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://flashfonic.de/piwik/" : "http://flashfonic.de/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 7);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://flashfonic.de/piwik/piwik.php?idsite=7" style="border:0" alt="" /></p></noscript>
+
+</body>
+</html>
