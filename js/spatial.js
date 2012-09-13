@@ -176,7 +176,6 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 						labelStyle: {opacity: 0.85},
 						icon: image 
 					});
-					console.log(latlon);
 					latlngbounds.extend(latlon);					
 					google.maps.event.addListener(marker, 'click', function() {
 				    	selectAffiliation(json.results.bindings[i].org.value);
@@ -220,7 +219,6 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 				
 			}
 			// rescale map to fit all markers:
-			console.log(latlngbounds);
 			map.fitBounds( latlngbounds );
 			
 			// TODO if there are no affiliations to show, zoom out to world
@@ -439,7 +437,7 @@ function loadAuthors(paper, author, year, affiliation, conference){
 	
 	if(author != null){ // // just a specific author - show co-authors:
 		//author info + header:
-		$('#authorsheader').html('Co-authors &amp; co-editors')
+		$('#authorsheader').html('Co-authors/-editors')
 
 		$query = prefixes + "SELECT DISTINCT ?name 	WHERE { GRAPH ?g { <" + author +"> foaf:name ?name. }}" ;
 

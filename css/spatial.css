@@ -1,67 +1,21 @@
 body {
   	background: rgb(252,252,252);
-	margin: 0;
-  	padding: 0;
-}
-
-div#head{
-	margin: 25px;
-} 
-
-div#filterinfo{
-	margin-left: 25px;
-}
-
-div#filter-search{
-	float:right;
-}
-
-input#search{
-	margin-left: 25px;
-	margin-right: 25px;
-}
-
-div#conferencesandauthors, div#yearsandpapers, div#stats 
-{
-	float: left;
-	margin-left: 25px;
-	margin-right: 25px;
-}
-
-div#conferencesandauthors{
-	width: 22%;
-}
-
-div#yearsandpapers{
-	width: 68%;
-	max-width: 68%;
 }
 
 div#map_canvas{
-	clear: both;
+	margin-top: 40px;
 	width: 100%;
 	height: 300px;
 }
 
-div#switchfilter{
-	position: fixed;
-	bottom: 0px;
-	right: 0px;
-	padding: 25px;
-	background: white;
-}
 
 div#affiliations{
 	position: absolute;
-	top: 315px;
+	top: 250px;
 	left: -8px;
 	background: rgb(252,252,252);
 	padding: 0 25px 0 25px;
 	z-index: 100000;
-}
-
-span.conference, span.year{
-	margin-right: 15px;
 }
 
 a img, a:link img, a:visited img, a:hover img, a:active img{
@@ -99,10 +53,6 @@ img#portrait{
 	margin: 0px 0px 15px 50px;	
 }
 
-p, b, i, h1, h2, h3, li, a, a:link, a:visited, a:active, div.vcard, p.d-status, .labels, input{
-     font-family: 'Molengo', 'Helvetica', 'Arial', sans-serif;
-}
-
 p, b, i, h1, h2, h3, li{
 	 
 	color: #333333;
@@ -117,19 +67,6 @@ i{
 	font-weight: normal;
 }
 
-h1{
-     font-size: 36px;
-	text-transform: uppercase;
-	margin-top: 0;
-	margin-bottom: 0;
-	float: left;
-}
-
-h3{
-	margin-bottom: 5px;
-	font-weight: normal;
-}
-
 p#about{
 	margin-left: 20px;
 	float: right;
@@ -140,50 +77,45 @@ p#about{
 	margin-bottom: 0;
 }
 
-h2{
-    font-size: 23px;
-	margin-top: 30px;
-
-}
 
 h2.aff{
 	margin: 10px;
-	background: url("icons/globe.png");
+	background: url("../icons/globe.png");
 	padding-left: 27px;
 	background-size: 23px 23px ;	
-	background-position: top left;
+	background-position: center left;
 	background-repeat: no-repeat;
 }
 
 h2#papersheader{
-	background: url("icons/paper.png");
+	background: url("../icons/paper.png");
 	padding-left: 27px;
 	background-size: 23px 23px ;	
-	background-position: top left;
+	background-position: center left;
 	background-repeat: no-repeat;
 }
 
 h2#yearsheader{
-	background: url("icons/calendar.png");
+	background: url("../icons/calendar.png");
 	padding-left: 27px;
 	background-size: 23px 23px ;	
-	background-position: top left;
+	background-position: center left;
 	background-repeat: no-repeat;
 }
 
 h2#conferencesheader{
-	background: url("icons/mic.png");
+	background: url("../icons/mic.png");
 	padding-left: 27px;
 	background-size: 23px 23px ;	
-	background-position: top left;
+	background-position: center left;
 	background-repeat: no-repeat;
 }
 
 h2#authorsheader{
-	background: url("icons/user.png");
+	background: url("../icons/user.png");
 	padding-left: 37px;
 	background-size: 33px 23px ;
-	background-position: top left;
+	background-position: center left;
 	background-repeat: no-repeat;	
 }
 
@@ -193,19 +125,6 @@ h1, h2{
 
 h2#kontakt{
 	clear: both;
-}
-
-
-p, li, div.vcard, input{
-     font-size: 16px;
-     }
-
-a:link, a:active, a:hover, a:visited{
-     font-size: 1em;
-} 
-
-li{
-	margin-bottom: 5px;
 }
 
 span.star{
@@ -224,46 +143,16 @@ span.star{
      white-space: nowrap;
    }
 
-.loading
+#loading
 {
-	background-image: url('ajax-loader.gif');
-	background-position: center right;
-	background-repeat: no-repeat;
-	padding-right: 35px;
-}
-
-div#about{
-	position:absolute;
-	width: 500px;
-	display: none;
-	top: 25px;
-	left: 50%;
-	margin-left: -250px;
-	background: white;
-	padding: 15px;
-	border: 1px solid #F1F1f1;
-	z-index: 100001;
-}
-
-div#stats{
-	clear: both;
-}
-
-p#statsheader{
-	width:800px;
-}
-
-#search{
-	display: inline;
-	border: 1px solid #333333;
-	background: url("icons/magnifier.png");
-	background-size: 19px 19px ;	
-	background-position: top left;
-	background-repeat: no-repeat;
-	padding-left: 20px;
+	
 }
 
 li.hidden{
 	display: none;
 
+}
+
+form.form-inline{
+	margin-top: 18px
 }

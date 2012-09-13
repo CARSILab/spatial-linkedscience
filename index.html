@@ -6,62 +6,106 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html" />
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<title>spatial.linkedscience.org</title>
-	<script src="jquery.js"></script>
-	<script type="text/javascript" 
-			src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>	
-	 <script type="text/javascript" src="markerwithlabel.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>spatial.linkedscience.org</title>	
+	  <!-- Le styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="css/spatial.css" />
 </head>
 <body onload="initialize()">
-	<div id="about">
-		<h2>About</h2>
-		<p><a href="http://linkedscience.org/spatial">spatial@linkedscience</a> is a community-driven effort to create methods, vocabularies, tools and data for showing how and why spatial information can efficiently be used in scientific settings.</p>
-
-		<p>As a first major step we have developed this access point to (almost) all papers ever published in the major Geographic Information conferences: GIScience, COSIT, ACM GIS, and AGILE. The result can be explored using this website developed by <a href="http://carsten.io">Carsten Keßler</a>, <a href="http://geog.ucsb.edu/~jano/">Krzysztof Janowicz</a> and <a href="http://kauppinen.net/tomi">Tomi Kauppinen</a>.</p>
-		
-		<p>The data used by this website is also available for anyone to analyze, visualize and link to via  dereferenceable URIs. The SPARQL endpoint to query the data is abvailable at <em>http://spatial.linkedscience.org/sparql</em> (<a href="http://sparql.carsten.io/?query=prefix%20bibo%3A%20%3Chttp%3A//purl.org/ontology/bibo/%3E%20%0Aprefix%20foaf%3A%20%3Chttp%3A//xmlns.com/foaf/0.1/%3E%20%0Aprefix%20gn%3A%20%3Chttp%3A//www.geonames.org/ontology%23%3E%0Aprefix%20dc%3A%20%3Chttp%3A//purl.org/dc/terms/%3E%20%0A%0ASELECT%20%3Fyear%20%3Fcountry%20%28COUNT%28DISTINCT%20%3Fpaper%29%20as%20%3Fcount%29%20WHERE%20%7B%0A%20%20%0A%20%20GRAPH%20%3Fg%7B%0A%20%20%09%3Fpaper%20a%20bibo%3AChapter%20%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dc%3Adate%20%3Fyear%20.%0A%20%20%20%20%20%20%20%20%3Fauthor%20foaf%3Apublications%20%3Fpaper%20.%0A%20%20%20%20%20%20%20%20%3Faffiliation%20foaf%3Amember%20%3Fauthor%20.%0A%20%20%7D%0A%20%20%0A%20%20GRAPH%20%3Chttp%3A//spatial.linkedscience.org/context/geonames%3E%20%7B%0A%20%20%09%3Faffiliation%20foaf%3Abased_near%20%3Fplace%20.%0A%20%20%7D%0A%20%20%20%20%20%20%20%20%0A%20%20GRAPH%20%3Chttp%3A//spatial.linkedscience.org/context/geonamesplaces%3E%20%7B%0A%20%20%09%3Fplace%20gn%3AparentFeature*%20%3Fparent%20.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%09%3Fparent%20gn%3AfeatureCode%20gn%3AA.PCLI%20%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20gn%3Aname%20%3Fcountry.%0A%20%20%7D%0A%7D%0A%0AGROUP%20BY%20%3Fyear%20%3Fcountry%0AORDER%20BY%20%3Fyear&endpoint=http%3A//spatial.linkedscience.org/sparql">sample query</a>). </p>
-		
-		<p>We are happy about any feedback, suggestions for improvements, bug reports, etc. Please use the input field at the bottom of <a href="http://linkedscience.org/spatial">LinkedScience.org/spatial</a> for any feedback, or feel free to get in touch with any of us directly.</p>
-
-		<p><small>Icons courtesy of <a href="Iconmnstr" target="_blank">Iconmnstr</a>.</small></p>
-		<p align="right"><a id="aboutoff">Close</a></p>
-	</div>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+    	<div class="navbar-inner">
+        	<div class="container">  
+        		<a class="brand" href="#">SPATIAL@LINKEDSCIENCE</a>
+          		<div class="nav-collapse collapse">
+            		<ul class="nav">
+              			<li><a href="#aboutModal" data-toggle="modal">About</a></li>
+              			<li><a href="#about">Stats</a></li>
+              			<li><a href="#contact">Contact</a></li>
+            		</ul>
+          		</div><!--/.nav-collapse -->
+        	</div>
+      	</div>
+    </div>
 	
-	<div id="content">		
-		<div id="head">
-			<h1><a href="">spatial@linkedscience</a></h1>
-			<p id="about">Explore publications at different geographic information science conference series | <a href="stats.html">Stats</a> | <a id="aboutlink">About</a></p>	
+	<div id="map_canvas"></div>
+	
+	<div class="container">	
+		<div class="row">
+			<div class="span12" id="filterinfo">
+				<form class="form-inline pull-right">
+					<input type="text" id="search" size="30" placeholder="Search authors &amp; titles" />
+				</form>
+				<h3 id="info"></h3>
+			</div>
 		</div>
 		
-		<div id="map_canvas"></div>
-		
-		<div id="filterinfo"><div id="filter-search"><input type="text" id="search" size="30" /></div><h3 id="info"></h3></div>
-		
-		<div id="conferencesandauthors">
-			<h2 id="conferencesheader"></h2>
-			<p id="conferences"></p>
+		<div class="row">
+			<div class="span4">
+				<h2 id="conferencesheader"></h2>
+				<p id="conferences"></p>
+			</div>
+
+			<div class="span8">
+				<h2 id="yearsheader"></h2>
+				<p id="years"></p>
+			</div>
 			
-			<h2 id="authorsheader"></h2>
-			
-			<ul id="people"></ul>			
 		</div>
 			
-		<div id="yearsandpapers">
-			<h2 id="yearsheader"></h2>
-			<p id="years"></p>
+		<div class="row">
+			<div class="span4">
+				<h2 id="authorsheader"></h2>
+				<ul id="people"></ul>			
+			</div>
+
+			<div class="span8">
+				<h2 id="papersheader"></h2>
+				<ul id="papers"></ul>
+				<p id="paperdetails"></p>
+			</div>
 			
-			<h2 id="papersheader"></h2>
-			<ul id="papers">
-			</ul>
-			<p id="paperdetails"></p>
 		</div>
 		
 		<div id="affiliations">
 			<h2 class="aff" id="affiliationsheader"></h2>
 		</div>
 	</div>
-<script src="spatial.js"></script>
+
+<div class="modal hide fade" id="aboutModal">
+ 
+ 	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    	<h3>About SPATIAL@LINKEDSCIENCE</h3>
+	</div>
+  	<div class="modal-body">
+    	<p><a href="http://linkedscience.org/spatial">spatial@linkedscience</a> is a community-driven effort to create methods, vocabularies, tools and data for showing how and why spatial information can efficiently be used in scientific settings.</p>
+
+		<p>As a first major step we have developed this access point to (almost) all papers ever published in the major Geographic Information conferences: GIScience, COSIT, ACM GIS, and AGILE. The result can be explored using this website developed by <a href="http://carsten.io">Carsten Keßler</a>, <a href="http://geog.ucsb.edu/~jano/">Krzysztof Janowicz</a> and <a href="http://kauppinen.net/tomi">Tomi Kauppinen</a>.</p>
+		
+		<p>The data used by this website is also available for anyone to analyze, visualize and link to via  dereferenceable URIs. The SPARQL endpoint to query the data is abvailable at <code>http://spatial.linkedscience.org/sparql</code>.</p>
+		
+		<p>We are happy about any feedback, suggestions for improvements, bug reports, etc. Please use the input field at the bottom of <a href="http://linkedscience.org/spatial">LinkedScience.org/spatial</a> for any feedback, or feel free to get in touch with any of us directly.</p>
+
+		<p><small>Icons courtesy of <a href="Iconmnstr" target="_blank">Iconmnstr</a>.</small></p>
+  	</div>
+  	<div class="modal-footer">
+    	<a href="#" class="btn">Close</a>
+    	<a href="#" class="btn btn-primary">Save changes</a>
+  	</div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>	
+<script src="js/markerwithlabel.js"></script>
+<script src="js/spatial.js"></script>
 <script>
 var pkBaseURL = (("https:" == document.location.protocol) ? "https://flashfonic.de/piwik/" : "http://flashfonic.de/piwik/");
 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
