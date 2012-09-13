@@ -13,6 +13,14 @@ $('#aboutoff').click(function() {
 });
 
 
+var image = new google.maps.MarkerImage('icons/circle.png',
+      // marker size
+      new google.maps.Size(10, 10),
+      // The origin for this image is 0,0.
+      new google.maps.Point(0,0),
+      // The anchor for this image
+      new google.maps.Point(0, 0));
+
 function initialize() {
 	var myOptions = {
 		zoom: 2,
@@ -106,32 +114,31 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 	clearOverlays();
 	
 	// standard query if no filters apply:
-	$query = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon WHERE { GRAPH ?g { ?org a foaf:Organization ; geo:lat ?lat ; geo:long ?lon ; foaf:name ?name. }  	}";
-	
+	var query        = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon WHERE { GRAPH ?g { ?org a foaf:Organization ; geo:lat ?lat ; geo:long ?lon ; foaf:name ?name. }  	}";
 	
 	if(paper != null){ // shows the affiliations of all authors of this paper at the time of publication: // TODO make coordinates optional to include affiliations which are not georeferenced
-		$query = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon		WHERE { 		  GRAPH ?g { 		    ?author foaf:publications <" + paper + "> .		   <" + paper + "> dc:date ?date .		    ?reif rdfs:subject ?org ;		          rdfs:predicate foaf:member ;		          rdfs:object ?author ;		          dc:date ?date .		    ?org a foaf:Organization ; 		         geo:lat ?lat ; 		         geo:long ?lon ; 		    foaf:name ?name.}  	}";		}
+		query = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon		WHERE { 		  GRAPH ?g { 		    ?author foaf:publications <" + paper + "> .		   <" + paper + "> dc:date ?date .		    ?reif rdfs:subject ?org ;		          rdfs:predicate foaf:member ;		          rdfs:object ?author ;		          dc:date ?date .		    ?org a foaf:Organization ; 		         geo:lat ?lat ; 		         geo:long ?lon ; 		    foaf:name ?name.}  	}";		}
 	
 	if(author != null){ // all affiliations for this author, ordered by year		
-		$query = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon ?date		WHERE { 		  GRAPH ?g { 		    ?reif rdfs:subject ?org;		          rdfs:predicate foaf:member ;		          rdfs:object <" + author + "> ;		          dc:date ?date .		    ?org a foaf:Organization ; 		         geo:lat ?lat ; 		         geo:long ?lon ; 		         foaf:name ?name.}  			} ORDER BY DESC(?date)";
+		query = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon ?date		WHERE { 		  GRAPH ?g { 		    ?reif rdfs:subject ?org;		          rdfs:predicate foaf:member ;		          rdfs:object <" + author + "> ;		          dc:date ?date .		    ?org a foaf:Organization ; 		         geo:lat ?lat ; 		         geo:long ?lon ; 		         foaf:name ?name.}  			} ORDER BY DESC(?date)";
 		
 	}
 	
 	if(year != null){ // all current affiliations of authors who published this year
-		$query = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon WHERE { GRAPH ?g { ?author foaf:publications ?paper . ?org foaf:member ?author . ?paper dc:date \"" + year + "\" . ?org a foaf:Organization ; geo:lat ?lat ; geo:long ?lon ; foaf:name ?name.}  	}"; 	}
+		query = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon WHERE { GRAPH ?g { ?author foaf:publications ?paper . ?org foaf:member ?author . ?paper dc:date \"" + year + "\" . ?org a foaf:Organization ; geo:lat ?lat ; geo:long ?lon ; foaf:name ?name.}  	}"; 	}
 	
 	if(conference != null){ 
-		$query = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon WHERE { GRAPH <" + conference + "> { ?org a foaf:Organization ; geo:lat ?lat ; geo:long ?lon ; foaf:name ?name. }  	}";  }
+		query = prefixes + "SELECT DISTINCT ?org ?name ?lat ?lon WHERE { GRAPH <" + conference + "> { ?org a foaf:Organization ; geo:lat ?lat ; geo:long ?lon ; foaf:name ?name. }  	}";  }
 	
 	if(affiliation != null){ 
-		$query = prefixes + "SELECT DISTINCT ?name ?lat ?lon WHERE { GRAPH ?g { <" + affiliation  + "> geo:lat ?lat ; geo:long ?lon ; foaf:name ?name.}  	}";
+		query = prefixes + "SELECT DISTINCT ?name ?lat ?lon WHERE { GRAPH ?g { <" + affiliation  + "> geo:lat ?lat ; geo:long ?lon ; foaf:name ?name.}  	}";
 	}
 
 	
 	//console.log($query);
 	$("h1").addClass("loading");
 	
-	$.getJSON("/sparql", { query: $query , 
+	$.getJSON("/sparql", { query: query , 
 						   format: "json" }, 	
 		function(json){
 			
@@ -139,13 +146,14 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 			
 			if(affiliation != null){ 
 			
-				$latlon = new google.maps.LatLng(parseFloat(json.results.bindings[0].lat.value), parseFloat(json.results.bindings[0].lon.value));
-					var marker = new google.maps.Marker({
-					position: $latlon, 
+				latlon = new google.maps.LatLng(parseFloat(json.results.bindings[0].lat.value), parseFloat(json.results.bindings[0].lon.value));
+				var marker = new google.maps.Marker({
+					position: latlon, 
 					map: map,
-					title: json.results.bindings[0].name.value
+					title: json.results.bindings[0].name.value,
+					icon: image 
 				});
-				latlngbounds.extend($latlon);
+				latlngbounds.extend(latlon);
 				google.maps.event.addListener(marker, 'click', function() {
 			    	selectAffiliation(affiliation);
 				});
@@ -157,17 +165,19 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 				
 				// show markers with years
 				$.each(json.results.bindings, function(i){
-						$latlon = new google.maps.LatLng(parseFloat(json.results.bindings[i].lat.value), parseFloat(json.results.bindings[i].lon.value));
-						var marker = new MarkerWithLabel({
-						position: $latlon, 
+					latlon = new google.maps.LatLng(parseFloat(json.results.bindings[i].lat.value), parseFloat(json.results.bindings[i].lon.value));
+					var marker = new MarkerWithLabel({
+						position: latlon, 
 						map: map,
 						title: json.results.bindings[i].name.value,
 						labelContent: json.results.bindings[i].date.value,
 						labelAnchor: new google.maps.Point(22, 0),
 						labelClass: "labels", // the CSS class for the label
-						labelStyle: {opacity: 0.85}
+						labelStyle: {opacity: 0.85},
+						icon: image 
 					});
-					latlngbounds.extend($latlon);
+					console.log(latlon);
+					latlngbounds.extend(latlon);					
 					google.maps.event.addListener(marker, 'click', function() {
 				    	selectAffiliation(json.results.bindings[i].org.value);
 					});
@@ -193,13 +203,15 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 			}else{
 				
 				$.each(json.results.bindings, function(i){
-						$latlon = new google.maps.LatLng(parseFloat(json.results.bindings[i].lat.value), parseFloat(json.results.bindings[i].lon.value));
-						var marker = new google.maps.Marker({
-						position: $latlon, 
+					latlon = new google.maps.LatLng(parseFloat(json.results.bindings[i].lat.value), parseFloat(json.results.bindings[i].lon.value));
+
+					var marker = new google.maps.Marker({
+						position: latlon, 
 						map: map,
-						title: json.results.bindings[i].name.value
+						title: json.results.bindings[i].name.value,
+						icon: image 
 					});
-					latlngbounds.extend($latlon);
+					latlngbounds.extend(latlon);
 					google.maps.event.addListener(marker, 'click', function() {
 				    	selectAffiliation(json.results.bindings[i].org.value);
 					});
@@ -208,6 +220,7 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 				
 			}
 			// rescale map to fit all markers:
+			console.log(latlngbounds);
 			map.fitBounds( latlngbounds );
 			
 			// TODO if there are no affiliations to show, zoom out to world
