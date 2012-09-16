@@ -19,7 +19,7 @@ var image = new google.maps.MarkerImage('icons/circle.png',
       // The origin for this image is 0,0.
       new google.maps.Point(0,0),
       // The anchor for this image
-      new google.maps.Point(0, 0));
+      new google.maps.Point(5, 5));
 
 function initialize() {
 	var myOptions = {
@@ -171,7 +171,7 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 						map: map,
 						title: json.results.bindings[i].name.value,
 						labelContent: json.results.bindings[i].date.value,
-						labelAnchor: new google.maps.Point(22, 0),
+						labelAnchor: new google.maps.Point(22, -7),
 						labelClass: "labels", // the CSS class for the label
 						labelStyle: {opacity: 0.85},
 						icon: image 
