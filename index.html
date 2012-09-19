@@ -22,14 +22,11 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
     	<div class="navbar-inner">
         	<div class="container">  
-        		<a class="brand" href="#">SPATIAL@LINKEDSCIENCE</a>
-          		<div class="nav-collapse collapse">
-            		<ul class="nav">
+        		<div class="brand" href="#">SPATIAL@LINKEDSCIENCE</div>
+          			<ul class="nav">
               			<li><a href="#aboutModal" data-toggle="modal">About</a></li>
-              			<li><a href="#about">Stats</a></li>
-              			<li><a href="#contact">Contact</a></li>
-            		</ul>
-          		</div><!--/.nav-collapse -->
+              			<!-- <li><a href="#statsModal" data-toggle="modal">Stats</a></li> -->
+            		</ul>          		
         	</div>
       	</div>
     </div>
@@ -78,6 +75,10 @@
 		</div>
 	</div>
 
+<div id="loading">
+	<h3>loading...</h3>
+</div>
+
 <div class="modal hide fade" id="aboutModal">
  
  	<div class="modal-header">
@@ -97,7 +98,76 @@
   	</div>
   	<div class="modal-footer">
     	<a href="#" class="btn">Close</a>
-    	<a href="#" class="btn btn-primary">Save changes</a>
+  	</div>
+</div>
+
+<div class="modal hide fade" id="statsModal">
+ 
+ 	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    	<h3>SPATIAL@LINKEDSCIENCE Stats</h3>
+	</div>
+  	<div class="modal-body">
+    	
+  		<p id="statsheader">Some sample statistics generated on the fly from our data store. The graphs have been generated with <a href="http://code.google.com/p/sgvizler/">sgvizler</a>. </p>
+			<h2>Papers per country</h2>
+			<div id="paperspercountry" 
+			 data-sgvizler-query="prefix bibo: <http://purl.org/ontology/bibo/> 
+			prefix foaf: <http://xmlns.com/foaf/0.1/> 
+			prefix gn: <http://www.geonames.org/ontology#>
+
+			SELECT ?country (COUNT(DISTINCT ?paper) as ?count) WHERE {
+
+			  GRAPH ?g{
+			  	?paper a bibo:Chapter .
+			        ?author foaf:publications ?paper .
+			        ?affiliation foaf:member ?author .
+			  }
+
+			  GRAPH <http://spatial.linkedscience.org/context/geonames> {
+			  	?affiliation foaf:based_near ?place .
+			  }
+
+			  GRAPH <http://spatial.linkedscience.org/context/geonamesplaces> {
+			  	?place gn:parentFeature* ?parent .               
+			    	?parent gn:featureCode gn:A.PCLI ;
+			                gn:name ?country.
+			  }
+			}
+
+			GROUP BY ?country
+			ORDER BY DESC(?count)"
+			 data-sgvizler-chart="gPieChart"
+			 data-sgvizler-log="0"
+			 style="width:800px; height:400px;"
+			 >
+		    </div>
+		
+			<h2>Papers by publication year</h2>
+			<div id="papersperyear" 
+			 data-sgvizler-query="prefix bibo: <http://purl.org/ontology/bibo/> 
+			prefix foaf: <http://xmlns.com/foaf/0.1/> 
+			prefix gn: <http://www.geonames.org/ontology#>
+			prefix dc: <http://purl.org/dc/terms/> 
+
+			SELECT ?year (COUNT(DISTINCT ?paper) as ?papers) WHERE {
+
+			  GRAPH ?g{
+			  	?paper a bibo:Chapter ;
+			               dc:date ?year .
+			  }
+			}
+			GROUP BY ?year 
+			ORDER BY ?year"
+			 data-sgvizler-chart="gLineChart"
+			 data-sgvizler-log="0"
+			 style="width:800px; height:400px;"
+			 >
+		    </div>
+
+  	</div>
+  	<div class="modal-footer">
+    	<a href="#" class="btn">Close</a>
   	</div>
 </div>
 
@@ -106,6 +176,12 @@
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>	
 <script src="js/markerwithlabel.js"></script>
 <script src="js/spatial.js"></script>
+<script type="text/javascript" id="sgvzlr_script" src="js/sgvizler.js"></script>	
+<script type="text/javascript">
+		sgvizler.option.query.endpoint =  "/sparql";
+
+	    $(document).ready(sgvizler.go());
+	</script>
 <script>
 var pkBaseURL = (("https:" == document.location.protocol) ? "https://flashfonic.de/piwik/" : "http://flashfonic.de/piwik/");
 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));

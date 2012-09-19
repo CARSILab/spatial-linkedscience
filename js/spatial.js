@@ -136,7 +136,7 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 
 	
 	//console.log($query);
-	$("h1").addClass("loading");
+	$("#loading").slideDown();
 	
 	$.getJSON("/sparql", { query: query , 
 						   format: "json" }, 	
@@ -231,7 +231,10 @@ function loadAffiliations(paper, author, year, affiliation, conference){
 				map.setZoom(2);
 			}
 			
-			$("h1").removeClass("loading");
+			$("#loading > h3").html("done!");
+			$("#loading").slideUp(function(){
+				$("#loading > h3").html("loading...");
+			});
 		}
 	);
 }
