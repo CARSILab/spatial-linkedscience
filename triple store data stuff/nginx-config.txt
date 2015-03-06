@@ -1,0 +1,211 @@
+I# You may add here your
+# server {
+#	...
+# }
+# statements for each of your virtual hosts
+
+server {
+	listen   80 default;
+#	server_name  localhost;
+	server_name spatial.linkedscience.org;
+
+	access_log  /var/log/nginx/localhost.access.log;
+	I
+#	if ($uri ~ "/data/") {
+# 		rewrite ^/data/(.*)$ http://$host:8081/pubby/data/$1;
+#                break;
+#	}
+#
+#	if ($uri ~ "cosit") {
+# 		rewrite ^/context/cosit/(.*)$ http://$host:8081/pubby/page/context/cosit/$1;
+#                break;
+#	}
+#	if ($uri ~ "giscience") {
+# 		rewrite ^/context/giscience/(.*)$ http://$host:8081/pubby/page/context/giscience/$1;
+#                break;
+#	}
+#	if ($uri ~ "amazon") {
+# 		rewrite ^/context/amazon/(.*)$ http://$host:8081/pubby/page/context/amazon/$1;
+#                break;
+#	}
+#   rewrite	http://spatial.linkedscience.org/context/cosit/(.*)$ http://spatial.linkedscience.org:8081/pubby/resource/$1 permanent;
+   rewrite	^/page/context/amazon/$ http://linkedscience.org/lbard/properties.rdf permanent;
+   rewrite	^/data/context/amazon/$ http://linkedscience.org/lbard/properties.rdf permanent;
+#   rewrite	^/page/context/amazon/$ ^/properties.rdf permanent;
+#   rewrite	^/page/context/amazon/$ http://sparql.vocab.at/vocab/sparql?query=prefix+prov%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0Aprefix+void%3A+%3Chttp%3A%2F%2Frdfs.org%2Fns%2Fvoid%23%3E%0D%0Aprefix+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0Aprefix+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0ACONSTRUCT+{+%3Fp+a+rdf%3AProperty+.+%3Fc+a+rdfs%3AClass+.+}%0D%0AFROM+%3Chttp%3A%2F%2Fvocab.at%2Fvoid%3E+WHERE++{%0D%0A%3Chttp%3A%2F%2Fvocab.at%2Fid%2F2P23%3E+prov%3Agenerated+%3Fvoid+.%0D%0A%3Fvoid+void%3ApropertyPartition+%3Fproperties+.%0D%0A%3Fproperties+void%3Aproperty+%3Fp+.%0D%0AFILTER%28STRSTARTS%28STR%28%3Fp%29%2C+%22http%3A%2F%2Fspatial.linkedscience.org%2Fcontext%2Famazon%2F%22%29%29%0D%0A%3Fvoid+void%3AclassPartition+%3Fclasses+.%0D%0A%3Fclasses+void%3Aclass+%3Fc+.%0D%0AFILTER%28STRSTARTS%28STR%28%3Fc%29%2C+%22http%3A%2F%2Fspatial.linkedscience.org%2Fcontext%2Famazon%2F%22%29%29%0D%0A}&output=xml&stylesheet=%2Fxml-to-html.xsl permanent;
+#   rewrite	^/cosit/(.*)$ /pubby/resource/$1 permanent;
+
+# use a proxy instead of URI rewrite - this makes pubby 'invisible' and remainds the original URIs without redirects:
+	location /context/ {
+    proxy_pass         http://giv-lodum2.uni-muenster.de:8081/pubby/context/;
+	proxy_set_header   X-Forwarded-Server spatial.linkedscience.org;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_max_temp_file_size 0;
+
+        client_max_body_size       10m;
+        client_body_buffer_size    128k;
+
+        proxy_connect_timeout      90;
+        proxy_send_timeout         90;
+        proxy_read_timeout         90;
+
+        proxy_buffer_size          4k;
+        proxy_buffers              4 32k;
+        proxy_busy_buffers_size    64k;
+        proxy_temp_file_write_size 64k;
+    }
+
+	location /page/ {
+        proxy_pass         http://giv-lodum2.uni-muenster.de:8081/pubby/page/;
+	proxy_set_header   X-Forwarded-Server spatial.linkedscience.org;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_max_temp_file_size 0;
+
+        client_max_body_size       10m;
+        client_body_buffer_size    128k;
+
+        proxy_connect_timeout      90;
+        proxy_send_timeout         90;
+        proxy_read_timeout         90;
+
+        proxy_buffer_size          4k;
+        proxy_buffers              4 32k;
+        proxy_busy_buffers_size    64k;
+        proxy_temp_file_write_size 64k;
+    }
+
+	location /data/ {
+    proxy_pass         http://giv-lodum2.uni-muenster.de:8081/pubby/data/;
+	proxy_set_header   X-Forwarded-Server spatial.linkedscience.org;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_max_temp_file_size 0;
+
+        client_max_body_size       10m;
+        client_body_buffer_size    128k;
+
+        proxy_connect_timeout      90;
+        proxy_send_timeout         90;
+        proxy_read_timeout         90;
+
+        proxy_buffer_size          4k;
+        proxy_buffers              4 32k;
+        proxy_busy_buffers_size    64k;
+        proxy_temp_file_write_size 64k;
+    }
+
+
+    location /sparql {
+        proxy_pass         http://giv-lodum2.uni-muenster.de:3030/spatial/sparql;
+        proxy_set_header   X-Forwarded-Server spatial.linkedscience.org;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+ 	add_header 	   Access-Control-Allow-Origin *;
+        proxy_max_temp_file_size 0;
+
+        client_max_body_size       10m;
+        client_body_buffer_size    128k;
+
+        proxy_connect_timeout      90;
+        proxy_send_timeout         90;
+        proxy_read_timeout         90;
+
+        proxy_buffer_size          4k;
+        proxy_buffers              4 32k;
+        proxy_busy_buffers_size    64k;
+        proxy_temp_file_write_size 64k;
+    }
+	location / {
+		root   /var/www/nginx-default;
+		index  index.html index.htm;
+
+	}
+
+	location /doc {
+		root   /usr/share;
+		autoindex on;
+		allow 127.0.0.1;
+		deny all;
+	}
+
+	location /images {
+		root   /usr/share;
+		autoindex on;
+	}
+
+
+	# location /context/ {
+	# 	rewrite  ^(.*)/context/cosit/(.*)$  $1/pubby/resource/$2  break;
+	# }
+
+
+	#error_page  404  /404.html;
+
+	# redirect server error pages to the static page /50x.html
+	#
+	#error_page   500 502 503 504  /50x.html;
+	#location = /50x.html {
+	#	root   /var/www/nginx-default;
+	#}
+
+	# proxy the PHP scripts to Apache listening on 127.0.0.1:80
+	#
+	#location ~ \.php$ {
+		#proxy_pass   http://127.0.0.1;
+	#}
+
+	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+	#
+	#location ~ \.php$ {
+		#fastcgi_pass   127.0.0.1:9000;
+		#fastcgi_index  index.php;
+		#fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+		#includefastcgi_params;
+	#}
+
+	# deny access to .htaccess files, if Apache's document root
+	# concurs with nginx's one
+	#
+	#location ~ /\.ht {
+		#deny  all;
+	#}
+}
+
+
+# another virtual host using mix of IP-, name-, and port-based configuration
+#
+#server {
+#listen   8000;
+#listen   somename:8080;
+#server_name  somename  alias  another.alias;
+
+#location / {
+#root   html;
+#index  index.html index.htm;
+#}
+#}
+
+
+# HTTPS server
+#
+#server {
+#listen   443;
+#server_name  localhost;
+
+#ssl  on;
+#ssl_certificate  cert.pem;
+#ssl_certificate_key  cert.key;
+
+#ssl_session_timeout  5m;
+
+#ssl_protocols  SSLv2 SSLv3 TLSv1;
+#ssl_ciphers  ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+#ssl_prefer_server_ciphers   on;
+
+#location / {
+#root   html;
+#index  index.html index.htm;
+#}
+#}

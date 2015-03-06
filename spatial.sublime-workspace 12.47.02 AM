@@ -1,0 +1,266 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"bi",
+				"Bin_Tree"
+			],
+			[
+				"print",
+				"Print_in"
+			],
+			[
+				"Print",
+				"Print_in"
+			],
+			[
+				"root",
+				"Root"
+			],
+			[
+				"is",
+				"isEmpty"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"len",
+				"length-1"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"border-r",
+				"border-right"
+			],
+			[
+				"top",
+				"top"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"in",
+				"inline"
+			],
+			[
+				"margin",
+				"margin"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"background",
+				"background-color"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"rad",
+				"border-bottom-right-radius"
+			],
+			[
+				"max",
+				"max_ind"
+			],
+			[
+				"max_",
+				"max_ind"
+			],
+			[
+				"n",
+				"n"
+			],
+			[
+				"o",
+				"OVERLOADING_OPERATORS"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"tex",
+				"textventure"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/private/var/www/nginx-default/css/spatial.css",
+		"/private/var/www/nginx-default/index.html",
+		"/private/var/www/nginx-default/css/spatial-linkedscience.sublime-project",
+		"/usr/local/etc/nginx/nginx.conf",
+		"/usr/local/etc/nginx/nginx.conf.default",
+		"/Users/amaldare/Documents/nginx.conf",
+		"/Users/amaldare/Downloads/nginx.conf",
+		"/Users/amaldare/Downloads/foundations/submission.py",
+		"/Users/amaldare/Dropbox/COSIT 2011 LOD/config-spatial@linkedscience.ttl",
+		"/Users/amaldare/Documents/myPrograms/euler/euler4.py",
+		"/Users/amaldare/Documents/myPrograms/euler/euler3.py",
+		"/Users/amaldare/Documents/myPrograms/euler/euler2.py",
+		"/Users/amaldare/Documents/myPrograms/euler/euler1.py",
+		"/Users/amaldare/Documents/myPrograms/euler/euler5.js",
+		"/Users/amaldare/Documents/myPrograms/euler/euler6.js",
+		"/Users/amaldare/Documents/myPrograms/euler/euler4.js",
+		"/Users/amaldare/Documents/myPrograms/euler/euler8.js",
+		"/Users/amaldare/Documents/myPrograms/euler/euler7.js",
+		"/Users/amaldare/Documents/myPrograms/euler/euler3.js",
+		"/Users/amaldare/Documents/myPrograms/euler/euler2.js",
+		"/Users/amaldare/Documents/myPrograms/euler/euler1.js",
+		"/Users/amaldare/Desktop/Computer Science/Notes.cpp",
+		"/Users/amaldare/Documents/My Programs/C++/Hello World/Hello World/main.cpp",
+		"/Users/amaldare/Documents/My Programs/Web/Kelwulf.js",
+		"/Users/amaldare/Documents/My Programs/Web/Kelwulf.css",
+		"/Users/amaldare/Documents/My Programs/Web/Kelwulf.html",
+		"/Users/amaldare/Documents/My Programs/Web/textventure.js",
+		"/Users/amaldare/Documents/My Programs/Web/textventure.css",
+		"/Users/amaldare/Documents/My Programs/Web/textventure.html"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"root",
+			"location",
+			"spatial",
+			":",
+			"::",
+			"80",
+			"p",
+			"cur",
+			"peek"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 248.0,
+	"status_bar_visible": true
+}
