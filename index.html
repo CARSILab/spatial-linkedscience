@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>spatial.linkedscience.org</title>	
+	  <!-- Le styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="css/spatial.css" />
+</head>
+<body onload="initialize()">
+	<div class="navbar navbar-inverse navbar-fixed-top">
+    	<div class="navbar-inner">
+        	<div class="container">  
+        		<div class="brand" href="#">SPATIAL@LINKEDSCIENCE</div>
+          			<ul class="nav">
+              			<li><a href="#aboutModal" data-toggle="modal">About</a></li>
+              			<!-- <li><a href="#statsModal" data-toggle="modal">Stats</a></li> -->
+              			<li><a href="test.html">test</a></li>
+            		</ul>          		
+        	</div>
+      	</div>
+    </div>
+	
+	<div id="map_canvas"></div>
+	
+	<div class="container">	
+		<div class="row">
+			<div class="span12" id="filterinfo">
+				<form class="form-inline pull-right">
+					<input type="text" id="search" size="30" placeholder="Search authors &amp; titles" />
+				</form>
+				<h3 id="info"></h3>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span4">
+				<h2 id="conferencesheader"></h2>
+				<p id="conferences"></p>
+			</div>
+
+			<div class="span8">
+				<h2 id="yearsheader"></h2>
+				<p id="years"></p>
+			</div>
+			
+		</div>
+			
+		<div class="row">
+			<div class="span4">
+				<h2 id="authorsheader"></h2>
+				<ul id="people"></ul>			
+			</div>
+
+			<div class="span8">
+				<h2 id="papersheader"></h2>
+				<ul id="papers"></ul>
+				<p id="paperdetails"></p>
+			</div>
+			
+		</div>
+		<div id="affiliations">
+			<h2 class="aff" id="affiliationsheader"></h2>
+		</div>
+	</div>
+
+<div id="loading">
+	<h3>loading...</h3>
+</div>
+
+<div class="modal hide fade" id="aboutModal">
+ 
+ 	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    	<h3>About SPATIAL@LINKEDSCIENCE</h3>
+	</div>
+  	<div class="modal-body">
+    	<p><a href="http://linkedscience.org/spatial">spatial@linkedscience</a> is a community-driven effort to create methods, vocabularies, tools and data for showing how and why spatial information can efficiently be used in scientific settings.</p>
+
+		<p>As a first major step we have developed this access point to (almost) all papers ever published in the major Geographic Information conferences: GIScience, COSIT, ACM GIS, and AGILE. The result can be explored using this website developed by <a href="http://carsten.io">Carsten Keßler</a>, <a href="http://geog.ucsb.edu/~jano/">Krzysztof Janowicz</a> and <a href="http://kauppinen.net/tomi">Tomi Kauppinen</a>.</p>
+		
+		<p>The data used by this website is also available for anyone to analyze, visualize and link to via  dereferenceable URIs. The SPARQL endpoint to query the data is abvailable at <code>http://spatial.linkedscience.org/sparql</code>.</p>
+		
+		<p>We are happy about any feedback, suggestions for improvements, bug reports, etc. Please use the input field at the bottom of <a href="http://linkedscience.org/spatial">LinkedScience.org/spatial</a> for any feedback, or feel free to get in touch with any of us directly.</p>
+
+		<p><small>Icons courtesy of <a href="Iconmnstr" target="_blank">Iconmnstr</a>.</small></p>
+  	</div>
+  	<div class="modal-footer">
+    	<a href="#" class="btn">Close</a>
+  	</div>
+</div>
+
+<div class="modal hide fade" id="statsModal">
+ 
+ 	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    	<h3>SPATIAL@LINKEDSCIENCE Stats</h3>
+	</div>
+  	<div class="modal-body">
+    	
+  		<p id="statsheader">Some sample statistics generated on the fly from our data store. The graphs have been generated with <a href="http://code.google.com/p/sgvizler/">sgvizler</a>. </p>
+			<h2>Papers per country</h2>
+			<div id="paperspercountry" 
+			 data-sgvizler-query="prefix bibo: <http://purl.org/ontology/bibo/> 
+			prefix foaf: <http://xmlns.com/foaf/0.1/> 
+			prefix gn: <http://www.geonames.org/ontology#>
+
+			SELECT ?country (COUNT(DISTINCT ?paper) as ?count) WHERE {
+
+			  GRAPH ?g{
+			  	?paper a bibo:Chapter .
+			        ?author foaf:publications ?paper .
+			        ?affiliation foaf:member ?author .
+			  }
+
+			  GRAPH <http://spatial.linkedscience.org/context/geonames> {
+			  	?affiliation foaf:based_near ?place .
+			  }
+
+			  GRAPH <http://spatial.linkedscience.org/context/geonamesplaces> {
+			  	?place gn:parentFeature* ?parent .               
+			    	?parent gn:featureCode gn:A.PCLI ;
+			                gn:name ?country.
+			  }
+			}
+
+			GROUP BY ?country
+			ORDER BY DESC(?count)"
+			 data-sgvizler-chart="gPieChart"
+			 data-sgvizler-log="0"
+			 style="width:800px; height:400px;"
+			 >
+		    </div>
+		
+			<h2>Papers by publication year</h2>
+			<div id="papersperyear" 
+			 data-sgvizler-query="prefix bibo: <http://purl.org/ontology/bibo/> 
+			prefix foaf: <http://xmlns.com/foaf/0.1/> 
+			prefix gn: <http://www.geonames.org/ontology#>
+			prefix dc: <http://purl.org/dc/terms/> 
+
+			SELECT ?year (COUNT(DISTINCT ?paper) as ?papers) WHERE {
+
+			  GRAPH ?g{
+			  	?paper a bibo:Chapter ;
+			               dc:date ?year .
+			  }
+			}
+			GROUP BY ?year 
+			ORDER BY ?year"
+			 data-sgvizler-chart="gLineChart"
+			 data-sgvizler-log="0"
+			 style="width:800px; height:400px;"
+			 >
+		    </div>
+
+  	</div>
+  	<div class="modal-footer">
+    	<a href="#" class="btn">Close</a>
+  	</div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>	
+<script src="js/markerwithlabel.js"></script>
+<script src="js/spatial.js"></script>
+<script type="text/javascript" id="sgvzlr_script" src="js/sgvizler.js"></script>	
+<script type="text/javascript">
+		sgvizler.option.query.endpoint =  "/sparql";
+
+	    $(document).ready(sgvizler.go());
+	</script>
+<script>
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://flashfonic.de/piwik/" : "http://flashfonic.de/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 7);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://flashfonic.de/piwik/piwik.php?idsite=7" style="border:0" alt="" /></p></noscript>
+
+</body>
+</html>

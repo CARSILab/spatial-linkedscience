@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>spatial.linkedscience.org</title>	
+	  <!-- Le styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	<link rel="stylesheet" type="text/css" href="css/spatial.css" />
+
+</head>
+<body onload='initialize()'>
+
+
+
+    <div class="container"> 
+        <div class="row">
+            <div class="span12" id="filterinfo">
+                <form>
+                    <input type='text' id='search' name='input' />
+                    <button type='submit'>submit</button>
+                </form>
+                <h3 id="info"></h3>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="span4">
+                <h2 id="conferencesheader"></h2>
+                <p id="conferences"></p>
+            </div>
+
+            <div class="span8">
+                <h2 id="yearsheader"></h2>
+                <p id="years"></p>
+            </div>
+            
+        </div>
+            
+        <div class="row">
+            <div class="span4">
+                <h2 id="authorsheader"></h2>
+                <ul id="people"></ul>           
+            </div>
+
+            <div class="span8">
+                <h2 id="papersheader"></h2>
+                <ul id="papers"></ul>
+                <p id="paperdetails"></p>
+            </div>
+            
+        </div>
+        <div id="affiliations">
+            <h2 class="aff" id="affiliationsheader"></h2>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- SCRIPTS -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/test.js"></script>
+    <script type="text/javascript" id="sgvzlr_script" src="js/sgvizler.js"></script>    
+    <script type="text/javascript">
+        sgvizler.option.query.endpoint =  "/sparql";
+
+        $(document).ready(sgvizler.go());
+    </script>
+    <script>
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://flashfonic.de/piwik/" : "http://flashfonic.de/piwik/");
+        document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+        var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 7);
+        piwikTracker.trackPageView();
+        piwikTracker.enableLinkTracking();
+        } catch( err ) {}
+    </script>
+    <noscript><p><img src="http://flashfonic.de/piwik/piwik.php?idsite=7" style="border:0" alt="" /></p></noscript>
+
+</body>
