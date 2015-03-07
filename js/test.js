@@ -58,26 +58,35 @@ function loadAuthors(paper, author, year, affiliation, conference){
 }
 
 function findAuthor(input){
-	$query = prefixes + 'SELECT ?link ?name WHERE { ?link foaf:givenName "' + input + '" . ?link foaf:name ?name}';
+	$query = prefixes + 'SELECT ?link ?name WHERE { ?link foaf:name ?name. FILTER regex(?name, "' + input + '", "i") ?link rdf:type foaf:Person }';
 
 	$.getJSON("/sparql", {query: $query , format: "json" }, 
 		function(json){
+			$('#authorsheader').html('Author');
 			$.each(json.results.bindings, function(i){
-				if(json.results.bindings.length == 1){  // TODO klappt nicht
-						$('#authorsheader').html('Author');
-				}
-				$('#people').append("<li><a href=\"" + json.results.bindings[i].link.value + "\">"+ json.results.bindings[i].name.value +"</a></li>")
-				//$('#people').append("<li>" + json.results.bindings[i].link.value + json.results.bindings[i].name.value + "</li>")
+				$('#people').append('<li><a href="' + json.results.bindings[i].link.value + '">' + json.results.bindings[i].name.value + '</a></li>')
 				console.log(json.results.bindings[i])
 			})
 
 		})
 }
 
+function findPaper(input){
+	$query = prefixes + 'SELECT ?link ?title WHERE { ?link dc:title ?title. FILTER regex(?title, "' + input + '", "i") ?link rdf:type bibo:Chapter }';
+
+	$.getJSON("/sparql", {query: $query , format: "json" },
+		function(json){
+			$('#papersheader').html('Paper');
+			$.each(json.results.bindings, function(i){
+				$('#papers').append('<li><a href="' + json.results.bindings[i].link.value + '">' + json.results.bindings[i].title.value + '</a></li>')
+			})
+		})
+}
+
 function initialize(){
 	if($.urlParam('input') != 0){
-		//$('#people').append('<li>' + $.urlParam('input') + '</li>')
-		findAuthor($.urlParam('input'))
+		findAuthor($.urlParam('input').replace(/\+/g," "))
+		findPaper($.urlParam('input').replace(/\+/g," "))
 	}
 };
 
