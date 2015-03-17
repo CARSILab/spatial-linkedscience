@@ -438,7 +438,7 @@ function loadSinglePaper(paper){
 }
 
 function loadAuthors(paper, author, year, affiliation, conference){
-	
+
 	// remove current list of authors before we load the new ones:
 	$('.author').remove();
 	
