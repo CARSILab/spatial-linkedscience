@@ -1,2 +1,0 @@
-when selecting a paper / year / author / etc, that selection will be displayed more prominately above,
-instead of displaying a whole section with just that selection, eg: years: 2012
