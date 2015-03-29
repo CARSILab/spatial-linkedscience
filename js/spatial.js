@@ -506,6 +506,7 @@ function resetHeadings(){
 	$('#paperdetails').html('');
 }
 
+
 // event handlers for author/paper search
 $("input#search").keyup(function(event){
 	if (event.keyCode == 27) {
