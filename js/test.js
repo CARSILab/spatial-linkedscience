@@ -68,10 +68,10 @@ function search(input, conference){
 
 			$.each(json.results.bindings, function(i){
 				if( json.results.bindings[i].type.value == 'http://xmlns.com/foaf/0.1/Person' ){
-			  		$("#people").append("<li class='author'><a href='javascript:selectAuthor(\"<" + json.results.bindings[i].link.value + ">\")'>" + json.results.bindings[i].name.value + "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + json.results.bindings[i].link.value + "'>&rarr;</a></li>");
-			  	} 
+			  		$("#people").append('<li class="author"><a href="javascript:selectAuthor(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].name.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this author" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
+			  	}
 			  	else if( json.results.bindings[i].type.value == 'http://purl.org/ontology/bibo/Chapter' ){
-			  		$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="' + json.results.bindings[i].link.value + '">' + json.results.bindings[i].title.value + '</a></li>');
+			  		$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:selectPaper(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
 			  	}
 			});
 		},
@@ -121,19 +121,47 @@ function selectAuthor(author){
 
 			$.each(json.results.bindings, function(i){
 				if( json.results.bindings[i].type.value =='http://purl.org/ontology/bibo/Chapter'){
-					$('#papers').append('<li>(' + json.results.bindings[i].year.value + ') <a href="' + json.results.bindings[i].paper.value + '">' + json.results.bindings[i].title.value + '</a></li>');
+					$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:selectPaper(\'<' + json.results.bindings[i].paper.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].paper.value + '">&rarr;</a></li>');
 				} else {
 					$('#people').append("<li class='author'><a href='javascript:selectAuthor(\"<" + json.results.bindings[i].knows.value + ">\")'>" + json.results.bindings[i].coname.value + "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + json.results.bindings[i].knows.value + "'>&rarr;</a></li>");
 				}
 			})
 		}
-	)
+	);
+};
+
+// shows everything linked to paper
+function selectPaper(paper){
+
+	$query = prefixes + 
+	'SELECT DISTINCT  ?title ?author ?name ?coauthors ?year ?homepage ?partOf ?subject ?g ' +
+	'{ ' +
+		'GRAPH ' + '?g ' + 
+		'{ ' +
+			paper +
+				'dc:title ?title ; ' +
+				'dc:date ?year ; ' +
+				'foaf:homepage ?homepage ; ' +
+				'dc:partOf ?partOf ; ' +
+				//'dc:subject ?subject ; ' + 
+				'bibo:authorList ?list . ' +
+			'?list rdf:first ?author . ' +
+			//'?list rdf:rest ?coauthors . ' +	
+			'?author foaf:name ?name . ' +
+		'} ' +
+	'}';
+
+	$.getJSON('/sparql', {query: $query, format: 'json'},
+		function(json){
+			console.log(json.results.bindings);
+		}
+	);
 };
 
 // clear elements on page
 function clear(){
 	$('#people').empty();
 	$('#papers').empty();
-}
+};
 
 
