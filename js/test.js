@@ -4,13 +4,16 @@
 
 var prefixes = "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> prefix dc: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix key: <http://spatial.linkedscience.org/context/keyword/>";
 
-// enable search bar
-$('#searchBar').keypress(function(event){
-	if(event.keyCode == 13 && $('#searchBar').val().length > 1){
+// handle search bar
+$('form').bind('submit', function(event){
+	event.preventDefault();
+	if($('#search').val().length > 1){
 		clear();
-		search( $('#searchBar').val() );
+		search( $('#search').val() );
 	}
 });
+
+
 
 // search for authors & papers
 function search(input, conference){
@@ -51,18 +54,8 @@ function search(input, conference){
 		'}' +
 	'}';
 
-	$.ajax({
-
-		url: '/sparql',
-		data: {
-			query: $query,
-			format: 'json'
-		},
-		type: 'GET',
-		dataType: 'json',
-
-		success: function(json) {
-
+	$.getJSON('/sparql', {query: $query, format: 'json'},
+		function(json){
 			$('#authorsheader').html('Author');
 			$('#papersheader').html('Papers');
 
@@ -74,17 +67,9 @@ function search(input, conference){
 			  		$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:selectPaper(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
 			  	}
 			});
-		},
-
-		error: function(){
-			console.log('ERROR');
-		},
-
-		complete: function(){
-			$('#searchBar').val('');
+			$('#search').val('');
 		}
-
-	});
+	);
 };
 
 // shows everything linked to author

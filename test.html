@@ -10,37 +10,52 @@
 	<title>spatial.linkedscience.org</title>	
 	  <!-- Le styles -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/spatial.css" />
+	<link rel="stylesheet" type="text/css" href="css/SPATIAL.css" />
 
 </head>
 <body>
 
-    <div class="container"> 
-        <div class="row">
-            <div class="col-md-12" id="filterinfo">
-                <input type='text' id='searchBar' name='input' autocomplete='off'/>
-                <form name='filters'>
-                    <input type='radio' name='conference' value='http://spatial.linkedscience.org/context/acmgis'>ACM GIS</input>
-                    <input type='radio' name='conference' value='http://spatial.linkedscience.org/context/agile'>AGILE</input>
-                    <input type='radio' name='conference' value='http://spatial.linkedscience.org/context/cosit'>COSIT</input>
-                    <input type='radio' name='conference' value='http://spatial.linkedscience.org/context/giscience'>GIScience</input>
+    <!-- NAVBAR -->
+    <div class='navbar navbar-inverse navbar-static-top'>
+        <div class='container'>
+            <div class='container'>
+                <div class='navbar-header'>
+                    <div class='navbar-brand' href='#'>SPATIAL@LINKEDSCIENCE</div>
+                </div>
+                <ul class='nav navbar-nav'>
+                    <li><a href='#aboutModal' data-toggle='modal'>About</a></li>
+                </ul>
+                <form class='navbar-form navbar-right' role='search'>
+                    <div class='form-group'>
+                        <input type='text' class='form-control' id='search' placeholder='Search' autocomplete='off' autofocus>
+                    </div>
                 </form>
-            </div>
+            </div>             
         </div>
-            
-        <div class="row">
-            <div class="col-md-4">
-                <h2 id="authorsheader"></h2>
-                <ul id="people"></ul>           
+    </div>
+
+    <!-- 
+        <input type='radio' name='conference' value='http://spatial.linkedscience.org/context/acmgis'>ACM GIS</input>
+        <input type='radio' name='conference' value='http://spatial.linkedscience.org/context/agile'>AGILE</input>
+        <input type='radio' name='conference' value='http://spatial.linkedscience.org/context/cosit'>COSIT</input>
+        <input type='radio' name='conference' value='http://spatial.linkedscience.org/context/giscience'>GIScience</input>
+    -->
+    <div class='container'>
+
+        <h3 id='info'></h3>
+        <div class='row'>
+
+            <div class='col-md-4'>
+                <h2 id='authorsheader'></h2>
+                <ul id='people'></ul>           
             </div>
 
-            <div class="col-md-8">
-                <h2 id="papersheader"></h2>
-                <ul id="papers"></ul>
-                <p id="paperdetails"></p>
+            <div class='col-md-8'>
+                <h2 id='papersheader'></h2>
+                <ul id='papers'></ul>
+                <p id='paperdetails'></p>
             </div>
-            
+
         </div>
     </div>
 
