@@ -2,27 +2,47 @@
 // each page with unique uri
 // convert map to leaflet with closeby pins combining to one (leaflet marker cluster)
 
-var prefixes = "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> prefix dc: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix key: <http://spatial.linkedscience.org/context/keyword/>";
+var prefixes = 'prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> prefix dc: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix spatial: <http://spatial.linkedscience.org/context/> prefix key: <http://spatial.linkedscience.org/context/keyword/>';
+var lastHash = '';
+
+// initialize
+$(document).ready(function(){
+	pollHash();
+	setInterval(pollHash, 10);
+})
+function pollHash(){
+	if (window.location.hash != lastHash) {
+		lastHash = window.location.hash;
+		if (lastHash == '') {
+			clear();
+		} else if (lastHash[1] == 'p') {
+			selectAuthor('<http://spatial.linkedscience.org/context/' + lastHash.slice(1) + '>');
+		} else {
+			selectPaper('<http://spatial.linkedscience.org/context/' + lastHash.slice(1) + '>');
+		}
+	}
+}
+
 
 // handle search bar
 $('form').bind('submit', function(event){
 	event.preventDefault();
-	if($('#search').val().length > 1){
+	text = $('#search').val();
+	conference = $('#conference').val();
+	if( text.length > 1){
+		search( text, conference );
 		clear();
-		search( $('#search').val() );
 	}
 });
 
-
-
 // search for authors & papers
 function search(input, conference){
-
+	window.location.hash = lastHash = '';
 	paper_seg = '';
 	conference_seg = '?g';
 
-	if(conference != null)
-		conference_seg = '<' + conference + '>';
+	if(conference != 'null')
+		conference_seg = 'spatial:' + conference;
 
 	$query = prefixes + 
 	'SELECT DISTINCT ?link ?name ?title ?year ?type ' +
@@ -32,6 +52,7 @@ function search(input, conference){
 			'{ ' +
 				'?link foaf:name ?name . ' +
 				'FILTER regex(?name, "' + input + '", "i") ' + 
+				'?link foaf:familyName ?lastName . ' +
 				'?link rdf:type foaf:Person . ' +
 				'?link rdf:type ?type . ' +
 			'}' +
@@ -45,36 +66,56 @@ function search(input, conference){
 			'} ' +
 			'UNION ' +
 			'{ ' +
-				'?link dc:subject key:' + input + ' .' +
+				'?link dc:subject key:' + input.split(' ').join('_') + ' . ' +
+				// try to use regex for keywords
+				//'FILTER regex(?subject, "key:' + input + '", "i") ' +
 				'?link dc:title ?title . ' +
 				'?link dc:date ?year . ' +
 				'?link rdf:type bibo:Chapter . ' +
 				'?link rdf:type ?type . ' +
 			'} ' +
 		'}' +
-	'}';
+	'}' +
+	'ORDER BY DESC(?year) ?title ?lastName';
+
 
 	$.getJSON('/sparql', {query: $query, format: 'json'},
 		function(json){
-			$('#authorsheader').html('Author');
+
+			// prepare page for data
+			conference_part = '';
+			if(conference != 'null')
+				conference_part = ' >> ' + conference;
+
+			if(json.results.bindings.length == 0)
+				$('#infoheader').html('There are no results for <b>' + input + conference_part + '</b>, try searching again.');
+			else 
+				$('#infoheader').html('Showing results for: <b>' + input + conference_part + '</b>');
+
+			$('#authorsheader').html('Authors');
 			$('#papersheader').html('Papers');
 
+			// fill page with data
 			$.each(json.results.bindings, function(i){
 				if( json.results.bindings[i].type.value == 'http://xmlns.com/foaf/0.1/Person' ){
-			  		$("#people").append('<li class="author"><a href="javascript:selectAuthor(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].name.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this author" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
+			  		$("#people").append('<li class="author"><a href="javascript:setHash(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].name.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this author" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
 			  	}
 			  	else if( json.results.bindings[i].type.value == 'http://purl.org/ontology/bibo/Chapter' ){
-			  		$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:selectPaper(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
+			  		$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:setHash(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
 			  	}
 			});
-			$('#search').val('');
 		}
 	);
 };
 
+function setHash(hash){
+	window.location.hash = hash.slice(42, -1);
+}
+
 // shows everything linked to author
 function selectAuthor(author){
 
+	console.log(author);
 	$query = prefixes + 
 	'SELECT DISTINCT ?name ?paper ?title ?year ?knows ?coname ?type ' +
 	'{ ' +
@@ -84,31 +125,35 @@ function selectAuthor(author){
 				author + 
 					'foaf:name ?name ; ' +
 					'foaf:publications ?paper . ' +
-				'?paper ' +
-					'dc:title ?title ; ' +
-					'dc:date ?year ; ' +
-					'rdf:type ?type . ' +
+				'?paper dc:title ?title . ' +
+				'?paper dc:date ?year . ' +
+				'?paper rdf:type ?type . ' +
 			'} ' +
 			'UNION ' +
 			'{ ' +
-					author + 'foaf:knows ?knows . ' +
-					'?knows foaf:name ?coname . ' +
-					'?knows rdf:type ?type . ' +
+				author + 'foaf:knows ?knows . ' +
+				'?knows foaf:name ?coname . ' +
+				'?knows foaf:familyName ?lastName . ' +
+				'?knows rdf:type ?type . ' +
 			'} ' +	
 		'} ' +
-	'}';
+	'}' +
+	'ORDER BY DESC(?year) ?title ?lastName';
 
 	$.getJSON('/sparql', {query: $query, format: 'json'},
 		function(json){
+			console.log(json.results.bindings)
+			clear();
+			$('#infoheader').html('<b>' + json.results.bindings[0].name.value + '</b>');
 			$('#papersheader').html('Papers');
 			$('#authorsheader').html('Co-authors/-editors');
-			clear();
+			
 
 			$.each(json.results.bindings, function(i){
 				if( json.results.bindings[i].type.value =='http://purl.org/ontology/bibo/Chapter'){
-					$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:selectPaper(\'<' + json.results.bindings[i].paper.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].paper.value + '">&rarr;</a></li>');
+					$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:setHash(\'<' + json.results.bindings[i].paper.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].paper.value + '">&rarr;</a></li>');
 				} else {
-					$('#people').append("<li class='author'><a href='javascript:selectAuthor(\"<" + json.results.bindings[i].knows.value + ">\")'>" + json.results.bindings[i].coname.value + "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + json.results.bindings[i].knows.value + "'>&rarr;</a></li>");
+					$('#people').append("<li class='author'><a href='javascript:setHash(\"<" + json.results.bindings[i].knows.value + ">\")'>" + json.results.bindings[i].coname.value + "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + json.results.bindings[i].knows.value + "'>&rarr;</a></li>");
 				}
 			})
 		}
@@ -128,9 +173,11 @@ function selectPaper(paper){
 				'dc:date ?year ; ' +
 				'foaf:homepage ?homepage ; ' +
 				'dc:partOf ?partOf ; ' +
+				// need to get list of subjects without returning the same paper n times for each subject
 				//'dc:subject ?subject ; ' + 
 				'bibo:authorList ?list . ' +
 			'?list rdf:first ?author . ' +
+			//  need to get list of all coauthors
 			//'?list rdf:rest ?coauthors . ' +	
 			'?author foaf:name ?name . ' +
 		'} ' +
@@ -138,15 +185,38 @@ function selectPaper(paper){
 
 	$.getJSON('/sparql', {query: $query, format: 'json'},
 		function(json){
+			clear();
 			console.log(json.results.bindings);
+
+			$('#infoheader').html('<b>' + json.results.bindings[0].title.value + '</b>');
+			$('#authorsheader').html('Authors/Co-authors');
+			$('#papersheader').html('Paper Info')
+			
+
+			$('#papers').append('<li><b>Title</b>: ' + json.results.bindings[0].title.value + '</li>');
+			$('#papers').append('<li><b>Year</b>: ' + json.results.bindings[0].year.value + '</li>');
+			$('#papers').append('<li><b>Homepage</b>: <a href="' + json.results.bindings[0].homepage.value + '">here</a></li>');
+			$('#papers').append('<li><b>Part Of</b>: ' + json.results.bindings[0].partOf.value + '</li>');
+
+
+			$.each(json.results.bindings, function(i){
+
+			});
+
+
 		}
 	);
 };
 
 // clear elements on page
 function clear(){
+	$('#infoheader').empty();
+	$('#papersheader').empty();
+	$('#authorsheader').empty();
 	$('#people').empty();
 	$('#papers').empty();
+	$('#search').val('');
+	$('#conference').val('null');
 };
 
 
