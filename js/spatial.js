@@ -7,9 +7,23 @@ var lastHash = '';
 
 // initialize
 $(document).ready(function(){
+
+	// leaflet map
+	var map = L.map('map', {
+		center:[22, -7],
+		zoom: 2,
+		scrollWheelZoom: false,
+	});
+	L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
+	    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
+	}).addTo(map);
+
+	// pollHash
 	pollHash();
 	setInterval(pollHash, 10);
 })
+
+// checks hash and loads page accordingly
 function pollHash(){
 	if (window.location.hash != lastHash) {
 		lastHash = window.location.hash;
@@ -34,6 +48,11 @@ $('form').bind('submit', function(event){
 		clear();
 	}
 });
+
+// onclick for home page
+$('.navbar-brand').click(function(){
+	window.location.hash = ''
+})
 
 // search for authors & papers
 function search(input, conference){
@@ -146,7 +165,6 @@ function selectAuthor(author){
 			$('#papersheader').html('Papers');
 			$('#authorsheader').html('Co-authors/-editors');
 			
-
 			$.each(json.results.bindings, function(i){
 				if( json.results.bindings[i].type.value =='http://purl.org/ontology/bibo/Chapter'){
 					$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:setHash(\'<' + json.results.bindings[i].paper.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].paper.value + '">&rarr;</a></li>');
@@ -162,27 +180,31 @@ function selectAuthor(author){
 function selectPaper(paper){
 
 	$query = prefixes + 
-	'SELECT DISTINCT ?title ?authors ?name ?coauthors ?year ?homepage ?partOf ?subject ?g ' +
+	'SELECT DISTINCT ?title ?authors ?name ?coauthor ?year ?homepage ?partOf ?subject ?g ' +
 	'{ ' +
 		'GRAPH ' + '?g ' + 
 		'{ ' +
-			paper +
-				'dc:title ?title ; ' +
-				'dc:date ?year ; ' +
-				'foaf:homepage ?homepage ; ' +
-				'dc:partOf ?partOf ; ' +
-				// need to get list of subjects without returning the same paper n times for each subject
-				//'dc:subject ?subject ; ' + 
-				'bibo:authorList ?list . ' +
-			'?list rdf:rest*/rdf:first ?authors . ' +
-			//'?author foaf:name ?name . ' +
+			'{ ' +
+				paper +
+					'dc:title ?title ; ' +
+					'dc:date ?year ; ' +
+					'foaf:homepage ?homepage ; ' +
+					'dc:partOf ?partOf . ' +
+					// need to get list of subjects without returning the same paper n times for each subject
+					//'dc:subject ?subject ; ' + 
+			'} ' +
+			'UNION ' +
+			'{ ' +
+				paper + 'bibo:authorList ?list . ' +
+				'?list rdf:rest*/rdf:first ?coauthor . ' +
+				'?coauthor foaf:name ?name . ' +
+			'} ' +
 		'} ' +
 	'}';
 
 	$.getJSON('/sparql', {query: $query, format: 'json'},
 		function(json){
 			clear();
-			console.log(json.results.bindings);
 
 			$('#infoheader').html('<b>' + json.results.bindings[0].title.value + '</b>');
 			$('#authorsheader').html('Authors/Co-authors');
@@ -196,7 +218,9 @@ function selectPaper(paper){
 
 
 			$.each(json.results.bindings, function(i){
-
+				if(i != 0){
+					$('#people').append("<li class='author'><a href='javascript:setHash(\"<" + json.results.bindings[i].coauthor.value + ">\")'>" + json.results.bindings[i].name.value + "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + json.results.bindings[i].coauthor.value + "'>&rarr;</a></li>");
+				}
 			});
 
 
