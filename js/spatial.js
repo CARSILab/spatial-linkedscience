@@ -4,12 +4,19 @@
 
 var prefixes = 'prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> prefix dc: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix spatial: <http://spatial.linkedscience.org/context/> prefix key: <http://spatial.linkedscience.org/context/keyword/>';
 var lastHash = '';
+var map
+var pin = L.icon({
+	iconUrl: '/icons/circle.png',
+	iconSize: [10, 10],
+	iconAnchor: [5, 5],
+});
+var markers = new Array();
 
 // initialize
 $(document).ready(function(){
 
 	// leaflet map
-	var map = L.map('map', {
+	map = L.map('map', {
 		center:[22, -7],
 		zoom: 2,
 		scrollWheelZoom: false,
@@ -36,7 +43,15 @@ function pollHash(){
 		}
 	}
 }
+function setHash(hash){
+	window.location.hash = hash.slice(42, -1);
+}
 
+function setPin(data){
+	latlong = data.latlong.value.split(' ');
+	marker = L.marker( [parseFloat(latlong[0]), parseFloat(latlong[1])], {icon: pin} ).addTo(map);
+	markers.push(marker);
+}
 
 // handle search bar
 $('form').bind('submit', function(event){
@@ -127,15 +142,12 @@ function search(input, conference){
 	);
 };
 
-function setHash(hash){
-	window.location.hash = hash.slice(42, -1);
-}
 
 // shows everything linked to author
 function selectAuthor(author){
 
 	$query = prefixes + 
-	'SELECT DISTINCT ?name ?paper ?title ?year ?knows ?coname ?type ' +
+	'SELECT DISTINCT ?name ?paper ?title ?year ?knows ?coname ?type ?affiliation ?latlong ' +
 	'{ ' +
 		'GRAPH ' + '?g ' + 
 		'{ ' +
@@ -153,23 +165,39 @@ function selectAuthor(author){
 				'?knows foaf:name ?coname . ' +
 				'?knows foaf:familyName ?lastName . ' +
 				'?knows rdf:type ?type . ' +
-			'} ' +	
+			'} ' + 
+			'UNION ' +
+			'{ ' +
+				'?affiliation foaf:member ' + author + ' ; ' +
+					'foaf:name ?name ; ' +
+					'geo:lat_long ?latlong ; ' +
+					'rdf:type ?type . ' +
+			'} ' + 
+			
 		'} ' +
 	'}' +
 	'ORDER BY DESC(?year) ?title ?lastName';
 
 	$.getJSON('/sparql', {query: $query, format: 'json'},
 		function(json){
+			console.log(json.results.bindings)
 			clear();
 			$('#infoheader').html('<b>' + json.results.bindings[0].name.value + '</b>');
 			$('#papersheader').html('Papers');
 			$('#authorsheader').html('Co-authors/-editors');
 			
 			$.each(json.results.bindings, function(i){
-				if( json.results.bindings[i].type.value =='http://purl.org/ontology/bibo/Chapter'){
+				if( json.results.bindings[i].type.value == 'http://purl.org/ontology/bibo/Chapter')
+				{
 					$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:setHash(\'<' + json.results.bindings[i].paper.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].paper.value + '">&rarr;</a></li>');
-				} else {
+				} 
+				else if ( json.results.bindings[i].type.value == 'http://xmlns.com/foaf/0.1/Person')
+				{
 					$('#people').append("<li class='author'><a href='javascript:setHash(\"<" + json.results.bindings[i].knows.value + ">\")'>" + json.results.bindings[i].coname.value + "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + json.results.bindings[i].knows.value + "'>&rarr;</a></li>");
+				}
+				else if ( json.results.bindings[i].type.value == 'http://xmlns.com/foaf/0.1/Organization')
+				{
+					setPin(json.results.bindings[i])
 				}
 			})
 		}
@@ -237,6 +265,9 @@ function clear(){
 	$('#papers').empty();
 	$('#search').val('');
 	$('#conference').val('null');
+	for(i = 0; i < markers.length; i++) {
+		//map.removeLayer(marker[i]);
+	}
 };
 
 
