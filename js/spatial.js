@@ -2,7 +2,7 @@
 // each page with unique uri
 // convert map to leaflet with closeby pins combining to one (leaflet marker cluster)
 
-var prefixes = 'prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> prefix dc: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix spatial: <http://spatial.linkedscience.org/context/> prefix key: <http://spatial.linkedscience.org/context/keyword/>';
+var prefixes = 'prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> prefix dc: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix spatial: <http://spatial.linkedscience.org/context/> prefix key: <http://spatial.linkedscience.org/context/keyword/> prefix ADR: <http://www.w3.org/2001/vcard-rdf/3.0#>';
 var lastHash = '';
 var map
 var pin = L.icon({
@@ -47,15 +47,31 @@ function setHash(hash){
 	window.location.hash = hash.slice(42, -1);
 }
 
+// CREATE MAP PIN
 function setPin(data){
+	// extract lat and long
 	latlong = data.latlong.value.split(' ');
-	marker = L.marker( [parseFloat(latlong[0]), parseFloat(latlong[1])], {icon: pin} ).addTo(map);
+	// create map marker
+	marker = L.marker( 
+		[parseFloat(latlong[0]), parseFloat(latlong[1])], {
+			icon: pin, 
+			title: data.name.value, 
+		}).addTo(map);
+
+	// selectAffiliation
+	$(marker).click(function(){
+		selectAffiliation(data.link.value);
+	});
+
+	// push marker into array (for later deletion)
 	markers.push(marker);
 }
 
-// handle search bar
+// SEARCH BAR
 $('form').bind('submit', function(event){
+	// stops form submission
 	event.preventDefault();
+
 	text = $('#search').val();
 	conference = $('#conference').val();
 	if( text.length > 1){
@@ -67,9 +83,9 @@ $('form').bind('submit', function(event){
 // onclick for home page
 $('.navbar-brand').click(function(){
 	window.location.hash = ''
-})
+});
 
-// search for authors & papers
+// search for authors & papers & affiliations
 function search(input, conference){
 	window.location.hash = lastHash = '';
 	paper_seg = '';
@@ -78,8 +94,8 @@ function search(input, conference){
 	if(conference != 'null')
 		conference_seg = 'spatial:' + conference;
 
-	$query = prefixes + 
-	'SELECT DISTINCT ?link ?name ?title ?year ?type ' +
+	var query = prefixes + 
+	'SELECT DISTINCT ?type ?link ?name ?year ?latlong ' +
 	'{ ' +
 		'GRAPH ' + conference_seg + 
 		'{ ' +
@@ -92,8 +108,8 @@ function search(input, conference){
 			'}' +
 			'UNION ' +
 			'{ ' +
-				'?link dc:title ?title . ' +
-				'FILTER regex(?title, "' + input + '", "i") '+ 
+				'?link dc:title ?name . ' +
+				'FILTER regex(?name, "' + input + '", "i") ' + 
 				'?link dc:date ?year . ' +
 				'?link rdf:type bibo:Chapter . ' +
 				'?link rdf:type ?type . ' +
@@ -108,14 +124,22 @@ function search(input, conference){
 				'?link rdf:type bibo:Chapter . ' +
 				'?link rdf:type ?type . ' +
 			'} ' +
+			'UNION ' +
+			'{ ' +
+				'?link foaf:name ?name ; ' +
+				'FILTER regex(?name, "' + input + '", "i") ' +
+				'?link geo:lat_long ?latlong . ' +
+				'?link rdf:type foaf:Organization . ' +
+				'?link rdf:type ?type . ' +
+			'} ' +
 		'}' +
 	'}' +
 	'ORDER BY DESC(?year) ?title ?lastName';
 
 
-	$.getJSON('/sparql', {query: $query, format: 'json'},
+	$.getJSON('/sparql', {query: query, format: 'json'},
 		function(json){
-
+			console.log(json.results.bindings)
 			// prepare page for data
 			conference_part = '';
 			if(conference != 'null')
@@ -131,11 +155,17 @@ function search(input, conference){
 
 			// fill page with data
 			$.each(json.results.bindings, function(i){
-				if( json.results.bindings[i].type.value == 'http://xmlns.com/foaf/0.1/Person' ){
+				if( json.results.bindings[i].type.value == 'http://xmlns.com/foaf/0.1/Person' )
+				{
 			  		$("#people").append('<li class="author"><a href="javascript:setHash(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].name.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this author" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
 			  	}
-			  	else if( json.results.bindings[i].type.value == 'http://purl.org/ontology/bibo/Chapter' ){
-			  		$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:setHash(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
+			  	else if( json.results.bindings[i].type.value == 'http://purl.org/ontology/bibo/Chapter' )
+			  	{
+			  		$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:setHash(\'<' + json.results.bindings[i].link.value + '>\')">' + json.results.bindings[i].name.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].link.value + '">&rarr;</a></li>');
+			  	}
+			  	else if( json.results.bindings[i].type.value == 'http://xmlns.com/foaf/0.1/Organization' )
+			  	{
+			  		setPin(json.results.bindings[i])
 			  	}
 			});
 		}
@@ -146,7 +176,7 @@ function search(input, conference){
 // shows everything linked to author
 function selectAuthor(author){
 
-	$query = prefixes + 
+	var query = prefixes + 
 	'SELECT DISTINCT ?name ?paper ?title ?year ?knows ?coname ?type ?affiliation ?latlong ' +
 	'{ ' +
 		'GRAPH ' + '?g ' + 
@@ -178,7 +208,7 @@ function selectAuthor(author){
 	'}' +
 	'ORDER BY DESC(?year) ?title ?lastName';
 
-	$.getJSON('/sparql', {query: $query, format: 'json'},
+	$.getJSON('/sparql', {query: query, format: 'json'},
 		function(json){
 			console.log(json.results.bindings)
 			clear();
@@ -207,7 +237,7 @@ function selectAuthor(author){
 // shows everything linked to paper
 function selectPaper(paper){
 
-	$query = prefixes + 
+	var query = prefixes + 
 	'SELECT DISTINCT ?title ?authors ?name ?coauthor ?year ?homepage ?partOf ?subject ?g ' +
 	'{ ' +
 		'GRAPH ' + '?g ' + 
@@ -230,7 +260,7 @@ function selectPaper(paper){
 		'} ' +
 	'}';
 
-	$.getJSON('/sparql', {query: $query, format: 'json'},
+	$.getJSON('/sparql', {query: query, format: 'json'},
 		function(json){
 			clear();
 
@@ -250,8 +280,33 @@ function selectPaper(paper){
 					$('#people').append("<li class='author'><a href='javascript:setHash(\"<" + json.results.bindings[i].coauthor.value + ">\")'>" + json.results.bindings[i].name.value + "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + json.results.bindings[i].coauthor.value + "'>&rarr;</a></li>");
 				}
 			});
+		}
+	);
+};
 
+function selectAffiliation(affiliation){
+	var query = prefixes + 
+	'SELECT DISTINCT ?link ?name ?latlong ?location ' +
+	'{ ' +
+		'{ ' +
+			affiliation +
+				'foaf:name ?name . ' +
+				//'geo:lat_long ?latlong ; ' +
+				//'ADR:ADR ?location ; ' +
+				//'foaf:member ?members . '+
+		'} ' +
+		'UNION ' +
+		'{ ' +
+			//'?members foaf:name ?name . ' +
+		'} ' +
+	'} ';
 
+	$.getJSON('/sparql', {query: query, format: 'json'},
+		function(json){
+			clear();
+			var data = json.results.bindings;
+
+			$('#infoheader').html('<strong>' + data[0].title.value + '</strong>')
 		}
 	);
 };
@@ -265,9 +320,7 @@ function clear(){
 	$('#papers').empty();
 	$('#search').val('');
 	$('#conference').val('null');
-	for(i = 0; i < markers.length; i++) {
-		//map.removeLayer(marker[i]);
-	}
+	for (i in markers) { map.removeLayer(markers[i]); }
 };
 
 
