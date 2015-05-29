@@ -1,5 +1,3 @@
-
-
 var prefixes = 'prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> prefix dc: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix spatial: <http://spatial.linkedscience.org/context/> prefix key: <http://spatial.linkedscience.org/context/keyword/> prefix ADR: <http://www.w3.org/2001/vcard-rdf/3.0#> ';
 var lastHash = '';
 var map;
@@ -52,10 +50,10 @@ function setPin(data){
 	// extract lat and long
 	var latlong = data.latlong.value.split(' ');
 	// create map marker
-	var marker = L.marker( 
+	var marker = L.marker(
 		[parseFloat(latlong[0]), parseFloat(latlong[1])], {
-			icon: pin, 
-			title: data.name.value, 
+			icon: pin,
+			title: data.name.value,
 		}).addTo(map);
 
 	// selectAffiliation
@@ -94,14 +92,14 @@ function search(input, conference){
 		conference_seg = 'spatial:' + conference;
 	}
 
-	var query = prefixes + 
+	var query = prefixes +
 	'SELECT DISTINCT ?type ?link ?name ?year ?latlong ' +
 	'{ ' +
-		'GRAPH ' + conference_seg + 
+		'GRAPH ' + conference_seg +
 		'{ ' +
 			'{ ' +
 				'?link foaf:name ?name . ' +
-				'FILTER regex(?name, "' + input + '", "i") ' + 
+				'FILTER regex(?name, "' + input + '", "i") ' +
 				'?link foaf:familyName ?lastName . ' +
 				'?link rdf:type foaf:Person . ' +
 				'?link rdf:type ?type . ' +
@@ -109,7 +107,7 @@ function search(input, conference){
 			'UNION ' +
 			'{ ' +
 				'?link dc:title ?name . ' +
-				'FILTER regex(?name, "' + input + '", "i") ' + 
+				'FILTER regex(?name, "' + input + '", "i") ' +
 				'?link dc:date ?year . ' +
 				'?link rdf:type bibo:Chapter . ' +
 				'?link rdf:type ?type . ' +
@@ -177,13 +175,13 @@ function search(input, conference){
 // shows everything linked to author
 function selectAuthor(author){
 
-	var query = prefixes + 
+	var query = prefixes +
 	'SELECT DISTINCT ?name ?paper ?title ?year ?knows ?coname ?type ?affiliation ?latlong ' +
 	'{ ' +
-		'GRAPH ' + '?g ' + 
+		'GRAPH ' + '?g ' +
 		'{ ' +
 			'{ ' +
-				author + 
+				author +
 					'foaf:name ?name ; ' +
 					'foaf:publications ?paper . ' +
 				'?paper dc:title ?title . ' +
@@ -196,15 +194,15 @@ function selectAuthor(author){
 				'?knows foaf:name ?coname . ' +
 				'?knows foaf:familyName ?lastName . ' +
 				'?knows rdf:type ?type . ' +
-			'} ' + 
+			'} ' +
 			'UNION ' +
 			'{ ' +
 				'?affiliation foaf:member ' + author + ' ; ' +
 					'foaf:name ?name ; ' +
 					'geo:lat_long ?latlong ; ' +
 					'rdf:type ?type . ' +
-			'} ' + 
-			
+			'} ' +
+
 		'} ' +
 	'}' +
 	'ORDER BY DESC(?year) ?title ?lastName';
@@ -216,12 +214,12 @@ function selectAuthor(author){
 			$('#infoheader').html('<b>' + json.results.bindings[0].name.value + '</b>');
 			$('#papersheader').html('Papers');
 			$('#authorsheader').html('Co-authors/-editors');
-			
+
 			$.each(json.results.bindings, function(i){
 				if( json.results.bindings[i].type.value == 'http://purl.org/ontology/bibo/Chapter')
 				{
 					$('#papers').append('<li class="paper">(' + json.results.bindings[i].year.value + ') <a href="javascript:setHash(\'<' + json.results.bindings[i].paper.value + '>\')">' + json.results.bindings[i].title.value + '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + json.results.bindings[i].paper.value + '">&rarr;</a></li>');
-				} 
+				}
 				else if ( json.results.bindings[i].type.value == 'http://xmlns.com/foaf/0.1/Person')
 				{
 					$('#people').append("<li class='author'><a href='javascript:setHash(\"<" + json.results.bindings[i].knows.value + ">\")'>" + json.results.bindings[i].coname.value + "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + json.results.bindings[i].knows.value + "'>&rarr;</a></li>");
@@ -238,10 +236,10 @@ function selectAuthor(author){
 // shows everything linked to paper
 function selectPaper(paper){
 
-	var query = prefixes + 
+	var query = prefixes +
 	'SELECT DISTINCT ?title ?authors ?name ?coauthor ?year ?homepage ?partOf ?subject ?g ' +
 	'{ ' +
-		'GRAPH ' + '?g ' + 
+		'GRAPH ' + '?g ' +
 		'{ ' +
 			'{ ' +
 				paper +
@@ -250,7 +248,7 @@ function selectPaper(paper){
 					'foaf:homepage ?homepage ; ' +
 					'dc:partOf ?partOf . ' +
 					// need to get list of subjects without returning the same paper n times for each subject
-					//'dc:subject ?subject ; ' + 
+					//'dc:subject ?subject ; ' +
 			'} ' +
 			'UNION ' +
 			'{ ' +
@@ -268,7 +266,7 @@ function selectPaper(paper){
 			$('#infoheader').html('<b>' + json.results.bindings[0].title.value + '</b>');
 			$('#authorsheader').html('Authors/Co-authors');
 			$('#papersheader').html('Paper Info');
-			
+
 
 			$('#papers').append('<li><b>Year</b>: ' + json.results.bindings[0].year.value + '</li>');
 			$('#papers').append('<li><b>Homepage</b>: <a href="' + json.results.bindings[0].homepage.value + '">here</a></li>');
@@ -285,7 +283,7 @@ function selectPaper(paper){
 }
 
 function selectAffiliation(affiliation){
-	var query = prefixes + 
+	var query = prefixes +
 	'SELECT DISTINCT ?link ?name ?latlong ?location ' +
 	'{ ' +
 		'{ ' +
@@ -331,5 +329,3 @@ function clear(){
 	for (var i in markers) { map.removeLayer(markers[i]); }
 	markers = [];
 }
-
-

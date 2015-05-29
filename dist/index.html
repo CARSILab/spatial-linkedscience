@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>spatial.linkedscience.org</title>
+    <!--link(rel="stylesheet", href="bootstrap.min.css")-->
+    <!--link(rel="stylesheet", href="leaflet.css")-->
+    <link rel="stylesheet" href="spatial.css"/>
+  </head>
+  <body>
+    <!--navbar-->
+    <div id="navbar" class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="container">
+          <div class="navbar-header">
+            <div href="#" class="navbar-brand">SPATIAL@LINKEDSCIENCE</div>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a href="#aboutModal" data-toggle="modal">About</a></li>
+          </ul>
+          <form role="search" class="navbar-form navbar-right">
+            <div class="form-group">
+              <input id="search" type="text" size="30px" placeholder="Search" autocomplete="off" autofocus="autofocus" class="form-control"/>
+            </div>
+            <button type="button" data-toggle="collapse" data-target="#filters" class="btn btn-default">Filters</button>
+            <div id="filters" class="collapse out">
+              <label for="conference">Conference</label>
+              <select id="conference" name="conference">
+                <option value="null">- none-</option>
+                <option value="acmgis">ACM GIS</option>
+                <option value="agile">AGILE</option>
+                <option value="cosit">COSIT</option>
+                <option value="giscience">GIScience</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--body-->
+    <div id="map"></div>
+    <div class="container">
+      <h3 id="infoheader"></h3>
+      <ul id="info"></ul>
+      <div class="row">
+        <div class="col-md-4">
+          <h2 id="authorsheader"></h2>
+          <ul id="people"></ul>
+        </div>
+        <div class="col-md-8">
+          <h2 id="papersheader"></h2>
+          <ul id="papers"></ul>
+        </div>
+      </div>
+    </div>
+    <!--scripts-->
+    <!--script(src='bower_components/jquery/dist/jquery.min.js')-->
+    <!--script(src='bower_components/bootstrap/dist/js/bootstrap.min.js')-->
+    <!--script(src='bower_components/leaflet/dist/leaflet.js')-->
+    <script src="spatial-min.js"></script>
+  </body>
+</html>
