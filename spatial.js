@@ -17,8 +17,9 @@ $(document).ready(function(){
 		zoom: 2,
 		scrollWheelZoom: false,
 	});
-	L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
-	    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
+
+	L.tileLayer('http://a.tiles.mapbox.com/v4/amaldare93.mbpl53l0/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYW1hbGRhcmU5MyIsImEiOiJGdEFlcHpZIn0.0WX3tspKb0IXCJbdGMLmNQ', {
+	    attribution: 'Map tiles by <a href="https://www.mapbox.com/">Mapbox</a>',
 	}).addTo(map);
 
 	// pollHash
@@ -70,12 +71,28 @@ $('form').bind('submit', function(event){
 	// stops form submission
 	event.preventDefault();
 
-	var text = $('#search').val();
-	var conference = $('#conference').val();
+	var text = $('.search').val();
+	var conference = $('#conference').text();
+	console.log(text, conference);
 	if( text.length > 1){
 		search( text, conference );
 		clear();
 	}
+});
+
+// dropdown selects
+$(document.body).on('click', '.dropdown-menu li', function(event){
+
+	var $target = $(event.currentTarget);
+
+	$target.closest('.btn-group')
+		.find('[data-bind="label"]').text($target.text())
+		//.find('[data-value="null"]').text($target.data-value())
+		.end()
+		.children('.dropdown-toggle').dropdown('toggle');
+
+	return false;
+
 });
 
 // onclick for home page
@@ -319,6 +336,7 @@ function selectAffiliation(affiliation){
 
 // clear elements on page
 function clear(){
+	
 	$('#infoheader').empty();
 	$('#papersheader').empty();
 	$('#authorsheader').empty();

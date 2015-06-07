@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="spatial.css"/>
   </head>
   <body>
-    <!--navbar-->
+    <!-- navbar-->
     <div id="navbar" class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="container">
@@ -20,38 +20,75 @@
           <ul class="nav navbar-nav">
             <li><a href="#aboutModal" data-toggle="modal">About</a></li>
           </ul>
-          <form role="search" class="navbar-form navbar-right">
-            <div class="form-group">
-              <input id="search" type="text" size="30px" placeholder="Search" autocomplete="off" autofocus="autofocus" class="form-control"/>
-            </div>
-            <button type="button" data-toggle="collapse" data-target="#filters" class="btn btn-default">Filters</button>
-            <div id="filters" class="collapse out">
-              <label for="conference">Conference</label>
-              <select id="conference" name="conference">
-                <option value="null">- none-</option>
-                <option value="acmgis">ACM GIS</option>
-                <option value="agile">AGILE</option>
-                <option value="cosit">COSIT</option>
-                <option value="giscience">GIScience</option>
-              </select>
-            </div>
-          </form>
+          <!--form.navbar-form.navbar-right(role='search')
+          .form-group
+          	input.form-control.search(type='search', placeholder='Search', autocomplete='off')
+          button.btn.btn-default(
+          	type='button',
+          	data-toggle='collapse',
+          	data-target='#filters') Filters
+          .collapse.out#filters
+          	label(for='conference') Conference
+          	select.conference(name='conference')
+          		option(value='null') - none-
+          		option(value='acmgis') ACM GIS
+          		option(value='agile') AGILE
+          		option(value='cosit') COSIT
+          		option(value='giscience') GIScience
+          
+          
+          -->
         </div>
       </div>
     </div>
-    <!--body-->
     <div id="map"></div>
-    <div class="container">
-      <h3 id="infoheader"></h3>
-      <ul id="info"></ul>
-      <div class="row">
-        <div class="col-md-4">
-          <h2 id="authorsheader"></h2>
-          <ul id="people"></ul>
+    <div id="main" class="container">
+      <!-- welcome-->
+      <div id="welcome" class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1>SPATIAL@LINKEDSCIENCE</h1>
+          <form>
+            <div class="form-group">
+              <div id="big-search" class="input-group">
+                <input type="search" placeholder="Search" autocomplete="off" autofocus="autofocus" class="form-control search"/><span class="input-group-btn">
+                  <div class="btn-group btn-input clearfix">
+                    <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle form-control">
+                      <div class="flex-box"><span id="conference" data-bind="label" data-value="null">Conference</span><span class="caret"></span></div>
+                    </button>
+                    <ul role="menu" class="dropdown-menu conference">
+                      <li><a data-value="null">none</a></li>
+                      <li><a data-value="acmgis">ACM GIS</a></li>
+                      <li><a data-value="agile">AGILE</a></li>
+                      <li><a data-value="cosit">COSIT</a></li>
+                      <li><a data-value="giscience">GIScience</a></li>
+                    </ul>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button></span>
+              </div>
+            </div>
+          </form>
+          <div id="blurb">
+            <p>Hi boys. I'm Tina. Drop the towel. Now my rash smells like bacon. But it doesn't itch anymore. Your body. Jimmy Jr. had a chance to ride the Tina truck, but now it's headed straight for Joshville. Toot-toot. I'm just not sure if I'll be any good on the grill with one free hand. This is where I thrash. Not if you're a fish. Dad, you're the best pimp a girl could ever have. Dr. Yap, once I was into you, but after seeing you torture my father, I think we should just be friends with dental benefits. I'm compiling a list of people I can mate with to repopulate the Earth.</p>
+          </div>
         </div>
-        <div class="col-md-8">
-          <h2 id="papersheader"></h2>
-          <ul id="papers"></ul>
+      </div>
+      <!--results-->
+      <div id="results" class="row">
+        <h3 id="infoheader"></h3>
+        <ul id="info"></ul>
+        <div class="row">
+          <div class="col-md-4">
+            <h2 id="authorsheader"></h2>
+            <div id="people-container">
+              <ul id="people"></ul>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <h2 id="papersheader"></h2>
+            <div id="papers-container">
+              <ul id="papers"></ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>

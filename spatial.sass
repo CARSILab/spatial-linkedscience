@@ -1,17 +1,69 @@
 @import bootstrap.min.css
 @import leaflet.css
 
+$ocean-color: #73B6E6
+$land-color: #E8E0D8
+
+body
+	background-color: white
+
+
 #navbar
 	position: fixed
-	width: 100%
 	margin-bottom: 20px
+	width: 100%
 	top: 0px
+
 
 #map
 	height: 300px
-	margin: 51px auto
+	margin: 51px auto 20px
 
-.leaflet-top, .leaflet-bottom
+	.leaflet-top, .leaflet-bottom
+		position: absolute
+		z-index: 10
+		pointer-events: none
+
+
+h1, h2
+	text-align: center
+
+
+#welcome
+	.search
+		margin: 20px 0px
+	.btn-group
+		width: 110px
+		.flex-box
+			display: flex
+			justify-content: space-between
+			align-items: center
+
+#people-container, #papers-container
+	padding: 5px
+	overflow: scroll
+	bottom: 5px
+
+	background-color: #eee
+
+// dropdown fix
+//.btn-input
+	display: block
+
+
+//.btn-input .btn.form-control
+	text-align: left
+
+
+//.btn-input .btn.form-control span:first-child
+	left: 10px
+	overflow: hidden
 	position: absolute
-	z-index: 10
-	pointer-events: none
+	right: 25px
+
+
+//.btn-input .btn.form-control .caret
+	margin-top: -1px
+	position: absolute
+	right: 10px
+	top: 50%
