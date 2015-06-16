@@ -1,1 +1,194 @@
-@import url(bootstrap.min.css);@import url(leaflet.css);body{background-color:#fff;overflow-x:hidden}#navbar{position:fixed;margin-bottom:20px;width:100%;top:0px}#map{height:300px;margin:51px auto 20px}#map .leaflet-top,#map .leaflet-bottom{position:absolute;z-index:10;pointer-events:none}h1,h2{text-align:center}.belt{width:200%;position:relative;left:0%;-webkit-transition:all,800ms;transition:all,800ms}.belt .welcome-wrap,.belt .results-wrap{width:50%;float:left}.belt .welcome-container .search{margin:20px 0px}.belt .welcome-container .btn-group{width:110px}.belt .welcome-container .btn-group .flex-box{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.belt .results{-webkit-align-self:flex-end;-ms-flex-item-align:end;align-self:flex-end}.belt .results #people-container,.belt .results #papers-container{padding:5px;overflow:scroll;bottom:5px;background-color:#eee}
+@import url(bootstrap.min.css);
+@import url(leaflet.css);
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Open Sans"), local("OpenSans"), url(//themes.googleusercontent.com/static/fonts/opensans/v8/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff) format("woff");
+}
+.gigantic, .huge, .large, .bigger, .big,
+h1, h2, h3, h4, h5, h6 {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+
+.gigantic {
+  font-size: 110px;
+  line-height: 1.09;
+  letter-spacing: -2px;
+}
+
+.huge, h1 {
+  line-height: 1.05;
+  letter-spacing: -1px;
+}
+
+.large, h2 {
+  line-height: 1.14;
+}
+
+.bigger, h3 {
+  font-size: 26px;
+  line-height: 1.38;
+}
+
+.big, h4 {
+  font-size: 22px;
+  line-height: 1.38;
+}
+
+.small, small {
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0 0 20px 0;
+}
+
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+hr {
+  border: solid #ddd;
+  border-width: 1px 0 0;
+  clear: both;
+  margin: 10px 0 30px;
+  height: 0;
+}
+
+a {
+  color: red;
+  text-decoration: none;
+  outline: 0;
+}
+
+a:hover, a:focus {
+  color: #ff6666;
+}
+
+::-moz-selection {
+  background: #E8E0D8;
+}
+
+::selection {
+  background: #E8E0D8;
+}
+
+::-moz-selection {
+  background: #E8E0D8;
+}
+
+img::-moz-selection {
+  background: transparent;
+}
+
+img::selection {
+  background: transparent;
+}
+
+img::-moz-selection {
+  background: transparent;
+}
+
+body {
+  -webkit-tap-highlight-color: #E8E0D8;
+}
+
+html, body {
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body {
+  background: #F6F6F8;
+  font-size: 14px;
+  line-height: 1.6;
+  font-family: "Open Sans" sans-serif;
+  color: #2E2D33;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+.belt {
+  width: 200%;
+  position: relative;
+  left: 0%;
+  -webkit-transition: all, 800ms;
+  transition: all, 800ms;
+}
+.belt .welcome-wrap, .belt .results-wrap {
+  width: 50%;
+  float: left;
+}
+
+#navbar {
+  position: fixed;
+  margin-bottom: 20px;
+  width: 100%;
+  top: 0px;
+}
+#navbar .navbar-brand {
+  cursor: pointer;
+}
+
+#map {
+  height: 35%;
+  margin: 51px auto 20px;
+}
+#map .leaflet-top, #map .leaflet-bottom {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.welcome-container .search {
+  margin: 20px 0px;
+}
+.welcome-container .btn-group {
+  width: 110px;
+}
+.welcome-container .btn-group .flex-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#magnifier-icon {
+  fill: white;
+}
+
+.results-wrap {
+  height: 100%;
+  .results-container-margin-left: 50px;
+  .results-container-margin-right: 50px;
+  .results-container-position: absolute;
+  .results-container-bottom: 0;
+}
+.results-wrap #infoheader {
+  margin-left: 35px;
+  margin-bottom: -13px;
+}
+.results-wrap #people-container, .results-wrap #papers-container {
+  padding: 5px;
+  overflow: scroll;
+  bottom: 0px;
+  background-color: #eee;
+  border-radius: 5px;
+  height: 250px;
+}

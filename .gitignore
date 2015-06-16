@@ -27,23 +27,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
-### CodeKit ###
-# General CodeKit files to ignore
-config.codekit
-/min
-.codekit-cache
-
 ### Sass ###
 .sass-cache
 *.css.map
 
-
-### Bower ###
-bower_components
-.bower-cache
-.bower-registry
-.bower-tmp
-
 ### Custom ###
 #oldFiles
+node_modules

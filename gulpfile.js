@@ -12,9 +12,11 @@ var gulp = require('gulp'),
 // HTML Task
 // Compiles Jade to HTML
 gulp.task('html', function(){
-  gulp.src('build/*.jade')
+  gulp.src('dev/*.jade')
       .pipe(plumber())
-      .pipe(jade())
+      .pipe(jade({
+        pretty: true
+      }))
       .pipe(gulp.dest(''))
       .pipe(reload({stream:true}));
 });
@@ -22,8 +24,8 @@ gulp.task('html', function(){
 // Styles Task
 // Compiles Sass to CSS
 gulp.task('styles', function(){
-  sass('build/css/main.sass', {
-    style: 'compressed' })
+  sass('dev/css/main.sass', {
+    style: 'expanded' })
   .pipe(plumber())
   .pipe(prefix('last 2 versions'))
   .pipe(gulp.dest('assets/css'))
@@ -33,7 +35,7 @@ gulp.task('styles', function(){
 // Scripts Task
 // Uglifies(minifies) Javascript
 gulp.task('scripts', function(){
-  gulp.src('build/*.js')
+  gulp.src('dev/*.js')
       .pipe(rename({suffix:'.min'}))
       .pipe(plumber())
       //.pipe(uglify())
@@ -45,18 +47,22 @@ gulp.task('scripts', function(){
 // runs browser-sync
 gulp.task('sync', function(){
   browserSync({
-    server: {
-      baseDir: './'
-    }
+    proxy: 'localhost:80'
   });
 });
 
 // Watch Task
 // Watches Jade, Sass, Javascript
 gulp.task('watch', function(){
-  gulp.watch('build/*.jade', ['html']);
-  gulp.watch('build/*.js', ['scripts']);
-  gulp.watch('build/css/main.sass', ['styles']);
+  gulp.watch('dev/*.jade', ['html']);
+  gulp.watch('dev/*.js', ['scripts']);
+  gulp.watch('dev/css/**/*.{sass,scss}', ['styles']);
 });
 
+// Default Task
+// Runs all the above
 gulp.task('default', ['html', 'scripts', 'styles', 'sync', 'watch']);
+
+// Offline Task
+// Runs all the above except for browser-sync
+gulp.task('offline', ['html', 'scripts', 'styles', 'watch']);
