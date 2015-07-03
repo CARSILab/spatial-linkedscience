@@ -1,10 +1,12 @@
 var gulp = require('gulp'),
     jade = require('gulp-jade'),
-    sass = require('gulp-ruby-sass'),
+    sass = require('gulp-sass'),
     prefix = require('gulp-autoprefixer'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     plumber = require('gulp-plumber'),
+    concat = require('gulp-concat'),
+    gutil = require('gulp-util'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload;
 
@@ -24,18 +26,24 @@ gulp.task('html', function(){
 // Styles Task
 // Compiles Sass to CSS
 gulp.task('styles', function(){
-  sass('dev/css/main.sass', {
-    style: 'expanded' })
-  .pipe(plumber())
-  .pipe(prefix('last 2 versions'))
-  .pipe(gulp.dest('assets/css'))
-  .pipe(reload({stream:true}));
-});
+  return gulp.src('dev/css/main.sass')
+    .pipe(plumber(function(error) {
+      gutil.beep();
+      gutil.log(gutil.colors.red(error.message));
+      this.emit('end');
+    }))
+    .pipe(sass({
+      //includePaths: ['dev/css/1-plugins', 'dev/css/2-base', 'dev/css/3-sections']
+    }))
+    .pipe(prefix(['last 2 versions', 'ie 9'], { cascade: true }))
+    .pipe(gulp.dest('assets/css'))
+    .pipe(reload({stream:true}));
+  });
 
 // Scripts Task
 // Uglifies(minifies) Javascript
 gulp.task('scripts', function(){
-  gulp.src('dev/*.js')
+  gulp.src('dev/js/*.js')
       .pipe(rename({suffix:'.min'}))
       .pipe(plumber())
       //.pipe(uglify())
