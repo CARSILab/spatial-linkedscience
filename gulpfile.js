@@ -43,19 +43,24 @@ gulp.task('styles', function(){
 // Scripts Task
 // Uglifies(minifies) Javascript
 gulp.task('scripts', function(){
-  gulp.src('dev/js/*.js')
-      .pipe(rename({suffix:'.min'}))
+  gulp.src(['dev/js/jquery.min.js', 'dev/js/bootstrap.min.js', 'dev/js/leaflet-src.js', 'dev/js/Sparql.js', 'dev/js/spatial.js'])
       .pipe(plumber())
-      //.pipe(uglify())
+      .pipe(concat('scripts.min.js', {
+        newLine:'\n;'
+      }))
+      .pipe(gulp.dest('assets/js'))
+      .pipe(uglify())
       .pipe(gulp.dest('assets/js'))
       .pipe(reload({stream:true}));
 });
+
 
 // Sync Task
 // runs browser-sync
 gulp.task('sync', function(){
   browserSync({
-    proxy: 'localhost:80'
+    proxy: '127.0.0.1:80',
+    open: "external"
   });
 });
 
@@ -63,7 +68,7 @@ gulp.task('sync', function(){
 // Watches Jade, Sass, Javascript
 gulp.task('watch', function(){
   gulp.watch('dev/*.jade', ['html']);
-  gulp.watch('dev/*.js', ['scripts']);
+  gulp.watch('dev/js/*.js', ['scripts']);
   gulp.watch('dev/css/**/*.{sass,scss}', ['styles']);
 });
 
