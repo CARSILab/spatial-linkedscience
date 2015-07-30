@@ -78,7 +78,7 @@
 
 .gigantic, .huge, .large, .bigger, .big,
 h1, h2, h3, h4, h5, h6 {
-  color: red;
+  color: #73B6E6;
   font-weight: bold;
   text-align: center; }
 
@@ -123,12 +123,12 @@ hr {
   height: 0; }
 
 a {
-  color: red;
+  color: #73B6E6;
   text-decoration: none;
   outline: 0; }
 
 a:hover, a:focus {
-  color: #ff6666; }
+  color: #cae3f5; }
 
 ::-moz-selection {
   background: #E8E0D8; }
@@ -216,9 +216,7 @@ body {
   height: 100%; }
   .results-wrap .results-container {
     margin-left: 50px;
-    margin-right: 50px;
-    position: absolute;
-    bottom: 0; }
+    margin-right: 50px; }
   .results-wrap .infoheader {
     margin-left: 35px;
     margin-bottom: -13px; }
