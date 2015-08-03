@@ -43,13 +43,13 @@ gulp.task('styles', function(){
 // Scripts Task
 // Uglifies(minifies) Javascript
 gulp.task('scripts', function(){
-  gulp.src(['dev/js/jquery.min.js', 'dev/js/bootstrap.min.js', 'dev/js/leaflet-src.js', 'dev/js/Sparql.js', 'dev/js/spatial.js'])
+  gulp.src(['dev/js/jquery.min.js', 'dev/js/bootstrap.min.js', 'dev/js/leaflet-src.js', 'moustache.min.js', 'dev/js/Sparql.js', 'dev/js/spatial.js'])
       .pipe(plumber())
       .pipe(concat('scripts.min.js', {
         newLine:'\n;'
       }))
       .pipe(gulp.dest('assets/js'))
-      .pipe(uglify())
+      //.pipe(uglify())
       .pipe(gulp.dest('assets/js'))
       .pipe(reload({stream:true}));
 });

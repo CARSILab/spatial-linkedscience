@@ -34,10 +34,12 @@ $(document).ready(function(){
 	$('form').bind('submit', function(event){
 		// stops form submission
 		event.preventDefault();
-		$('.belt').css('left', '-100%');
-		var $text = $('.search').val();
-		var $conference = $('.conference').attr('data-value');
+
+		var $text = $('.search').val(),
+				$conference = $('.conference').attr('data-value');
 		if( $text.length > 1){
+			window.location.hash = lastHash = '';
+			$('.belt').css('left', '-100%');
 			Sparql.search( $text, $conference );
 			clear();
 		}
@@ -64,7 +66,9 @@ $(document).ready(function(){
 function pollHash(){
 	if (window.location.hash != lastHash) {
 		lastHash = window.location.hash;
-		var key = '<http://spatial.linkedscience.org/context/' + lastHash.slice(1) + '>'
+		var key = '<http://spatial.linkedscience.org/context/' + lastHash.slice(1) + '>';
+
+		$('.belt').css('left', '-100%');
 		if (lastHash.length < 2) {
 			clear();
 		} else if (lastHash[1] == 'p') {
