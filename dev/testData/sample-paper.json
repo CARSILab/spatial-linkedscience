@@ -1,0 +1,45 @@
+{
+  "results": {
+    "bindings": {
+      "0": {
+        "title": {
+          "value": "Bill and Ted's Excellent Adventure"
+        },
+        "year": {
+          "value": "1986"
+        },
+        "homepage": {
+          "value": "#"
+        },
+        "partOf": {
+          "value": "AGILE"
+        }
+      },
+      "1": {
+        "name": {
+          "value": "John Hamm"
+        },
+        "coauthor": {
+          "value": "#"
+        }
+      },
+      "2": {
+        "name": {
+          "value": "Billiam Winnerford"
+        },
+        "coauthor": {
+          "value": "#"
+        }
+      },
+      "3": {
+        "name": {
+          "value": "Terrance Howard"
+        },
+        "coauthor": {
+          "value": "#"
+        }
+      },
+
+    }
+  }
+}

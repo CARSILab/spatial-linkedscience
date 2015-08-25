@@ -1,3 +1,5 @@
+//var $ = require('jquery');
+
 var lastHash = '';
 var map;
 var markers = [];

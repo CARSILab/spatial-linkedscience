@@ -16,6 +16,10 @@ html(xmlns="http://www.w3.org/1999/xhtml")
 						.navbar-brand(href='#') SPATIAL@LINKEDSCIENCE
 					ul.nav.navbar-nav
 						li: a(href='#aboutModal', data-toggle='modal') About
+						//li: a(href='javascript:Sparql.testSearch()') Search
+						li: a(href='javascript:Sparql.testAuthor()') Author
+						li: a(href='javascript:Sparql.testPaper()') Paper
+						//li: a(href='javascript:Sparql.testAffiliation()') Affiliation
 					//form.navbar-form.navbar-right(role='search')
 						.form-group
 							input.form-control.search(type='search', placeholder='Search', autocomplete='off')

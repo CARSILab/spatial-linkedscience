@@ -11,6 +11,203 @@ var Sparql = (function(){
       $peopleList = $(".people-list"),
       $paperList = $('.paper-list');
 
+  // Sample JSONs
+  var sampleAuthor = {
+        "results": {
+          "bindings": {
+            "0": {
+              "name": {
+                "value": "John Smith"
+              },
+              "paper": {
+                "value": "#"
+              },
+              "title": {
+                "value": "A Day in the Life of John: John Walks his Dog in Public"
+              },
+              "year": {
+                "value": "2011"
+              },
+              "type": {
+                "value": "http://purl.org/ontology/bibo/Chapter"
+              }
+            },
+            "1": {
+              "name": {
+                "value": "John Smith"
+              },
+              "paper": {
+                "value": "#"
+              },
+              "title": {
+                "value": "A Day in the Life of John Part Two: Electric Boogaloo"
+              },
+              "year": {
+                "value": "2012"
+              },
+              "type": {
+                "value": "http://purl.org/ontology/bibo/Chapter"
+              }
+            },
+            "2": {
+              "name": {
+                "value": "John Smith"
+              },
+              "paper": {
+                "value": "#"
+              },
+              "title": {
+                "value": "2 John 2 Furious: The story of Two Smiths"
+              },
+              "year": {
+                "value": "2013"
+              },
+              "type": {
+                "value": "http://purl.org/ontology/bibo/Chapter"
+              }
+            },
+            "3": {
+              "name": {
+                "value": "John Smith"
+              },
+              "paper": {
+                "value": "#"
+              },
+              "title": {
+                "value": "John Smith: Tokyo Drift or 'How Johnny Met Sally'"
+              },
+              "year": {
+                "value": "2014"
+              },
+              "type": {
+                "value": "http://purl.org/ontology/bibo/Chapter"
+              }
+            },
+            "4": {
+              "name": {
+                "value": "John Smith"
+              },
+              "paper": {
+                "value": "#"
+              },
+              "title": {
+                "value": "Smith Five: The Raiders of The Lost Arc"
+              },
+              "year": {
+                "value": "2015"
+              },
+              "type": {
+                "value": "http://purl.org/ontology/bibo/Chapter"
+              }
+            },
+            "5": {
+              "name": {
+                "value": "John Smith"
+              },
+              "paper": {
+                "value": "#"
+              },
+              "title": {
+                "value": "John Smith and The Deathly Hallows: Part 6"
+              },
+              "year": {
+                "value": "2016"
+              },
+              "type": {
+                "value": "http://purl.org/ontology/bibo/Chapter"
+              }
+            },
+            "6": {
+              "coname": {
+                "value": "Adam West"
+              },
+              "knows": {
+                "value": "#"
+              },
+              "lastName": {
+                "value": "West"
+              },
+              "type": {
+                "value": "http://xmlns.com/foaf/0.1/Person"
+              }
+            },
+            "7": {
+              "coname": {
+                "value": "Tyreece Williams"
+              },
+              "knows": {
+                "value": "#"
+              },
+              "lastName": {
+                "value": "Williams"
+              },
+              "type": {
+                "value": "http://xmlns.com/foaf/0.1/Person"
+              }
+            },
+            "8": {
+              "coname": {
+                "value": "People Person"
+              },
+              "knows": {
+                "value": "#"
+              },
+              "lastName": {
+                "value": "Person"
+              },
+              "type": {
+                "value": "http://xmlns.com/foaf/0.1/Person"
+              }
+            },
+            "9": {
+              "coname": {
+                "value": "Tony Pajamas"
+              },
+              "knows": {
+                "value": "#"
+              },
+              "lastName": {
+                "value": "Pajamas"
+              },
+              "type": {
+                "value": "http://xmlns.com/foaf/0.1/Person"
+              }
+            },
+
+          }
+        }
+      },
+      samplePaper = {
+        "results": {
+          "bindings": {
+            "0": {
+              "title": {
+                "value": "Bill and Ted's Excellent Adventure"
+              },
+              "year": {
+                "value": "1986"
+              },
+              "homepage": {
+                "value": "#"
+              },
+              "partOf": {
+                "value": "AGILE"
+              }
+            },
+            "1": {
+              "name": {
+                "value": "John Hamm"
+              },
+              "coauthor": {
+                "value": "#"
+              }
+            },
+
+
+          }
+        }
+      };
+
 
 
   // generate SPARQL query strings
@@ -137,7 +334,8 @@ var Sparql = (function(){
   }
 
   // Display results to page
-  function searchRender(json, input, conference){
+  function renderSearch(json, input, conference){
+    console.log('rendering');
     var results = json.results.bindings,
         conference_part = conference != 'null' ? ' >> ' + conference : '';
 
@@ -172,7 +370,7 @@ var Sparql = (function(){
     }
   }
 
-  function authorRender(json){
+  function renderAuthor(json){
     var results = json.results.bindings;
     clear();
     $title.html('<b>' + results[0].name.value + '</b>');
@@ -195,7 +393,9 @@ var Sparql = (function(){
     });
   }
 
-  function paperRender(json){
+  function renderPaper(json){
+    console.log(json);
+
     var results = json.results.bindings;
     clear();
 
@@ -216,7 +416,7 @@ var Sparql = (function(){
     });
   }
 
-  function affiliationRender(json){
+  function renderAffiliation(json){
     var results = json.results.bindings;
     clear();
 
@@ -234,34 +434,58 @@ var Sparql = (function(){
   // Public
   function search(input, conference){
     $.getJSON('/sparql', {query: searchQuery(input, conference), format: 'json'}, function(json){
-      searchRender(json, input, conference);
+      renderSearch(json, input, conference);
     });
   }
 
   function selectAuthor(input, conference){
     $.getJSON('/sparql', {query: authorQuery(input, conference), format: 'json'}, function(json){
-      authorRender(json);
+      renderAuthor(json);
     });
   }
 
   function selectPaper(input, conference){
     $.getJSON('/sparql', {query: paperQuery(input, conference), format: 'json'}, function(json){
-      paperRender(json);
+      renderPaper(json);
     });
   }
 
   function selectAffiliation(input, conference){
     $.getJSON('/sparql', {query: affiliationQuery(input, conference), format: 'json'}, function(json){
-      affiliationRender(json);
+      renderAffiliation(json);
     });
   }
 
-  // API
+  // Render Offline Test Data
+  function testSearch(){
+    $('.belt').css('left', '-100%');
+    renderSearch(sampleSearch);
+  }
+  function testAuthor(){
+    $('.belt').css('left', '-100%');
+    renderAuthor(sampleAuthor);
+  }
+  function testPaper(){
+    $('.belt').css('left', '-100%');
+    renderPaper(samplePaper);
+  }
+  function testAffiliation(){
+    $('.belt').css('left', '-100%');
+    renderAffiliation(sampleAffiliation);
+  }
+
   return {
+    // API
     search: search,
     selectAuthor: selectAuthor,
     selectPaper: selectPaper,
-    selectAffiliation: selectAffiliation
+    selectAffiliation: selectAffiliation,
+
+    // Testing
+    testSearch: testSearch,
+    testAuthor: testAuthor,
+    testPaper: testPaper,
+    testAffiliation: testAffiliation
   };
 })();
 // end
