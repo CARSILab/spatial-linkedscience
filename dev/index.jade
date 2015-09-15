@@ -1,76 +1,25 @@
-doctype xml
-doctype transitional
-html(xmlns="http://www.w3.org/1999/xhtml")
+doctype 
+html(lang="en")
 	head
 		meta(http-equiv="Content-Type" content="text/html")
 		meta(http-equiv="content-type" content="text/html; charset=UTF-8")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(name="viewport", content="width=device-width, initial-scale=1")
 		title spatial.linkedscience
 		link(rel="stylesheet", href="assets/css/main.css")
 	body
-		// NAVBAR
-		.navbar.navbar-inverse.navbar-static-top
-			.container
-				.container
-					.navbar-header
-						.navbar-brand(href='#') SPATIAL@LINKEDSCIENCE
-					ul.nav.navbar-nav
-						li: a(href='#aboutModal', data-toggle='modal') About
-						//li: a(href='javascript:Sparql.testSearch()') Search
-						li: a(href='javascript:Sparql.testAuthor()') Author
-						li: a(href='javascript:Sparql.testPaper()') Paper
-						//li: a(href='javascript:Sparql.testAffiliation()') Affiliation
-					//form.navbar-form.navbar-right(role='search')
-						.form-group
-							input.form-control.search(type='search', placeholder='Search', autocomplete='off')
-
+		// navbar
+		include ./includes/navbar
+		// leaflet map
 		#map
+		// conveyor belt for UI
 		.belt
 			// WELCOME
-			.welcome-wrap.container
-				.row
-					.welcome-container.col-xs-10.col-xs-offset-1.col-lg-6.col-lg-offset-3
-						h1 SPATIAL@LINKEDSCIENCE
-						form
-							.form-group
-								#big-search.input-group
-									input.form-control.search(type='search', placeholder='Search', autocomplete='off', autofocus)
-									span.input-group-btn
-										.btn-group.btn-input.clearfix
-											button.btn.btn-default.dropdown-toggle.form-control(type='button', data-toggle='dropdown')
-												.flex-box
-													span.conference(data-bind='label', data-value='null') Conference
-													span.caret
-											ul.dropdown-menu(role='menu')
-												li(data-value='null')
-													a none
-												li(data-value='acmgis')
-													a ACM GIS
-												li(data-value='agile')
-													a AGILE
-												li(data-value='cosit')
-													a COSIT
-												li(data-value='giscience')
-													a GIScience
-										button.btn.btn-primary(type='submit')
-											.icon-search
-
-						#blurb
-							p Cat ipsum dolor sit amet, burrow under covers yet knock dis off table head butt cant eat out of my own dish. Burrow under covers hiss at vacuum cleaner chase ball of string has closed eyes but still sees you and intently stare at the same spot attack feet. Chew iPad power cord intently sniff hand. Inspect anything brought into the house pooping rainbow while flying in a toasted bread costume in space then cats take over the world fall over dead (not really but gets sypathy) stand in front of the computer screen play riveting piece on synthesizer keyboard. Chew foot intently stare at the same spot poop in litter box, scratch the walls.
+			include ./includes/welcome
 			// RESULTS
-			.results-wrap.container
-				.results-container
-					h1.title
-					.row
-						.people-wrap.col-md-4
-							h2.people-header
-							.people-container
-								ul.people-list
-						.paper-wrap.col-md-8
-							h2.paper-header
-							.paper-container
-								ul.paper-list
+			include ./includes/results
 
-		script(src='assets/js/scripts.min.js')
+		script(src="https://code.jquery.com/jquery-2.1.4.min.js")
+		//- script(src="libs/jquery/dist/jquery.min.js")
+		script(src='assets/js/bundle.js')
 
 // nginx config file at /usr/local/etc/nginx/nginx.conf

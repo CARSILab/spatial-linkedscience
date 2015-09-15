@@ -1,12 +1,31 @@
 .welcome-container
 
-  .search
-    margin: 20px 0px
-  .btn-group
-    width: 110px
-    .flex-box
-      display: flex
-      justify-content: space-between
-      align-items: center
-  .icon-search
-    font-size: 20px
+  // whole search form
+  .input-group
+    margin-top: 20px
+    box-sizing: border-box
+
+  // conference selector
+  .conference
+    width: auto
+
+  li
+    padding-left: 1rem
+    cursor: pointer
+    &:hover
+      background: fade-in(blue, .1)
+
+    a
+      color: inherit
+      text-decoration: none
+
+
+  // submit button
+  .btn
+    height: 38px
+
+
+
+
+  .blurb
+    margin-top: 20px

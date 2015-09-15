@@ -1,0 +1,13 @@
+{
+  "name": "spatial",
+  "version": "0.0.0",
+  "homepage": "https://github.com/CARSILab/spatial-linkedscience",
+  "authors": [
+    "amaldare93 <amaldare93@gmail.com>"
+  ],
+  "description": "spatial@linkedscience.org",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "https://github.com/twbs/bootstrap.git#v4-dev"
+  }
+}

@@ -1,36 +1,33 @@
-<?xml version="1.0" encoding="utf-8" ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html"/>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>spatial.linkedscience</title>
-    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/main.css">
   </head>
   <body>
-    <!-- NAVBAR-->
-    <div class="navbar navbar-inverse navbar-static-top">
-      <div class="container">
-        <div class="container">
-          <div class="navbar-header">
-            <div href="#" class="navbar-brand">SPATIAL@LINKEDSCIENCE</div>
-          </div>
-          <ul class="nav navbar-nav">
-            <li><a href="#aboutModal" data-toggle="modal">About</a></li>
-            <!--li: a(href='javascript:Sparql.testSearch()') Search-->
-            <li><a href="javascript:Sparql.testAuthor()">Author</a></li>
-            <li><a href="javascript:Sparql.testPaper()">Paper</a></li>
-            <!--li: a(href='javascript:Sparql.testAffiliation()') Affiliation-->
-          </ul>
-          <!--form.navbar-form.navbar-right(role='search')
-          .form-group
-          	input.form-control.search(type='search', placeholder='Search', autocomplete='off')
-          
-          -->
-        </div>
-      </div>
-    </div>
+    <!-- navbar-->
+    <nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
+      <div href="" class="navbar-brand"><span class="hidden-sm-down">Spatial <span class="icon-earth"></span> Linkedscience</span><span class="icon-earth hidden-md-up"></span></div>
+      <ul class="nav navbar-nav">
+        <!--li.nav-itema.nav-link(href="#") About
+        -->
+        <!--li.nav-itema.nav-link(href="#") Search
+        -->
+        <li id="testAuthor" class="nav-item"><a href="#" class="nav-link">Author</a></li>
+        <li id="testPaper" class="nav-item"><a href="#" class="nav-link">Paper</a></li>
+        <!--li.nav-itema.nav-link(href="#") Affiliation
+        -->
+      </ul>
+      <form id="nav-search" class="form-inline navbar-form pull-right">
+        <input type="search" placeholder="Search" autocomplete="off" class="form-control form-control-sm">
+      </form>
+    </nav>
+    <!-- leaflet map-->
     <div id="map"></div>
+    <!-- conveyor belt for UI-->
     <div class="belt">
       <!-- WELCOME-->
       <div class="welcome-wrap container">
@@ -38,28 +35,27 @@
           <div class="welcome-container col-xs-10 col-xs-offset-1 col-lg-6 col-lg-offset-3">
             <h1>SPATIAL@LINKEDSCIENCE</h1>
             <form>
-              <div class="form-group">
-                <div id="big-search" class="input-group">
-                  <input type="search" placeholder="Search" autocomplete="off" autofocus="autofocus" class="form-control search"/><span class="input-group-btn">
-                    <div class="btn-group btn-input clearfix">
-                      <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle form-control">
-                        <div class="flex-box"><span data-bind="label" data-value="null" class="conference">Conference</span><span class="caret"></span></div>
-                      </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li data-value="null"><a>none</a></li>
-                        <li data-value="acmgis"><a>ACM GIS</a></li>
-                        <li data-value="agile"><a>AGILE</a></li>
-                        <li data-value="cosit"><a>COSIT</a></li>
-                        <li data-value="giscience"><a>GIScience</a></li>
-                      </ul>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                      <div class="icon-search"></div>
-                    </button></span>
+              <div id="big-search" class="input-group">
+                <input type="search" placeholder="Search" autocomplete="off" autofocus class="form-control search">
+                <div class="input-group-btn">
+                  <div class="btn-group">
+                    <button type="button" data-toggle="dropdown" class="btn btn-secondary dropdown-toggle form-control"><span data-bind="label" data-value="null" class="conference">Conference</span></button>
+                    <ul role="menu" class="dropdown-menu">
+                      <li data-value="null"><a>none</a></li>
+                      <div role="separator" class="dropdown-divider"></div>
+                      <li data-value="acmgis"><a>ACM GIS</a></li>
+                      <li data-value="agile"><a>AGILE</a></li>
+                      <li data-value="cosit"><a>COSIT</a></li>
+                      <li data-value="giscience"><a>GIScience</a></li>
+                    </ul>
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    <div class="icon-search"></div>
+                  </button>
                 </div>
               </div>
             </form>
-            <div id="blurb">
+            <div class="blurb">
               <p>Cat ipsum dolor sit amet, burrow under covers yet knock dis off table head butt cant eat out of my own dish. Burrow under covers hiss at vacuum cleaner chase ball of string has closed eyes but still sees you and intently stare at the same spot attack feet. Chew iPad power cord intently sniff hand. Inspect anything brought into the house pooping rainbow while flying in a toasted bread costume in space then cats take over the world fall over dead (not really but gets sypathy) stand in front of the computer screen play riveting piece on synthesizer keyboard. Chew foot intently stare at the same spot poop in litter box, scratch the walls.</p>
             </div>
           </div>
@@ -86,7 +82,8 @@
         </div>
       </div>
     </div>
-    <script src="assets/js/scripts.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="assets/js/bundle.js"></script>
   </body>
 </html>
 <!-- nginx config file at /usr/local/etc/nginx/nginx.conf-->
