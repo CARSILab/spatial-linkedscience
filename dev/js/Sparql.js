@@ -1,19 +1,23 @@
 // Custom module for making SPARQL queries
-var Sparql = (function () {
+module.exports = (function () {
 
   // Dependencies
   var $ = require('jquery');
+  var Dom = require('./Dom.js');
+  var Map = require('./Map.js');
+  // console.log('from Sparql.js');
+  console.log(Dom);
 
   // PRIVATE
   var prefixes =
     'prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> prefix dc: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix spatial: <http://spatial.linkedscience.org/context/> prefix key: <http://spatial.linkedscience.org/context/keyword/> prefix ADR: <http://www.w3.org/2001/vcard-rdf/3.0#> ';
 
   // DOM CACHING
-  var $title = $('.title'),
-    $peopleHeader = $('.people-header'),
-    $paperHeader = $('.paper-header'),
-    $peopleList = $(".people-list"),
-    $paperList = $('.paper-list');
+  var $title = $('.title');
+  var $peopleHeader = $('.people-header');
+  var $paperHeader = $('.paper-header');
+  var $peopleList = $(".people-list");
+  var $paperList = $('.paper-list');
 
   // generate SPARQL query strings
   function searchQuery(input, conference) {
@@ -154,12 +158,14 @@ var Sparql = (function () {
       // fill page with data
       $.each(results, function (i) {
         if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
-          $peopleList.append('<li class="author"><a href="javascript:setHash(\'<' + results[i].link.value + '>\')">' +
+          $peopleList.append('<li class="list-group-item author"><a href="javascript:setHash(\'<' + results[i].link.value +
+            '>\')">' +
             results[i].name.value +
             '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this author" href="' + results[i].link.value +
             '">&rarr;</a></li>');
         } else if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
-          $paperList.append('<li class="paper">(' + results[i].year.value + ') <a href="javascript:setHash(\'<' + results[
+          $paperList.append('<li class="list-group-item paper">(' + results[i].year.value +
+            ') <a href="javascript:setHash(\'<' + results[
               i].link.value + '>\')">' + results[i].name.value +
             '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + results[i].link.value +
             '">&rarr;</a></li>');
@@ -172,19 +178,22 @@ var Sparql = (function () {
 
   function renderAuthor(json) {
     var results = json.results.bindings;
-    clear();
+
+    Dom.clear();
     $title.html('<b>' + results[0].name.value + '</b>');
     $paperHeader.html('Papers');
     $peopleHeader.html('Co-authors/-editors');
 
     $.each(results, function (i) {
       if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
-        $paperList.append('<li class="paper">(' + results[i].year.value + ') <a href="javascript:setHash(\'<' + results[i]
+        $paperList.append('<li class="list-group-item paper">(' + results[i].year.value +
+          ') <a href="javascript:setHash(\'<' + results[i]
           .paper.value + '>\')">' + results[i].title.value +
           '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + results[i].paper.value +
           '">&rarr;</a></li>');
       } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
-        $peopleList.append("<li class='author'><a href='javascript:setHash(\"<" + results[i].knows.value + ">\")'>" +
+        $peopleList.append("<li class='list-group-item author'><a href='javascript:setHash(\"<" + results[i].knows.value +
+          ">\")'>" +
           results[i].coname.value +
           "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + results[i].knows.value +
           "'>&rarr;</a></li>");
@@ -197,7 +206,7 @@ var Sparql = (function () {
   function renderPaper(json) {
 
     var results = json.results.bindings;
-    clear();
+    Dom.clear();
 
     $title.html('<b>' + results[0].title.value + '</b>');
     $peopleHeader.html('Authors/Co-authors');
@@ -209,7 +218,8 @@ var Sparql = (function () {
 
     $.each(results, function (i) {
       if (i > 0) {
-        $peopleList.append("<li class='author'><a href='javascript:setHash(\"<" + results[i].coauthor.value + ">\")'>" +
+        $peopleList.append("<li class='list-group-item author'><a href='javascript:setHash(\"<" + results[i].coauthor.value +
+          ">\")'>" +
           results[i].name.value +
           "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + results[i].coauthor.value +
           "'>&rarr;</a></li>");
@@ -219,7 +229,7 @@ var Sparql = (function () {
 
   function renderAffiliation(json) {
     var results = json.results.bindings;
-    clear();
+    Dom.clear();
 
     var data = results;
     $title.html('<strong>' + data[0].name.value + '</strong>');
@@ -298,18 +308,35 @@ var Sparql = (function () {
     });
   }
 
-  function clear() {
-    $('.title').empty();
-    $('.paper-header').empty();
-    $('.people-header').empty();
-    $('.people-list').empty();
-    $('.paper-list').empty();
-    $('.search').val('');
-    $('.conference').text('Conference');
-    $('.conference').attr('data-value', 'null');
-    // for (var i in markers) { map.removeLayer(markers[i]); }
-    // markers = [];
-  }
+  // DOM BINDINGS
+  $(document).ready(function () {
+
+    // SEARCH BAR
+    $('form').bind('submit', function (event) {
+      // stops form submission
+      event.preventDefault();
+
+      var $text = $('.search').val();
+      var $conference = $('.conference').attr('data-value');
+
+      if ($text.length > 1) {
+        window.location.hash = lastHash = '';
+        $('.belt').css('left', '-100%');
+        search($text, $conference);
+        Dom.clear();
+      }
+    });
+
+    // bind test functions to buttons
+    $('#testAuthor').click(function (event) {
+      event.preventDefault();
+      testAuthor();
+    });
+    $('#testPaper').click(function (event) {
+      event.preventDefault();
+      testPaper();
+    });
+  });
 
   return {
     // API
@@ -325,5 +352,3 @@ var Sparql = (function () {
     testAffiliation: testAffiliation
   };
 })();
-
-module.exports = Sparql;

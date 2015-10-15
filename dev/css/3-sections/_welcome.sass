@@ -1,5 +1,30 @@
-.welcome-container
+.welcome-wrap
+  +make-container()
 
+.row
+  +make-row()
+
+.welcome-container
+  +make-col()
+
+  //TODO: maybe just make it max width?
+  +media-breakpoint-up(xs)
+    +make-col-span(12)
+
+  +media-breakpoint-up(md)
+    +make-col-span(8)
+    +make-col-offset(2)
+
+  +media-breakpoint-up(lg)
+    +make-col-span(6)
+    +make-col-offset(3)
+
+
+  h1
+    text-align: center
+    font-size: 1.6rem
+    +media-breakpoint-up(lg)
+      font-size: 2.96rem
   // whole search form
   .input-group
     margin-top: 20px
@@ -13,7 +38,7 @@
     padding-left: 1rem
     cursor: pointer
     &:hover
-      background: fade-in(blue, .1)
+      background-color: rgba($brand-primary, .25)
 
     a
       color: inherit
@@ -23,9 +48,6 @@
   // submit button
   .btn
     height: 38px
-
-
-
 
   .blurb
     margin-top: 20px

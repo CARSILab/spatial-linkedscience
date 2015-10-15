@@ -1,5 +1,4 @@
-// Module for controlling the leaflet map
-var Map = (function () {
+module.exports = (function () {
 
   // Dependencies
   var L = require('leaflet');
@@ -60,5 +59,3 @@ var Map = (function () {
     setPin: setPin
   };
 })();
-
-module.exports = Map;

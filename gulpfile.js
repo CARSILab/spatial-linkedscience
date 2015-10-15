@@ -1,17 +1,22 @@
+// Shared Dependencies
 var gulp = require('gulp');
-var plumber = require('gulp-plumber');
 var gutil = require('gulp-util');
-var browserSync = require('browser-sync');
+var plumber = require('gulp-plumber');
+var sourcemaps = require('gulp-sourcemaps');
+// html task
 var jade = require('gulp-jade');
+// styles task
 var sass = require('gulp-sass');
 var prefix = require('gulp-autoprefixer');
+// javascript task
 var browserify = require('browserify');
-var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
-var sourcemaps = require('gulp-sourcemaps');
+var source = require('vinyl-source-stream');
+// sync task
+var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-// ON error
+// On error
 function onError(error) {
   gutil.beep();
   gutil.log(gutil.colors.red(error.message));
@@ -53,7 +58,7 @@ gulp.task('styles', function () {
 // browserify
 gulp.task('javascript', function () {
   var b = browserify({
-    entries: './dev/js/spatial.js',
+    entries: './dev/js/index.js',
     debug: true
   });
 
@@ -73,9 +78,22 @@ gulp.task('javascript', function () {
 
 // Sync Task
 // runs browser-sync
-gulp.task('sync', function () {
+gulp.task('sync-proxy', function () {
   browserSync({
     proxy: '127.0.0.1:80',
+    open: "external",
+    browser: ['chrome'],
+    notify: false
+  });
+});
+
+// Sync Task
+// runs browser-sync
+gulp.task('sync-noproxy', function () {
+  browserSync({
+    server: {
+      baseDir: './'
+    },
     open: "external",
     notify: false
   });
@@ -86,12 +104,12 @@ gulp.task('sync', function () {
 gulp.task('watch', function () {
   gulp.watch('dev/**/*.jade', ['html']);
   gulp.watch('dev/js/*.js', ['javascript']);
-  gulp.watch('dev/css/**/*.{sass,scss}', ['styles']);
+  gulp.watch(['dev/css/**/*.{sass,scss}', 'dev/libs/bootstrap/scss/*.scss'], ['styles']);
 });
 
 // Default Task
 // Runs all the above
-gulp.task('default', ['html', 'javascript', 'styles', 'sync', 'watch']);
+gulp.task('default', ['html', 'javascript', 'styles', 'sync-noproxy', 'watch']);
 
 // Offline Task
 // Runs all the above except for browser-sync

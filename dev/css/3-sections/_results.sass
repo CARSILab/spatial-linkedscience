@@ -1,17 +1,30 @@
 .results-wrap
-  height: 100%
-  .results-container
-    margin-left: 50px
-    margin-right: 50px
+  +make-container()
+.row
+  +make-row()
 
-  .infoheader
-    margin-left: 35px
-    margin-bottom: -13px
+.results-container
+  +make-col()
 
-  .people-container, .paper-container
-    padding: 5px
-    overflow: scroll
-    bottom: 0px
-    background-color: #eee
-    border-radius: 5px
-    max-height: 250px
+
+  +media-breakpoint-up(xs)
+    +make-col-span(12)
+
+  +media-breakpoint-up(md)
+    +make-col-span(8)
+    +make-col-offset(2)
+
+  +media-breakpoint-up(lg)
+    +make-col-span(6)
+    +make-col-offset(3)
+
+  // .infoheader
+  //   margin-left: 35px
+  //   margin-bottom: -13px
+  //
+  // .people-container, .paper-container
+  //   padding: 5px
+  //   overflow: scroll
+  //   bottom: 0px
+  //   border-radius: 5px
+  //   max-height: 250px
