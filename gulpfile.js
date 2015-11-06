@@ -9,6 +9,7 @@ var jade = require('gulp-jade');
 var sass = require('gulp-sass');
 var prefix = require('gulp-autoprefixer');
 // javascript task
+var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 // sync task
 var browserSync = require('browser-sync');
@@ -57,6 +58,7 @@ gulp.task('javascript', function () {
   return gulp.src('dev/js/*.js')
     .pipe(plumber(onError))
     .pipe(sourcemaps.init())
+		.pipe(babel())
 		.pipe(concat('bundle.js'))
     //.pipe(uglify())
     .pipe(sourcemaps.write('./'))
