@@ -1,12 +1,4 @@
-// Custom module for making SPARQL queries
-module.exports = (function () {
-
-  // Dependencies
-  var $ = require('jquery');
-  var Dom = require('./Dom.js');
-  var Map = require('./Map.js');
-  // console.log('from Sparql.js');
-  console.log(Dom);
+var Sparql = (function () {
 
   // PRIVATE
   var prefixes =
@@ -16,10 +8,11 @@ module.exports = (function () {
   var $title = $('.title');
   var $peopleHeader = $('.people-header');
   var $paperHeader = $('.paper-header');
-  var $peopleList = $(".people-list");
+  var $peopleList = $('.people-list');
   var $paperList = $('.paper-list');
 
   // generate SPARQL query strings
+  // TODO: get Babel and use template strings!
   function searchQuery(input, conference) {
     var conference_seg = conference != 'null' ? 'spatial:' + conference : '?g';
     return prefixes +
@@ -45,7 +38,7 @@ module.exports = (function () {
       'UNION ' +
       '{ ' +
       '?link dc:subject key:' + input.split(' ').join('_') + ' . ' +
-      // try to use regex for keywords
+      // TODO: try to use regex for keywords
       //'FILTER regex(?subject, "key:' + input + '", "i") ' +
       '?link dc:title ?title . ' +
       '?link dc:date ?year . ' +
@@ -158,19 +151,19 @@ module.exports = (function () {
       // fill page with data
       $.each(results, function (i) {
         if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
-          $peopleList.append('<li class="list-group-item author"><a href="javascript:setHash(\'<' + results[i].link.value +
+          $peopleList.append('<li class="list-group-item author"><a href="javascript:Poll.setHash(\'<' + results[i].link.value +
             '>\')">' +
             results[i].name.value +
             '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this author" href="' + results[i].link.value +
             '">&rarr;</a></li>');
         } else if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
           $paperList.append('<li class="list-group-item paper">(' + results[i].year.value +
-            ') <a href="javascript:setHash(\'<' + results[
+            ') <a href="javascript:Poll.setHash(\'<' + results[
               i].link.value + '>\')">' + results[i].name.value +
             '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + results[i].link.value +
-            '">&rarr;</a></li>');
+            '">&rarr; </a></li>');
         } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Organization') {
-          setPin(results[i]);
+          Map.setPin(results[i]);
         }
       });
     }
@@ -187,18 +180,18 @@ module.exports = (function () {
     $.each(results, function (i) {
       if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
         $paperList.append('<li class="list-group-item paper">(' + results[i].year.value +
-          ') <a href="javascript:setHash(\'<' + results[i]
+          ') <a href="javascript:Poll.setHash(\'<' + results[i]
           .paper.value + '>\')">' + results[i].title.value +
           '</a>&nbsp;<a class="rawdata" target="_blank" title="Raw data for this paper" href="' + results[i].paper.value +
           '">&rarr;</a></li>');
       } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
-        $peopleList.append("<li class='list-group-item author'><a href='javascript:setHash(\"<" + results[i].knows.value +
+        $peopleList.append("<li class='list-group-item author'><a href='javascript:Poll.setHash(\"<" + results[i].knows.value +
           ">\")'>" +
           results[i].coname.value +
           "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + results[i].knows.value +
           "'>&rarr;</a></li>");
       } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Organization') {
-        setPin(results[i]);
+        Map.setPin(results[i]);
       }
     });
   }
@@ -218,7 +211,7 @@ module.exports = (function () {
 
     $.each(results, function (i) {
       if (i > 0) {
-        $peopleList.append("<li class='list-group-item author'><a href='javascript:setHash(\"<" + results[i].coauthor.value +
+        $peopleList.append("<li class='list-group-item author'><a href='javascript:Poll.setHash(\"<" + results[i].coauthor.value +
           ">\")'>" +
           results[i].name.value +
           "</a>&nbsp;<a class='rawdata' target='_blank' title='Raw data for this author' href='" + results[i].coauthor.value +
@@ -282,28 +275,28 @@ module.exports = (function () {
   // Render Offline Test Data
   function testSearch() {
     $.getJSON('./dev/testData/sample-search.json', function (json) {
-      $('.belt').css('left', '-100%');
+      Dom.slide('right');
       renderSearch(json);
     });
   }
 
   function testAuthor() {
     $.getJSON('./dev/testData/sample-author.json', function (json) {
-      $('.belt').css('left', '-100%');
+      Dom.slide('right');
       renderAuthor(json);
     });
   }
 
   function testPaper() {
     $.getJSON('./dev/testData/sample-paper.json', function (json) {
-      $('.belt').css('left', '-100%');
+      Dom.slide('right');
       renderPaper(json);
     });
   }
 
   function testAffiliation() {
     $.getJSON('./dev/testData/sample-affiliation.json', function (json) {
-      $('.belt').css('left', '-100%');
+      Dom.slide('right');
       renderAffiliation(json);
     });
   }
@@ -311,18 +304,31 @@ module.exports = (function () {
   // DOM BINDINGS
   $(document).ready(function () {
 
+    // TODO: implement both search bars
     // SEARCH BAR
-    $('form').bind('submit', function (event) {
+    $('#main-form').bind('submit', function (event) {
       // stops form submission
       event.preventDefault();
 
-      var $text = $('.search').val();
+      var $text = $('#main-search').val();
       var $conference = $('.conference').attr('data-value');
-
+      console.log($text);
       if ($text.length > 1) {
-        window.location.hash = lastHash = '';
-        $('.belt').css('left', '-100%');
+        Dom.slide('right');
         search($text, $conference);
+        Dom.clear();
+      }
+    });
+
+    $('#nav-form').bind('submit', function (event) {
+      // stops form submission
+      event.preventDefault();
+
+      var $text = $('#nav-search').val();
+      console.log($text);
+      if ($text.length > 1) {
+        Dom.slide('right');
+        search($text);
         Dom.clear();
       }
     });

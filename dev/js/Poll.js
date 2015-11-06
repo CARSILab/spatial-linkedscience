@@ -1,6 +1,4 @@
-module.exports = (function () {
-
-  var $ = require('jquery');
+var Poll = (function () {
 
   var lastHash = '';
 
@@ -35,7 +33,8 @@ module.exports = (function () {
   });
 
   return {
-
+		pollHash: pollHash,
+		setHash: setHash
   };
 
 })();

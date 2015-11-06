@@ -1,15 +1,11 @@
-module.exports = (function () {
-
-  // Dependencies
-  var L = require('leaflet');
-  var $ = require('jquery');
+var Map = (function () {
 
   // PRIVATE
   var markers = [];
   var pin = L.icon({
     iconUrl: 'assets/icons/circle.png',
     iconSize: [10, 10],
-    iconAnchor: [5, 5],
+    iconAnchor: [5, 5]
   });
   var map = createMap();
 
@@ -24,14 +20,14 @@ module.exports = (function () {
     return L.map('map', {
       center: center,
       zoom: 2,
-      scrollWheelZoom: false,
+      scrollWheelZoom: false
     });
   }
 
   // might need to doc ready this
   L.tileLayer(
     'http://a.tiles.mapbox.com/v4/amaldare93.mbpl53l0/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYW1hbGRhcmU5MyIsImEiOiJGdEFlcHpZIn0.0WX3tspKb0IXCJbdGMLmNQ', {
-      attribution: 'Map tiles by <a href="https://www.mapbox.com/">Mapbox</a>',
+      attribution: 'Map tiles by <a href="https://www.mapbox.com/">Mapbox</a>'
     }).addTo(map);
 
   // CREATE MAP PIN
@@ -42,12 +38,12 @@ module.exports = (function () {
     var marker = L.marker(
       [parseFloat(latlong[0]), parseFloat(latlong[1])], {
         icon: pin,
-        title: data.name.value,
+        title: data.name.value
       }).addTo(map);
 
     // selectAffiliation
     $(marker).click(function () {
-      setHash('<' + data.link.value + '>');
+      Poll.setHash('<' + data.link.value + '>');
     });
 
     // push marker into array (for later deletion)

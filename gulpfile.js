@@ -9,9 +9,7 @@ var jade = require('gulp-jade');
 var sass = require('gulp-sass');
 var prefix = require('gulp-autoprefixer');
 // javascript task
-var browserify = require('browserify');
-var buffer = require('vinyl-buffer');
-var source = require('vinyl-source-stream');
+var concat = require('gulp-concat');
 // sync task
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
@@ -55,20 +53,12 @@ gulp.task('styles', function () {
 });
 
 // Javascript Task
-// browserify
 gulp.task('javascript', function () {
-  var b = browserify({
-    entries: './dev/js/index.js',
-    debug: true
-  });
-
-  return b.bundle()
+  return gulp.src('dev/js/*.js')
     .pipe(plumber(onError))
-    .pipe(source('bundle.js'))
-    .pipe(buffer())
     .pipe(sourcemaps.init())
+		.pipe(concat('bundle.js'))
     //.pipe(uglify())
-    .on('error', gutil.log)
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./assets/js'))
     .pipe(reload({
@@ -81,8 +71,8 @@ gulp.task('javascript', function () {
 gulp.task('sync-proxy', function () {
   browserSync({
     proxy: '127.0.0.1:80',
-    open: "external",
-    browser: ['chrome'],
+		online: true,
+    open: 'external',
     notify: false
   });
 });
@@ -94,7 +84,8 @@ gulp.task('sync-noproxy', function () {
     server: {
       baseDir: './'
     },
-    open: "external",
+		online: false,
+    open: 'external',
     notify: false
   });
 });
@@ -109,8 +100,8 @@ gulp.task('watch', function () {
 
 // Default Task
 // Runs all the above
-gulp.task('default', ['html', 'javascript', 'styles', 'sync-noproxy', 'watch']);
+gulp.task('default', ['html', 'javascript', 'styles', 'sync-proxy', 'watch']);
 
 // Offline Task
 // Runs all the above except for browser-sync
-gulp.task('offline', ['html', 'javascript', 'styles', 'watch']);
+gulp.task('offline', ['html', 'javascript', 'styles', 'sync-noproxy', 'watch']);

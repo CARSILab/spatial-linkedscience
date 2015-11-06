@@ -1,18 +1,15 @@
-module.exports = (function () {
-
-  // dependencies
-  var $ = require('jquery');
-  var Map = require('./Map.js');
-  require('../libs/bootstrap/dist/js/npm.js');
+var Dom = (function () {
 
   // DOM CACHING
   var $title = $('.title');
   var $peopleHeader = $('.people-header');
   var $paperHeader = $('.paper-header');
-  var $peopleList = $(".people-list");
+  var $peopleList = $('.people-list');
   var $paperList = $('.paper-list');
-  var $search = $('.search');
+  var $mainSearch = $('#main-search');
+  var $navSearch = $('#nav-search');
   var $conference = $('.conference');
+  var $belt = $('.belt');
 
   // clears all data off page
   function clear() {
@@ -22,7 +19,8 @@ module.exports = (function () {
     $paperHeader.empty();
     $peopleList.empty();
     $paperList.empty();
-    $search.val('');
+    $mainSearch.val('');
+    $navSearch.val('');
     $conference.text('Conference');
     $conference.attr('data-value', 'null');
     for (var i in Map.markers) {
@@ -31,13 +29,23 @@ module.exports = (function () {
     Map.markers = [];
   }
 
+  function slide(direction){
+    if(direction === 'left'){
+      $belt.css('left', '0%');
+      window.location.hash = '';
+      $navSearch.hide();
+    } else if (direction === 'right') {
+      $belt.css('left', '-100%');
+      $navSearch.show();
+    }
+  }
+
   // DOM BINDINGS
   $(document).ready(function () {
 
     // onclick  for home page
     $('.navbar-brand').click(function () {
-      $('.belt').css('left', '0%');
-      window.location.hash = '';
+      slide('left');
     });
 
     // dropdown selects
@@ -60,6 +68,6 @@ module.exports = (function () {
 
   return {
     clear: clear,
-    apple: 'hello'
+    slide: slide
   };
 })();

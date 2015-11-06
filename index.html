@@ -23,8 +23,8 @@
         
         -->
       </ul>
-      <form id="nav-search" class="form-inline navbar-form pull-right">
-        <input type="search" placeholder="Search" autocomplete="off" class="form-control form-control-sm">
+      <form id="nav-form" class="form-inline navbar-form pull-right">
+        <input id="nav-search" type="search" placeholder="Search" autocomplete="off" class="form-control form-control-sm">
       </form>
     </nav>
     <!-- leaflet map-->
@@ -36,9 +36,9 @@
         <div class="row">
           <div class="welcome-container">
             <h1>SPATIAL@LINKEDSCIENCE</h1>
-            <form>
+            <form id="main-form">
               <div id="big-search" class="input-group">
-                <input type="search" placeholder="Search" autocomplete="off" autofocus class="form-control search">
+                <input id="main-search" type="search" placeholder="Search" autocomplete="off" autofocus class="form-control">
                 <div class="input-group-btn">
                   <div class="btn-group">
                     <button type="button" data-toggle="dropdown" class="btn btn-secondary dropdown-toggle form-control"><span data-bind="label" data-value="null" class="conference">Conference</span></button>
@@ -97,6 +97,8 @@
       </div>
     </div>
     <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/leaflet.js"></script>
     <script src="assets/js/bundle.js"></script>
   </body>
 </html>
