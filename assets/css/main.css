@@ -5218,9 +5218,7 @@ body {
 .belt {
   width: 200%;
   position: relative;
-  left: 0%;
-  -webkit-transition: all, 800ms;
-  transition: all, 800ms; }
+  left: 0; }
   .belt .welcome-wrap, .belt .results-wrap {
     width: 50%;
     float: left; }
@@ -5329,7 +5327,8 @@ body {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 100%;
       -ms-flex: 0 0 100%;
-          flex: 0 0 100%; }
+          flex: 0 0 100%;
+  background-color: cyan; }
   @media (min-width: 48em) {
     .results-container {
       -webkit-box-flex: 0;

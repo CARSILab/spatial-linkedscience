@@ -74,7 +74,6 @@ gulp.task('sync-proxy', function () {
   browserSync({
     proxy: '127.0.0.1:80',
 		online: true,
-    open: 'external',
     notify: false
   });
 });
@@ -87,7 +86,6 @@ gulp.task('sync-noproxy', function () {
       baseDir: './'
     },
 		online: false,
-    open: 'external',
     notify: false
   });
 });
@@ -101,9 +99,7 @@ gulp.task('watch', function () {
 });
 
 // Default Task
-// Runs all the above
 gulp.task('default', ['html', 'javascript', 'styles', 'sync-proxy', 'watch']);
 
 // Offline Task
-// Runs all the above except for browser-sync
 gulp.task('offline', ['html', 'javascript', 'styles', 'sync-noproxy', 'watch']);
