@@ -1,26 +1,21 @@
 section.welcome
   .row
     .welcome-container
-      h1.welcome-header SPATIAL@LINKEDSCIENCE
+      h1.welcome-header spatial <span class="icon-earth"></span> linkedscience
       form#main-form.welcome-form
         .input-group
           input#main-search.form-control(type="search", placeholder="Search", autocomplete="off", autofocus)
           .input-group-btn
             .btn-group
-              button.btn.btn-secondary.dropdown-toggle.form-control(type="button", data-toggle="dropdown")
-                span.conference(data-bind="label", data-value="null") Conference
+              button.btn.dropdown-toggle.form-control(type="button", data-toggle="dropdown")
+                span#conference(data-bind="label", data-value="null") Conference
               ul.dropdown-menu(role="menu")
-                li(data-value="null")
-                  a none
+                li.conference(data-value="null") none
                 .dropdown-divider(role="separator")
-                li(data-value="acmgis")
-                  a ACM GIS
-                li(data-value="agile")
-                  a AGILE
-                li(data-value="cosit")
-                  a COSIT
-                li(data-value="giscience")
-                  a GIScience
+                li.conference(data-value="acmgis") ACM GIS
+                li.conference(data-value="agile") AGILE
+                li.conference(data-value="cosit") COSIT
+                li.conference(data-value="giscience") GIScience
             button.welcome-submit.btn.btn-primary(type="submit")
               .icon-search
       

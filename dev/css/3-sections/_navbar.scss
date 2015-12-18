@@ -1,9 +1,14 @@
 .navbar {
+
 	&-brand {
+		font-family: $geom;
 		cursor: pointer;
+		&:hover {
+			// gotto target the inner span i guess
+		}
 	}
 	&-nav {
-
+		color: white;
 	}
 	&-form {
 		float: right;
@@ -12,4 +17,8 @@
 		width: 40vw;
 		max-width: 300px;
 	}
+}
+
+.nav-link {
+	color: white;
 }

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Bootstrap v4.0.0-alpha.2 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -5,6 +6,7 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 @import url(leaflet.css);
+@import url("//hello.myfonts.net/count/2ff6de");
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -1385,7 +1387,7 @@ pre {
   color: #55595c;
   background-color: #fff;
   background-image: none;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 0.25rem; }
   .form-control::-ms-expand {
     background-color: transparent;
@@ -1671,7 +1673,7 @@ input[type="checkbox"].disabled {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   padding: 0.375rem 1rem;
   font-size: 1rem;
   line-height: 1.5;
@@ -2339,7 +2341,7 @@ input[type="button"].btn-block {
 .btn-group .btn + .btn-group,
 .btn-group .btn-group + .btn,
 .btn-group .btn-group + .btn-group {
-  margin-left: -1px; }
+  margin-left: -2px; }
 
 .btn-toolbar {
   margin-left: -5px; }
@@ -2426,7 +2428,7 @@ input[type="button"].btn-block {
 .btn-group-vertical > .btn + .btn-group,
 .btn-group-vertical > .btn-group + .btn,
 .btn-group-vertical > .btn-group + .btn-group {
-  margin-top: -1px;
+  margin-top: -2px;
   margin-left: 0; }
 
 .btn-group-vertical > .btn:not(:first-child):not(:last-child) {
@@ -2500,7 +2502,7 @@ input[type="button"].btn-block {
   color: #55595c;
   text-align: center;
   background-color: #eceeef;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 0.25rem; }
   .input-group-addon.form-control-sm, .input-group-sm > .input-group-addon,
   .input-group-sm > .input-group-btn > .input-group-addon.btn {
@@ -2549,18 +2551,18 @@ input[type="button"].btn-block {
   .input-group-btn > .btn {
     position: relative; }
     .input-group-btn > .btn + .btn {
-      margin-left: -1px; }
+      margin-left: -2px; }
     .input-group-btn > .btn:focus,
     .input-group-btn > .btn:active,
     .input-group-btn > .btn:hover {
       z-index: 3; }
   .input-group-btn:first-child > .btn,
   .input-group-btn:first-child > .btn-group {
-    margin-right: -1px; }
+    margin-right: -2px; }
   .input-group-btn:last-child > .btn,
   .input-group-btn:last-child > .btn-group {
     z-index: 2;
-    margin-left: -1px; }
+    margin-left: -2px; }
     .input-group-btn:last-child > .btn:focus,
     .input-group-btn:last-child > .btn:active,
     .input-group-btn:last-child > .btn:hover,
@@ -2645,7 +2647,7 @@ input[type="button"].btn-block {
   background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAMAAACzvE1FAAAADFBMVEUzMzMzMzMzMzMzMzMKAG/3AAAAA3RSTlMAf4C/aSLHAAAAPElEQVR42q3NMQ4AIAgEQTn//2cLdRKppSGzBYwzVXvznNWs8C58CiussPJj8h6NwgorrKRdTvuV9v16Afn0AYFOB7aYAAAAAElFTkSuQmCC) no-repeat right 0.75rem center;
   background-image: none \9;
   background-size: 8px 10px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   -moz-appearance: none;
   -webkit-appearance: none; }
   .c-select:focus {
@@ -2689,7 +2691,7 @@ input[type="button"].btn-block {
       -ms-user-select: none;
           user-select: none;
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: .25rem; }
 
 .file-custom::after {
@@ -2708,7 +2710,7 @@ input[type="button"].btn-block {
   color: #555;
   content: "Browse";
   background-color: #eee;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 0 0.25rem 0.25rem 0; }
 
 .nav {
@@ -2954,10 +2956,10 @@ input[type="button"].btn-block {
     color: white; }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.5); }
+  color: white; }
   .navbar-dark .navbar-nav .nav-link:focus,
   .navbar-dark .navbar-nav .nav-link:hover {
-    color: rgba(255, 255, 255, 0.75); }
+    color: rgba(255, 255, 255, 0.5); }
 
 .navbar-dark .navbar-nav .open > .nav-link,
 .navbar-dark .navbar-nav .open > .nav-link:focus,
@@ -4853,8 +4855,8 @@ a.bg-danger:hover {
 
 @font-face {
   font-family: 'icomoon';
-  src: url("fonts/icomoon.eot?um524h");
-  src: url("fonts/icomoon.eot?#iefixum524h") format("embedded-opentype"), url("fonts/icomoon.ttf?um524h") format("truetype"), url("fonts/icomoon.woff?um524h") format("woff"), url("fonts/icomoon.svg?um524h#icomoon") format("svg");
+  src: url("icons/icomoon.eot?um524h");
+  src: url("icons/icomoon.eot?#iefixum524h") format("embedded-opentype"), url("icons/icomoon.ttf?um524h") format("truetype"), url("icons/icomoon.woff?um524h") format("woff"), url("icons/icomoon.svg?um524h#icomoon") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -4927,6 +4929,32 @@ a.bg-danger:hover {
 .icon-arrow-right2:before {
   content: "\ea3c"; }
 
+/**
+ * @license
+ * MyFonts Webfont Build ID 3143390, 2015-12-18T10:24:29-0500
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: XXIIGeom-Regular by Doubletwo Studios
+ * URL: http://www.myfonts.com/fonts/doubletwo/xxii-geom/regular/
+ * Copyright: Copyright &#x00A9; 2014 by Doubletwo Studios. All rights reserved.
+ * Licensed pageviews: 10,000
+ *
+ *
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=3143390
+ *
+ * © 2015 MyFonts Inc
+*/
+/* @import must be at top of file, otherwise CSS will not work */
+@font-face {
+  font-family: 'XXIIGeom-Regular';
+  src: url("fonts/2FF6DE_0_0.eot");
+  src: url("fonts/2FF6DE_0_0.eot?#iefix") format("embedded-opentype"), url("fonts/2FF6DE_0_0.woff2") format("woff2"), url("fonts/2FF6DE_0_0.woff") format("woff"), url("fonts/2FF6DE_0_0.ttf") format("truetype"), url("fonts/2FF6DE_0_0.svg#wf") format("svg"); }
+
 html, body {
   overflow-x: hidden;
   height: 100%; }
@@ -4963,7 +4991,11 @@ body {
     display: table; }
 
 .navbar-brand {
+  font-family: "XXIIGeom-Regular";
   cursor: pointer; }
+
+.navbar-nav {
+  color: white; }
 
 .navbar-form {
   float: right; }
@@ -4971,6 +5003,9 @@ body {
 .navbar-search {
   width: 40vw;
   max-width: 300px; }
+
+.nav-link {
+  color: white; }
 
 #map {
   height: 35%;
@@ -4987,7 +5022,10 @@ body {
 
 .welcome-header {
   text-align: center;
-  font-size: 7vw; }
+  font-size: 7vw;
+  font-family: 'XXIIGeom-Regular';
+  font-weight: bold;
+  font-style: normal; }
   @media (min-width: 667px) {
     .welcome-header {
       font-size: calc(667px * 0.07); } }
@@ -4996,16 +5034,18 @@ body {
   margin: 20px 0; }
 
 .welcome-submit {
-  height: 38px; }
+  height: 40px;
+  background-color: #373a3c;
+  border-color: #373a3c; }
 
-.welcome-container li {
+.form-control {
+  border-color: #373a3c; }
+
+.conference {
   padding-left: 1rem;
   cursor: pointer; }
-  .welcome-container li:hover {
+  .conference:hover {
     background-color: rgba(2, 117, 216, 0.25); }
-  .welcome-container li a {
-    color: inherit;
-    text-decoration: none; }
 
 .results {
   color: black; }

@@ -10,7 +10,7 @@
   <body>
     <!-- navbar-->
     <header class="navbar navbar-dark bg-inverse navbar-fixed-top">
-      <div href="" class="navbar-brand"><span class="hidden-sm-down">SPATIAL <span class="icon-earth"></span> LINKEDSCIENCE</span><span class="icon-earth hidden-md-up"></span></div>
+      <div href="" class="navbar-brand"><span class="hidden-sm-down">spatial <span class="icon-earth"></span> linkedscience</span><span class="icon-earth hidden-md-up"></span></div>
       <ul class="nav navbar-nav">
         <!--li.nav-itema.nav-link(href="#") About
         -->
@@ -35,20 +35,20 @@
       <section class="welcome">
         <div class="row">
           <div class="welcome-container">
-            <h1 class="welcome-header">SPATIAL@LINKEDSCIENCE</h1>
+            <h1 class="welcome-header">spatial <span class="icon-earth"></span> linkedscience</h1>
             <form id="main-form" class="welcome-form">
               <div class="input-group">
                 <input id="main-search" type="search" placeholder="Search" autocomplete="off" autofocus class="form-control">
                 <div class="input-group-btn">
                   <div class="btn-group">
-                    <button type="button" data-toggle="dropdown" class="btn btn-secondary dropdown-toggle form-control"><span data-bind="label" data-value="null" class="conference">Conference</span></button>
+                    <button type="button" data-toggle="dropdown" class="btn dropdown-toggle form-control"><span id="conference" data-bind="label" data-value="null">Conference</span></button>
                     <ul role="menu" class="dropdown-menu">
-                      <li data-value="null"><a>none</a></li>
+                      <li data-value="null" class="conference">none</li>
                       <div role="separator" class="dropdown-divider"></div>
-                      <li data-value="acmgis"><a>ACM GIS</a></li>
-                      <li data-value="agile"><a>AGILE</a></li>
-                      <li data-value="cosit"><a>COSIT</a></li>
-                      <li data-value="giscience"><a>GIScience</a></li>
+                      <li data-value="acmgis" class="conference">ACM GIS</li>
+                      <li data-value="agile" class="conference">AGILE</li>
+                      <li data-value="cosit" class="conference">COSIT</li>
+                      <li data-value="giscience" class="conference">GIScience</li>
                     </ul>
                   </div>
                   <button type="submit" class="welcome-submit btn btn-primary">
