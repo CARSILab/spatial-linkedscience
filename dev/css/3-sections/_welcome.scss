@@ -1,6 +1,5 @@
 .welcome {
-  @include make-container();
-
+  
   &-container {
     margin: auto;
     max-width: 600px;
@@ -15,21 +14,19 @@
       font-size: calc(667px * 0.07)
     }
   }
+
+  &-form {
+    margin: 20px 0;
+  }
+
+  &-submit {
+    height: 38px;
+  }
 }
 
 .welcome-container {
 
-  // whole search form
-  .input-group {
-    margin-top: 20px;
-    box-sizing: border-box;
-  }
-
-  // conference selector
-  .conference {
-    width: auto;
-  }
-
+  // test to see if it works when you remove the nested a links
   li {
     padding-left: 1rem;
     cursor: pointer;
@@ -42,12 +39,5 @@
     }
   }
 
-  // submit button
-  .btn {
-    height: 38px;
-  }
 
-  .blurb {
-    margin-top: 20px;
-  }
 }

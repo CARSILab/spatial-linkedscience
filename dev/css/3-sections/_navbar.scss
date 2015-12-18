@@ -6,7 +6,10 @@
 
 	}
 	&-form {
-		// display: hidden;
 		float: right;
+	}
+	&-search {
+		width: 40vw;
+		max-width: 300px;
 	}
 }

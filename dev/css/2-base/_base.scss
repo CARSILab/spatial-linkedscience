@@ -9,18 +9,22 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.row {
-  @include make-row();
-}
 
 .belt {
   width: 200%;
   position: relative;
   left: 0;
-  @include transition(all, 800ms);
 
-  .welcome, .results-wrap {
-    width: 50%;
-    float: left;
-  }
+  @include transition(all, 800ms);
+}
+
+.welcome, .results {
+  width: 50%;
+  float: left;
+
+  @include make-container()
+}
+
+.row {
+  @include make-row();
 }

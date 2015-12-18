@@ -1,5 +1,5 @@
 var Dom = (function () {
-
+  
   // DOM CACHING
   var $title = $('.title');
   var $peopleHeader = $('.people-header');

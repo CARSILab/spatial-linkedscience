@@ -33,8 +33,8 @@ var Poll = (function () {
   });
 
   return {
-		pollHash: pollHash,
-		setHash: setHash
+    pollHash: pollHash,
+    setHash: setHash
   };
 
 })();

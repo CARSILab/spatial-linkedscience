@@ -23,8 +23,8 @@
         
         -->
       </ul>
-      <form class="form-inline navbar-form">
-        <input id="nav-search" type="search" placeholder="Search" autocomplete="off" class="form-control form-control-sm">
+      <form id="nav-form" class="navbar-form">
+        <input id="nav-search" type="search" placeholder="Search" autocomplete="off" class="navbar-search form-control">
       </form>
     </header>
     <!-- leaflet map-->
@@ -32,11 +32,11 @@
     <!-- conveyor belt for UI-->
     <div class="belt">
       <!-- WELCOME-->
-      <div class="welcome">
+      <section class="welcome">
         <div class="row">
           <div class="welcome-container">
             <h1 class="welcome-header">SPATIAL@LINKEDSCIENCE</h1>
-            <form>
+            <form id="main-form" class="welcome-form">
               <div class="input-group">
                 <input id="main-search" type="search" placeholder="Search" autocomplete="off" autofocus class="form-control">
                 <div class="input-group-btn">
@@ -51,50 +51,38 @@
                       <li data-value="giscience"><a>GIScience</a></li>
                     </ul>
                   </div>
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="welcome-submit btn btn-primary">
                     <div class="icon-search"></div>
                   </button>
                 </div>
               </div>
             </form>
-            <div class="blurb">
+            <div class="welcome-blurb">
               <p>Cat ipsum dolor sit amet, burrow under covers yet knock dis off table head butt cant eat out of my own dish. Burrow under covers hiss at vacuum cleaner chase ball of string has closed eyes but still sees you and intently stare at the same spot attack feet. Chew iPad power cord intently sniff hand. Inspect anything brought into the house pooping rainbow while flying in a toasted bread costume in space then cats take over the world fall over dead (not really but gets sypathy) stand in front of the computer screen play riveting piece on synthesizer keyboard. Chew foot intently stare at the same spot poop in litter box, scratch the walls.</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
       <!-- RESULTS-->
-      <div class="results-wrap">
+      <section class="results">
         <div class="row">
-          <section class="results-container">
-            <ul role="tablist" class="nav nav-tabs">
-              <li class="nav-item"><a href="#authors-pane" role="tab" data-toggle="tab" class="nav-link"> 
-                  <div class="icon-users"> Authors</div></a></li>
-              <li class="nav-item"><a href="#papers-pane" role="tab" data-toggle="tab" class="nav-link">
-                  <div class="icon-book"> Papers</div></a></li>
-            </ul>
-            <div class="tab-content">
-              <div id="authors-pane" role="tabpanel" class="tab-pane">
-                <div class="people-wrap">
-                  <!--h2.people-header-->
-                  <div class="people-container">
-                    <ul class="list-group people-list"> </ul>
-                  </div>
-                </div>
-              </div>
-              <div id="papers-pane" role="tabpanel" class="tab-pane">
-                <div class="paper-wrap">
-                  <!--h2.paper-header-->
-                  <div class="paper-container">
-                    <ul class="list-group paper-list"></ul>
-                  </div>
-                </div>
+          <div class="results-container">
+            <h1 class="title"></h1>
+            <div class="people-wrap">
+              <h2 class="people-header"></h2>
+              <div class="people-container">
+                <ul class="people-list"></ul>
               </div>
             </div>
-            <!---->
-          </section>
+            <div class="paper-wrap">
+              <h2 class="paper-header"></h2>
+              <div class="paper-container">
+                <ul class="paper-list"></ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
