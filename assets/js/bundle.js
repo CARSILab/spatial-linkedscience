@@ -56,6 +56,9 @@ var Dom = (function () {
       $target.closest('.btn-group').find('[data-bind="label"]').text($target.text()).attr('data-value', $target.data('value')).end().children('.dropdown-toggle').dropdown('toggle');
       return false;
     });
+
+    // initially hide navSearch
+    $navSearch.hide();
   });
 
   return {

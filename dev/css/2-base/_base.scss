@@ -1,5 +1,5 @@
 html, body {
-  overflow-x: hidden;
+  overflow-x:hidden;
   height: 100%;
 }
 
@@ -9,14 +9,18 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.row {
+  @include make-row();
+}
+
 .belt {
   width: 200%;
   position: relative;
   left: 0;
-  // +transition(all, 800ms);
+  @include transition(all, 800ms);
 
-  .welcome-wrap, .results-wrap {
+  .welcome, .results-wrap {
     width: 50%;
     float: left;
-	}
+  }
 }

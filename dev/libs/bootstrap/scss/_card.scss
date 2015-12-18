@@ -4,8 +4,9 @@
 
 .card {
   position: relative;
+  display: block;
   margin-bottom: $card-spacer-y;
-  background-color: #fff;
+  background-color: $card-bg;
   border: $card-border-width solid $card-border-color;
   @include border-radius($card-border-radius);
 }
@@ -92,54 +93,48 @@
 //
 
 .card-primary {
-  background-color: $brand-primary;
-  border-color: $brand-primary;
+  @include card-variant($brand-primary, $brand-primary);
 }
 .card-success {
-  background-color: $brand-success;
-  border-color: $brand-success;
+  @include card-variant($brand-success, $brand-success);
 }
 .card-info {
-  background-color: $brand-info;
-  border-color: $brand-info;
+  @include card-variant($brand-info, $brand-info);
 }
 .card-warning {
-  background-color: $brand-warning;
-  border-color: $brand-warning;
+  @include card-variant($brand-warning, $brand-warning);
 }
 .card-danger {
-  background-color: $brand-danger;
-  border-color: $brand-danger;
+  @include card-variant($brand-danger, $brand-danger);
 }
 
+// Remove all backgrounds
+.card-primary-outline {
+  @include card-outline-variant($btn-primary-bg);
+}
+.card-secondary-outline {
+  @include card-outline-variant($btn-secondary-border);
+}
+.card-info-outline {
+  @include card-outline-variant($btn-info-bg);
+}
+.card-success-outline {
+  @include card-outline-variant($btn-success-bg);
+}
+.card-warning-outline {
+  @include card-outline-variant($btn-warning-bg);
+}
+.card-danger-outline {
+  @include card-outline-variant($btn-danger-bg);
+}
 
 //
 // Inverse text within a card for use with dark backgrounds
 //
 
 .card-inverse {
-  .card-header,
-  .card-footer {
-    border-bottom: .075rem solid rgba(255,255,255,.2);
-  }
-  .card-header,
-  .card-footer,
-  .card-title,
-  .card-blockquote {
-    color: #fff;
-  }
-  .card-link,
-  .card-text,
-  .card-blockquote > footer {
-    color: rgba(255,255,255,.65);
-  }
-  .card-link {
-    @include hover-focus {
-      color: #fff;
-    }
-  }
+  @include card-inverse;
 }
-
 
 //
 // Blockquote
@@ -169,10 +164,10 @@
 
 // Card image caps
 .card-img-top {
-  @include border-radius(.25rem .25rem 0 0);
+  @include border-radius($card-border-radius-inner $card-border-radius-inner 0 0);
 }
 .card-img-bottom {
-  @include border-radius(0 0 .25rem .25rem);
+  @include border-radius(0 0 $card-border-radius-inner $card-border-radius-inner);
 }
 
 
@@ -185,22 +180,23 @@
     .card-deck {
       display: flex;
       flex-flow: row wrap;
-      margin-right: -.625rem;
-      margin-left: -.625rem;
+      margin-right: -$card-deck-margin;
+      margin-left: -$card-deck-margin;
 
       .card {
         flex: 1 0 0;
-        margin-right: .625rem;
-        margin-left: .625rem;
+        margin-right: $card-deck-margin;
+        margin-left: $card-deck-margin;
       }
     }
   }
 } @else {
   @include media-breakpoint-up(sm) {
+    $space-between-cards: (2 * $card-deck-margin);
     .card-deck {
       display: table;
       table-layout: fixed;
-      border-spacing: 1.25rem 0;
+      border-spacing: $space-between-cards 0;
 
       .card {
         display: table-cell;
@@ -209,8 +205,8 @@
       }
     }
     .card-deck-wrapper {
-      margin-right: -1.25rem;
-      margin-left: -1.25rem;
+      margin-right: (-$space-between-cards);
+      margin-left: (-$space-between-cards);
     }
   }
 }
@@ -246,6 +242,8 @@
       // Handle rounded corners
       @if $enable-rounded {
         &:first-child {
+          @include border-right-radius(0);
+
           .card-img-top {
             border-top-right-radius: 0;
           }
@@ -254,6 +252,8 @@
           }
         }
         &:last-child {
+          @include border-left-radius(0);
+
           .card-img-top {
             border-top-left-radius: 0;
           }

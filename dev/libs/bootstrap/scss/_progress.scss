@@ -19,20 +19,24 @@
   margin-bottom: $spacer-y;
 }
 .progress[value] {
-  // IE10 uses `color` to set the bar background-color
-  color: #0074d9;
+  // Set overall background
+  background-color: #eee;
   // Remove Firefox and Opera border
   border: 0;
   // Reset the default appearance
   appearance: none;
+  // Set overall border radius
+  @include border-radius($border-radius);
+}
+.progress[value]::-ms-fill {
+  background-color: #0074d9;
+  // Remove right-hand border of value bar from IE10+/Edge
+  border: 0;
 }
 .progress[value]::-webkit-progress-bar {
   background-color: #eee;
   @include border-radius($border-radius);
   @include box-shadow(inset 0 .1rem .1rem rgba(0,0,0,.1));
-}
-.progress[value]::-webkit-progress-value::before {
-  content: attr(value);
 }
 .progress[value]::-webkit-progress-value {
   background-color: #0074d9;
@@ -111,6 +115,11 @@
   @include gradient-striped();
   background-size: $spacer-y $spacer-y;
 }
+.progress-striped[value]::-ms-fill {
+  @include gradient-striped();
+  background-size: $spacer-y $spacer-y;
+}
+// IE9
 @media screen and (min-width:0\0) {
   .progress-bar-striped {
     @include gradient-striped();
@@ -129,6 +138,7 @@
 .progress-animated[value]::-moz-progress-bar {
   animation: progress-bar-stripes 2s linear infinite;
 }
+// IE9
 @media screen and (min-width:0\0) {
   .progress-animated .progress-bar-striped {
     animation: progress-bar-stripes 2s linear infinite;

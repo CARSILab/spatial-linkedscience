@@ -64,6 +64,9 @@ var Dom = (function () {
       return false;
     });
 
+    // initially hide navSearch
+    $navSearch.hide();
+
   });
 
   return {

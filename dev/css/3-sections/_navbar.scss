@@ -1,11 +1,12 @@
 .navbar {
-
-	.navbar-brand {
+	&-brand {
 		cursor: pointer;
 	}
-	@media (max-width: 34em) {
-		form {
-			width: 10em;
-		}
+	&-nav {
+
+	}
+	&-form {
+		// display: hidden;
+		float: right;
 	}
 }

@@ -7,10 +7,11 @@ var sourcemaps = require('gulp-sourcemaps');
 var jade = require('gulp-jade');
 // styles task
 var sass = require('gulp-sass');
-var prefix = require('gulp-autoprefixer');
+var postcss = require('gulp-postcss');
 // javascript task
 var babel = require('gulp-babel');
 var concat = require('gulp-concat');
+var eslint = require('gulp-eslint');
 // sync task
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
@@ -41,12 +42,14 @@ gulp.task('html', function () {
 gulp.task('styles', function () {
   return gulp.src('dev/css/main.scss')
     .pipe(plumber(onError))
-    .pipe(sass({
-      //includePaths: ['./dev/css/1-plugins', './dev/css/2-base', './dev/css/3-sections']
-    }))
-    .pipe(prefix(['last 2 versions', 'ie 9'], {
-      cascade: true
-    }))
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(postcss([
+      // require('stylelint')(config.stylelint),
+      // require('precss')(),
+      require('autoprefixer')({ browsers: ['last 2 versions'] })
+    ]))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('assets/css'))
     .pipe(reload({
       stream: true
@@ -58,9 +61,11 @@ gulp.task('javascript', function () {
   return gulp.src('dev/js/*.js')
     .pipe(plumber(onError))
     .pipe(sourcemaps.init())
-		.pipe(babel())
-		.pipe(concat('bundle.js'))
-    //.pipe(uglify())
+      .pipe(eslint())
+      .pipe(eslint.format())
+      .pipe(babel())
+      .pipe(concat('bundle.js'))
+      //.pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./assets/js'))
     .pipe(reload({
@@ -73,7 +78,7 @@ gulp.task('javascript', function () {
 gulp.task('sync-proxy', function () {
   browserSync({
     proxy: '127.0.0.1:80',
-		online: true,
+    online: true,
     notify: false
   });
 });
@@ -85,7 +90,7 @@ gulp.task('sync-noproxy', function () {
     server: {
       baseDir: './'
     },
-		online: false,
+    online: false,
     notify: false
   });
 });
@@ -103,3 +108,17 @@ gulp.task('default', ['html', 'javascript', 'styles', 'sync-proxy', 'watch']);
 
 // Offline Task
 gulp.task('offline', ['html', 'javascript', 'styles', 'sync-noproxy', 'watch']);
+
+// var config = {
+//   stylelint: {
+//     'rules': {
+//       'string-quotes': 'double',
+//       'color-hex-case': 'lower',
+//       'color-hex-length': 'long',
+//       'color-no-invalid-hex': true,
+//       'number-leading-zero': 'always',
+//       'declaration-colon-space-after': 'always',
+//       'max-empty-lines': 2
+//     }
+//   }
+// };
