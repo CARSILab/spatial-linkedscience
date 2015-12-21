@@ -4972,23 +4972,7 @@ body {
 
 .welcome, .results {
   width: 50%;
-  float: left;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 0.9375rem;
-  padding-right: 0.9375rem; }
-  .welcome::after, .results::after {
-    clear: both;
-    content: "";
-    display: table; }
-
-.row {
-  margin-left: -0.9375rem;
-  margin-right: -0.9375rem; }
-  .row::after {
-    clear: both;
-    content: "";
-    display: table; }
+  float: left; }
 
 .navbar-brand {
   font-family: "XXIIGeom-Regular";
@@ -5035,6 +5019,7 @@ body {
 
 .welcome-submit {
   height: 40px;
+  color: white;
   background-color: #373a3c;
   border-color: #373a3c; }
 
@@ -5049,5 +5034,25 @@ body {
 
 .results {
   color: black; }
+  .results-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem; }
+    .results-container::after {
+      clear: both;
+      content: "";
+      display: table; }
+  .results-title {
+    text-align: center; }
+
+.people,
+.papers {
+  position: relative;
+  float: left;
+  min-height: 1px;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  width: 50%; }
 
 /*# sourceMappingURL=main.css.map */

@@ -22,9 +22,5 @@ body {
   width: 50%;
   float: left;
 
-  @include make-container()
-}
-
-.row {
-  @include make-row();
+  // @include make-container()
 }

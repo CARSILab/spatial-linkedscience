@@ -26,7 +26,7 @@ function onError(error) {
 // HTML Task
 // Compiles Jade to HTML
 gulp.task('html', function () {
-  gulp.src('dev/*.jade')
+  gulp.src('src/*.jade')
     .pipe(plumber(onError))
     .pipe(jade({
       pretty: true
@@ -40,7 +40,7 @@ gulp.task('html', function () {
 // Styles Task
 // Compiles Sass to CSS
 gulp.task('styles', function () {
-  return gulp.src('dev/css/main.scss')
+  return gulp.src('src/css/main.scss')
     .pipe(plumber(onError))
     .pipe(sourcemaps.init())
     .pipe(sass())
@@ -58,7 +58,7 @@ gulp.task('styles', function () {
 
 // Javascript Task
 gulp.task('javascript', function () {
-  return gulp.src('dev/js/*.js')
+  return gulp.src('src/js/*.js')
     .pipe(plumber(onError))
     .pipe(sourcemaps.init())
       .pipe(eslint())
@@ -98,9 +98,9 @@ gulp.task('sync-noproxy', function () {
 // Watch Task
 // Watches Jade, Sass, Javascript
 gulp.task('watch', function () {
-  gulp.watch('dev/**/*.jade', ['html']);
-  gulp.watch('dev/js/*.js', ['javascript']);
-  gulp.watch(['dev/css/**/*.{sass,scss}', 'dev/libs/bootstrap/scss/*.scss'], ['styles']);
+  gulp.watch('src/**/*.jade', ['html']);
+  gulp.watch('src/js/*.js', ['javascript']);
+  gulp.watch(['src/css/**/*.{sass,scss}', 'src/libs/bootstrap/scss/*.scss'], ['styles']);
 });
 
 // Default Task

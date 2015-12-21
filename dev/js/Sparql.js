@@ -1,3 +1,5 @@
+var testObject = {'book': {'name': 'hello'}};
+
 var Sparql = (function () {
 
   // gotto be a way to maybe use templating to fill in data instead of jquery appending everything
@@ -17,7 +19,7 @@ var Sparql = (function () {
     `;
 
   // DOM CACHING
-  var $title = $('.title');
+  var $title = $('.results-title');
   var $peopleHeader = $('.people-header');
   var $paperHeader = $('.paper-header');
   var $peopleList = $('.people-list');
@@ -133,6 +135,8 @@ var Sparql = (function () {
   }
 
   function affiliationQuery(affiliation) {
+    // TODO: when searching for affiliations, return the locations themselves
+    // when selecting an affiliation (which is what this is), return all authors belonging, and all papers written at the place
     return `
       ${prefixes}
       SELECT DISTINCT ?link ?name ?latlong ?location
@@ -163,14 +167,14 @@ var Sparql = (function () {
     } else {
       $title.html(`Showing results for: <b>${input} >> ${conference_part}</b>`);
 
-      $peopleHeader.html('<span class="icon-user">Authors</span>');
+      $peopleHeader.html('Authors');
       $paperHeader.html('Papers');
 
       // fill page with data
       $.each(results, function (i) {
         if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
           $peopleList.append(`
-            <li class="list-group-item author">
+            <li class="author">
               <a href="javascript:Poll.setHash('<${results[i].link.value}>')">${results[i].name.value}</a>
               &nbsp;
               <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].link.value}">&rarr;</a>
@@ -178,7 +182,7 @@ var Sparql = (function () {
           `);
         } else if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
           $paperList.append(`
-            <li class="list-group-item paper">(${results[i].year.value})
+            <li class="paper">(${results[i].year.value})
               <a href="javascript:Poll.setHash('<${results[i].link.value}>')"> ${results[i].name.value}</a>
               &nbsp;
               <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].link.value}">&rarr;</a>
@@ -202,7 +206,7 @@ var Sparql = (function () {
     $.each(results, function (i) {
       if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
         $paperList.append(`
-          <li class="list-group-item paper">(${results[i].year.value})
+          <li class="paper">(${results[i].year.value})
             <a href="javascript:Poll.setHash('<${results[i].paper.value}>')">${results[i].title.value}</a>
             &nbsp;
             <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].paper.value}">&rarr;</a>
@@ -210,7 +214,7 @@ var Sparql = (function () {
         `);
       } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
         $peopleList.append(`
-          <li class="list-group-item author">
+          <li class="author">
             <a href="javascript:Poll.setHash('<${results[i].knows.value}>')">${results[i].coname.value}</a>
             &nbsp;
             <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].knows.value}">&rarr;</a>
@@ -238,7 +242,7 @@ var Sparql = (function () {
     $.each(results, function (i) {
       if (i > 0) {
         $peopleList.append(`
-          <li class="list-group-item author">
+          <li class="author">
             <a href="javascript:Poll.setHash('<${results[i].coauthor.value}>')">${results[i].name.value}</a>
             &nbsp;
             <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].coauthor.value}>&rarr;</a>
@@ -371,6 +375,7 @@ var Sparql = (function () {
       testPaper();
     });
   });
+
 
   return {
     // API
