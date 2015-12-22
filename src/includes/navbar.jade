@@ -1,9 +1,13 @@
 header.navbar.navbar-dark.bg-inverse.navbar-fixed-top
   
   .navbar-brand(href='')
-    span.hidden-sm-down spatial <span class="icon-earth"></span> linkedscience
-    span.icon-earth.hidden-md-up
-      
+    span.hidden-sm-down 
+      | spatial 
+      span.icon.icon-earth
+        include ../assets/icons/earth.svg
+      |  linkedscience
+    span.icon.icon-earth.hidden-md-up
+      include ../assets/icons/earth.svg
   ul.nav.navbar-nav
     //li.nav-item
       a.nav-link(href="#") About

@@ -8,6 +8,8 @@
   "description": "spatial@linkedscience.org",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "https://github.com/twbs/bootstrap.git#v4-dev"
+    "bootstrap": "https://github.com/twbs/bootstrap.git#v4-dev",
+    "jquery": "~2.1.4",
+    "leaflet": "~0.7.7"
   }
 }

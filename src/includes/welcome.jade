@@ -1,6 +1,10 @@
 section.welcome
   .welcome-container
-    h1.welcome-header spatial <span class="icon-earth"></span> linkedscience
+    h1.welcome-header 
+      | spatial 
+      span.icon.icon-earth
+        include ../assets/icons/earth.svg
+      |  linkedscience
     form#main-form.welcome-form
       .input-group
         input#main-search.form-control(type="search", placeholder="Search", autocomplete="off", autofocus)

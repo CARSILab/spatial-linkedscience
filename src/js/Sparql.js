@@ -305,33 +305,33 @@ var Sparql = (function () {
   }
 
   // Render Offline Test Data
-  function testSearch() {
-    $.getJSON('./dev/testData/sample-search.json', function (json) {
-      Dom.slide('right');
-      renderSearch(json);
-    });
-  }
-
-  function testAuthor() {
-    $.getJSON('./dev/testData/sample-author.json', function (json) {
-      Dom.slide('right');
-      renderAuthor(json);
-    });
-  }
-
-  function testPaper() {
-    $.getJSON('./dev/testData/sample-paper.json', function (json) {
-      Dom.slide('right');
-      renderPaper(json);
-    });
-  }
-
-  function testAffiliation() {
-    $.getJSON('./dev/testData/sample-affiliation.json', function (json) {
-      Dom.slide('right');
-      renderAffiliation(json);
-    });
-  }
+  // function testSearch() {
+  //   $.getJSON('../src/testData/sample-search.json', function (json) {
+  //     Dom.slide('right');
+  //     renderSearch(json);
+  //   });
+  // }
+  //
+  // function testAuthor() {
+  //   $.getJSON('../src/testData/sample-author.json', function (json) {
+  //     Dom.slide('right');
+  //     renderAuthor(json);
+  //   });
+  // }
+  //
+  // function testPaper() {
+  //   $.getJSON('../src/testData/sample-paper.json', function (json) {
+  //     Dom.slide('right');
+  //     renderPaper(json);
+  //   });
+  // }
+  //
+  // function testAffiliation() {
+  //   $.getJSON('../src/testData/sample-affiliation.json', function (json) {
+  //     Dom.slide('right');
+  //     renderAffiliation(json);
+  //   });
+  // }
 
   // DOM BINDINGS
   $(document).ready(function () {
@@ -366,14 +366,14 @@ var Sparql = (function () {
     });
 
     // bind test functions to buttons
-    $('#testAuthor').click(function (event) {
-      event.preventDefault();
-      testAuthor();
-    });
-    $('#testPaper').click(function (event) {
-      event.preventDefault();
-      testPaper();
-    });
+    // $('#testAuthor').click(function (event) {
+    //   event.preventDefault();
+    //   testAuthor();
+    // });
+    // $('#testPaper').click(function (event) {
+    //   event.preventDefault();
+    //   testPaper();
+    // });
   });
 
 
@@ -382,12 +382,12 @@ var Sparql = (function () {
     search: search,
     selectAuthor: selectAuthor,
     selectPaper: selectPaper,
-    selectAffiliation: selectAffiliation,
+    selectAffiliation: selectAffiliation
 
     // Testing
-    testSearch: testSearch,
-    testAuthor: testAuthor,
-    testPaper: testPaper,
-    testAffiliation: testAffiliation
+  //   testSearch: testSearch,
+  //   testAuthor: testAuthor,
+  //   testPaper: testPaper,
+  //   testAffiliation: testAffiliation
   };
 })();

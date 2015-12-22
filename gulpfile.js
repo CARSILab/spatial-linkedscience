@@ -78,7 +78,7 @@ gulp.task('move', function(){
   return gulp.src([
     'src/assets/libs/jquery/dist/jquery.min.js',
     'src/assets/libs/bootstrap/dist/js/bootstrap.min.js',
-    'src/assets/libs/leaflet/leaflet.min.js'
+    'src/assets/libs/leaflet/dist/leaflet.js'
   ])
     .pipe(gulp.dest('dist/js'));
 });
@@ -116,7 +116,7 @@ gulp.task('sync-noproxy', function () {
 // Watch Task
 // Watches Jade, Sass, Javascript
 gulp.task('watch', function () {
-  gulp.watch('src/**/*.jade', ['html']);
+  gulp.watch('src/**/*.{jade,svg}', ['html']);
   gulp.watch('src/js/*.js', ['javascript']);
   gulp.watch('src/scss/**/*.scss', ['styles']);
 });
