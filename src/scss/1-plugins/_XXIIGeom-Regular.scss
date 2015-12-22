@@ -1,0 +1,35 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3143390, 2015-12-18T10:24:29-0500
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: XXIIGeom-Regular by Doubletwo Studios
+ * URL: http://www.myfonts.com/fonts/doubletwo/xxii-geom/regular/
+ * Copyright: Copyright &#x00A9; 2014 by Doubletwo Studios. All rights reserved.
+ * Licensed pageviews: 10,000
+ *
+ *
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=3143390
+ *
+ * © 2015 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/2ff6de");
+
+
+@font-face {
+  font-family: 'XXIIGeom-Regular';
+  src: url('/fonts/XXIIGeom-Regular.eot');
+  src: url('/fonts/XXIIGeom-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/XXIIGeom-Regular.woff2') format('woff2'),
+    url('/fonts/XXIIGeom-Regular.woff') format('woff'),
+    url('/fonts/XXIIGeom-Regular.ttf') format('truetype'),
+    url('/fonts/XXIIGeom-Regular.svg#wf') format('svg');
+}

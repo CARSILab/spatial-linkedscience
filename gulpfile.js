@@ -31,7 +31,7 @@ gulp.task('html', function () {
     .pipe(jade({
       pretty: true
     }))
-    .pipe(gulp.dest(''))
+    .pipe(gulp.dest('dist/'))
     .pipe(reload({
       stream: true
     }));
@@ -40,7 +40,7 @@ gulp.task('html', function () {
 // Styles Task
 // Compiles Sass to CSS
 gulp.task('styles', function () {
-  return gulp.src('src/css/main.scss')
+  return gulp.src('src/scss/main.scss')
     .pipe(plumber(onError))
     .pipe(sourcemaps.init())
     .pipe(sass())
@@ -50,7 +50,7 @@ gulp.task('styles', function () {
       require('autoprefixer')({ browsers: ['last 2 versions'] })
     ]))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('assets/css'))
+    .pipe(gulp.dest('dist/css'))
     .pipe(reload({
       stream: true
     }));
@@ -66,12 +66,30 @@ gulp.task('javascript', function () {
       .pipe(babel())
       .pipe(concat('bundle.js'))
       //.pipe(uglify())
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./assets/js'))
+    .pipe(sourcemaps.write(''))
+    .pipe(gulp.dest('dist/js'))
     .pipe(reload({
       stream: true
     }));
 });
+
+// move libraries and assets over to build
+gulp.task('move', function(){
+  return gulp.src([
+    'src/assets/libs/jquery/dist/jquery.min.js',
+    'src/assets/libs/bootstrap/dist/js/bootstrap.min.js',
+    'src/assets/libs/leaflet/leaflet.min.js'
+  ])
+    .pipe(gulp.dest('dist/js'));
+});
+
+// move font files over to build
+gulp.task('fonts', function(){
+  return gulp.src('src/assets/fonts/*.*')
+    .pipe(gulp.dest('dist/fonts'));
+});
+
+
 
 // Sync Task
 // runs browser-sync
@@ -100,14 +118,14 @@ gulp.task('sync-noproxy', function () {
 gulp.task('watch', function () {
   gulp.watch('src/**/*.jade', ['html']);
   gulp.watch('src/js/*.js', ['javascript']);
-  gulp.watch(['src/css/**/*.{sass,scss}', 'src/libs/bootstrap/scss/*.scss'], ['styles']);
+  gulp.watch('src/scss/**/*.scss', ['styles']);
 });
 
 // Default Task
-gulp.task('default', ['html', 'javascript', 'styles', 'sync-proxy', 'watch']);
+gulp.task('default', ['html', 'javascript', 'styles', 'fonts', 'move', 'sync-proxy', 'watch']);
 
 // Offline Task
-gulp.task('offline', ['html', 'javascript', 'styles', 'sync-noproxy', 'watch']);
+gulp.task('offline', ['html', 'javascript', 'styles', 'fonts', 'move', 'sync-noproxy', 'watch']);
 
 // var config = {
 //   stylelint: {
