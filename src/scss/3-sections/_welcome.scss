@@ -11,7 +11,7 @@
     font-size: 7vw;
     font-family: 'XXIIGeom-Regular';
     font-weight: bold;
-    
+
     @media (min-width: 667px) {
       font-size: 48px
     }
@@ -42,4 +42,8 @@
   &:hover {
     background-color: rgba($brand-primary, .25);
   }
+}
+
+.icon-search {
+  @include size(1.5rem);
 }
