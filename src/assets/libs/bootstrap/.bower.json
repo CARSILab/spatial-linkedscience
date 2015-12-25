@@ -31,11 +31,11 @@
   "dependencies": {
     "jquery": "1.9.1 - 2"
   },
-  "_release": "e6fdebb9c7",
+  "_release": "99dfd88219",
   "_resolution": {
     "type": "branch",
     "branch": "v4-dev",
-    "commit": "e6fdebb9c7efda70b9c1d9e3a716e28cd6b050cc"
+    "commit": "99dfd882194deb9ed0e84a3463ef048771624779"
   },
   "_source": "https://github.com/twbs/bootstrap.git",
   "_target": "v4-dev",
