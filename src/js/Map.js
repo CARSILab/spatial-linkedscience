@@ -43,7 +43,7 @@ var Map = (function () {
 
     // selectAffiliation
     $(marker).click(function () {
-      Poll.setHash('<' + data.link.value + '>');
+      Router.setHash('<' + data.link.value + '>');
     });
 
     // push marker into array (for later deletion)

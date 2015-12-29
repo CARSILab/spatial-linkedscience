@@ -7,7 +7,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var jade = require('gulp-jade');
 // styles task
 var sass = require('gulp-sass');
-var postcss = require('gulp-postcss');
+var autoprefixer = require('gulp-autoprefixer');
 // javascript task
 var babel = require('gulp-babel');
 var concat = require('gulp-concat');
@@ -43,12 +43,8 @@ gulp.task('styles', function () {
   return gulp.src('src/scss/main.scss')
     .pipe(plumber(onError))
     .pipe(sourcemaps.init())
-    .pipe(sass())
-    .pipe(postcss([
-      // require('stylelint')(config.stylelint),
-      // require('precss')(),
-      require('autoprefixer')({ browsers: ['last 2 versions'] })
-    ]))
+      .pipe(sass())
+      .pipe(autoprefixer({ browsers: ['last 2 versions']}))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'))
     .pipe(reload({
@@ -89,8 +85,6 @@ gulp.task('fonts', function(){
     .pipe(gulp.dest('dist/fonts'));
 });
 
-
-
 // Sync Task
 // runs browser-sync
 gulp.task('sync-proxy', function () {
@@ -122,10 +116,13 @@ gulp.task('watch', function () {
 });
 
 // Default Task
-gulp.task('default', ['html', 'javascript', 'styles', 'fonts', 'move', 'sync-proxy', 'watch']);
+gulp.task('default', ['html', 'javascript', 'styles', 'sync-proxy', 'watch']);
 
 // Offline Task
-gulp.task('offline', ['html', 'javascript', 'styles', 'fonts', 'move', 'sync-noproxy', 'watch']);
+gulp.task('offline', ['html', 'javascript', 'styles', 'sync-noproxy', 'watch']);
+
+// build task
+gulp.task('build', ['html', 'javascript', 'styles', 'fonts', 'move']);
 
 // var config = {
 //   stylelint: {

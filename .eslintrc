@@ -14,7 +14,7 @@
 	"globals": {
 		"Dom": false,
 		"Map": false,
-		"Poll": false,
+		"Router": false,
 		"Sparql": false,
 		"$": false,
 		"L": false

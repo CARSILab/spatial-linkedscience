@@ -160,6 +160,7 @@ var Sparql = (function () {
   function renderSearch(json, input, conference) {
     var results = json.results.bindings;
     var conference_part = conference != 'null' ? `${conference}` : '';
+    Dom.slide('right');
 
     // No Results:
     if (results.length === 0) {
@@ -175,7 +176,7 @@ var Sparql = (function () {
         if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
           $peopleList.append(`
             <li class="author">
-              <a href="javascript:Poll.setHash('<${results[i].link.value}>')">${results[i].name.value}</a>
+              <a href="javascript:Router.setHash('<${results[i].link.value}>')">${results[i].name.value}</a>
               &nbsp;
               <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].link.value}">&rarr;</a>
             </li>
@@ -183,7 +184,7 @@ var Sparql = (function () {
         } else if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
           $paperList.append(`
             <li class="paper">(${results[i].year.value})
-              <a href="javascript:Poll.setHash('<${results[i].link.value}>')"> ${results[i].name.value}</a>
+              <a href="javascript:Router.setHash('<${results[i].link.value}>')"> ${results[i].name.value}</a>
               &nbsp;
               <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].link.value}">&rarr;</a>
             </li>
@@ -199,6 +200,8 @@ var Sparql = (function () {
     var results = json.results.bindings;
 
     Dom.clear();
+    Dom.slide('right');
+
     $title.html('<b>' + results[0].name.value + '</b>');
     $paperHeader.html('Papers');
     $peopleHeader.html('Co-authors/-editors');
@@ -207,7 +210,7 @@ var Sparql = (function () {
       if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
         $paperList.append(`
           <li class="paper">(${results[i].year.value})
-            <a href="javascript:Poll.setHash('<${results[i].paper.value}>')">${results[i].title.value}</a>
+            <a href="javascript:Router.setHash('<${results[i].paper.value}>')">${results[i].title.value}</a>
             &nbsp;
             <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].paper.value}">&rarr;</a>
           </li>
@@ -215,7 +218,7 @@ var Sparql = (function () {
       } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
         $peopleList.append(`
           <li class="author">
-            <a href="javascript:Poll.setHash('<${results[i].knows.value}>')">${results[i].coname.value}</a>
+            <a href="javascript:Router.setHash('<${results[i].knows.value}>')">${results[i].coname.value}</a>
             &nbsp;
             <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].knows.value}">&rarr;</a>
           </li>
@@ -229,7 +232,9 @@ var Sparql = (function () {
   function renderPaper(json) {
 
     var results = json.results.bindings;
+
     Dom.clear();
+    Dom.slide('right');
 
     $title.html('<b>' + results[0].title.value + '</b>');
     $peopleHeader.html('Authors/Co-authors');
@@ -243,7 +248,7 @@ var Sparql = (function () {
       if (i > 0) {
         $peopleList.append(`
           <li class="author">
-            <a href="javascript:Poll.setHash('<${results[i].coauthor.value}>')">${results[i].name.value}</a>
+            <a href="javascript:Router.setHash('<${results[i].coauthor.value}>')">${results[i].name.value}</a>
             &nbsp;
             <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].coauthor.value}>&rarr;</a>
           </li>
@@ -254,7 +259,9 @@ var Sparql = (function () {
 
   function renderAffiliation(json) {
     var results = json.results.bindings;
+
     Dom.clear();
+    Dom.slide('right');
 
     var data = results;
     $title.html(`<strong>${data[0].name.value}</strong>`);
