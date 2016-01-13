@@ -10,8 +10,6 @@ var Router = (function () {
     var hash = window.location.hash.slice(1);
     var key = `<http://spatial.linkedscience.org/context/${hash}>`;
 
-    // $('.belt').css('left', '-100%');
-
     if (hash.length < 2) {
       Dom.clear();
     } else if (hash[0] === 'p') {
