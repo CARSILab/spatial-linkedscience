@@ -3,9 +3,10 @@ var Map = (function () {
   // PRIVATE
   var markers = [];
   var pin = L.icon({
-    iconUrl: 'assets/icons/circle.png',
-    iconSize: [10, 10],
-    iconAnchor: [5, 5]
+    iconUrl: 'icons/place.svg',
+    iconSize: [20, 20],
+    iconAnchor: [10, 20],
+    className: 'map-marker'
   });
   var map = createMap();
 
@@ -30,8 +31,14 @@ var Map = (function () {
       attribution: 'Map tiles by <a href="https://www.mapbox.com/">Mapbox</a>'
     }).addTo(map);
 
-  // CREATE MAP PIN
-  function setPin(data) {
+
+
+
+
+
+
+  // CREATE MAP PIN FOR AN AFFILIATION
+  function setAffiliation(data) {
     // extract lat and long
     var latlong = data.latlong.value.split(' ');
     // create map marker
@@ -50,8 +57,30 @@ var Map = (function () {
     markers.push(marker);
   }
 
+  // CREATE MAP PINS FOR AN AUTHOR
+  function setAuthorPins(data) {
+    console.log(data);
+    // // extract lat and long
+    // var latlong = data.latlong.value.split(' ');
+    // // create map marker
+    // var marker = L.marker(
+    //   [parseFloat(latlong[0]), parseFloat(latlong[1])], {
+    //     icon: pin,
+    //     title: data.name.value
+    //   }).addTo(map);
+
+    // // selectAffiliation
+    // $(marker).click(function () {
+    //   Router.setHash('<' + data.link.value + '>');
+    // });
+
+    // // push marker into array (for later deletion)
+    // markers.push(marker);
+  }
+
   return {
     // API
-    setPin: setPin
+    setAffiliation: setAffiliation,
+    setAuthorPins: setAuthorPins
   };
 })();

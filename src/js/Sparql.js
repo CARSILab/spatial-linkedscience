@@ -36,6 +36,10 @@ var Sparql = (function () {
         GRAPH ${conference_seg}
         {
           {
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+            # get any person matching input
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
             ?link foaf:name ?name .
               FILTER regex(?name, "${input}", "i")
             ?link foaf:familyName ?lastName .
@@ -44,6 +48,10 @@ var Sparql = (function () {
           }
           UNION
           {
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+            # get any publication matching input
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
             ?link dc:title ?name .
               FILTER regex(?name, "${input}", "i")
             ?link dc:date ?year .
@@ -52,6 +60,10 @@ var Sparql = (function () {
           }
           UNION
           {
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+            # get any publication with subject matching input
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
             ?link dc:subject key:${input.split(' ').join('_')} .
             ?link dc:title ?title .
             ?link dc:date ?year .
@@ -60,6 +72,10 @@ var Sparql = (function () {
           }
           UNION
           {
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+            # get any affiliation matching input
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
             ?link foaf:name ?name ;
               FILTER regex(?name, "${input}", "i")
             ?link geo:lat_long ?latlong .
@@ -79,6 +95,10 @@ var Sparql = (function () {
         GRAPH ?g
         {
           {
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+            # get author's name and publications
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
             ${author}
               foaf:name ?name ;
               foaf:publications ?paper .
@@ -88,6 +108,10 @@ var Sparql = (function () {
           }
           UNION
           {
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+            # get all co-authors / editors of author
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
             ${author} foaf:knows ?knows .
             ?knows foaf:name ?coname .
             ?knows foaf:familyName ?lastName .
@@ -95,6 +119,10 @@ var Sparql = (function () {
           }
           UNION
           {
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+            # get author's affiliations
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
             ?affiliation
               foaf:member ${author} ;
               foaf:name ?name ;
@@ -110,6 +138,9 @@ var Sparql = (function () {
   function paperQuery(paper) {
     // need to get list of subjects without returning the same paper n times for each subject
     //'dc:subject ?subject ; ' +
+
+    //  get location / affiliation
+
     return `
       ${prefixes}
       SELECT DISTINCT ?title ?authors ?name ?coauthor ?year ?homepage ?partOf ?subject ?g
@@ -117,6 +148,10 @@ var Sparql = (function () {
         GRAPH ?g
         {
           {
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+            # get paper's title, year, homepage, and conference
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
             ${paper}
               dc:title ?title ;
               dc:date ?year ;
@@ -125,6 +160,10 @@ var Sparql = (function () {
           }
           UNION
           {
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+            # get paper's author and  co-authors / editors
+            # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
             ${paper} bibo:authorList ?list .
             ?list rdf:rest*/rdf:first ?coauthor .
             ?coauthor foaf:name ?name .
@@ -142,6 +181,10 @@ var Sparql = (function () {
       SELECT DISTINCT ?link ?name ?latlong ?location
       {
         {
+          # # # # # # # # # # # # # # # # # # # # # # # # # # #
+          # get name and location of affiliation
+          # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
           ${affiliation}
             foaf:name ?name ;
             geo:lat_long ?latlong ;
@@ -149,6 +192,10 @@ var Sparql = (function () {
         }
         UNION
         {
+          # # # # # # # # # # # # # # # # # # # # # # # # # # #
+          # get all members of affiliation
+          # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
           ${affiliation} 'foaf:member ?members .
           ?members foaf:name ?name .
         }
@@ -190,7 +237,7 @@ var Sparql = (function () {
             </li>
           `);
         } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Organization') {
-          Map.setPin(results[i]);
+          Map.setAffiliation(results[i]);
         }
       });
     }
@@ -205,6 +252,8 @@ var Sparql = (function () {
     $title.html('<b>' + results[0].name.value + '</b>');
     $paperHeader.html('Papers');
     $peopleHeader.html('Co-authors/-editors');
+
+    Map.setAuthorPins(results);
 
     $.each(results, function (i) {
       if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
@@ -224,7 +273,7 @@ var Sparql = (function () {
           </li>
         `);
       } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Organization') {
-        Map.setPin(results[i]);
+        Map.setAffiliation(results[i]);
       }
     });
   }

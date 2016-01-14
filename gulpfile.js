@@ -70,7 +70,7 @@ gulp.task('javascript', function () {
 });
 
 // move libraries and assets over to build
-gulp.task('move', function(){
+gulp.task('libs', function(){
   return gulp.src([
     'src/assets/libs/jquery/dist/jquery.min.js',
     'src/assets/libs/bootstrap/dist/js/bootstrap.min.js',
@@ -83,6 +83,12 @@ gulp.task('move', function(){
 gulp.task('fonts', function(){
   return gulp.src('src/assets/fonts/*.*')
     .pipe(gulp.dest('dist/fonts'));
+});
+
+// move icon files over to build
+gulp.task('icons', function(){
+  return gulp.src('src/assets/icons/*.*')
+    .pipe(gulp.dest('dist/icons'));
 });
 
 // Sync Task
@@ -111,18 +117,19 @@ gulp.task('sync-noproxy', function () {
 // Watches Jade, Sass, Javascript
 gulp.task('watch', function () {
   gulp.watch('src/**/*.{jade,svg}', ['html']);
+  gulp.watch('src/assets/icons/*.*', ['icons']);
   gulp.watch('src/js/*.js', ['javascript']);
   gulp.watch('src/scss/**/*.scss', ['styles']);
 });
 
 // Default Task
-gulp.task('default', ['html', 'javascript', 'styles', 'sync-proxy', 'watch']);
+gulp.task('default', ['html', 'icons', 'javascript', 'styles', 'sync-proxy', 'watch']);
 
 // Offline Task
-gulp.task('offline', ['html', 'javascript', 'styles', 'sync-noproxy', 'watch']);
+gulp.task('offline', ['html', 'icons', 'javascript', 'styles', 'sync-noproxy', 'watch']);
 
 // build task
-gulp.task('build', ['html', 'javascript', 'styles', 'fonts', 'move']);
+gulp.task('build', ['html', 'icons', 'javascript', 'styles', 'fonts', 'libs']);
 
 // var config = {
 //   stylelint: {
