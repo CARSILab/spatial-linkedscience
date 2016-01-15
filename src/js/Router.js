@@ -9,14 +9,16 @@ var Router = (function () {
 
     var hash = window.location.hash.slice(1);
     var key = `<http://spatial.linkedscience.org/context/${hash}>`;
-
+    console.log(hash);
     if (hash.length < 2) {
       Dom.clear();
-    } else if (hash[0] === 'p') {
+    } else if (hash.match(/^search/)) {
+      Sparql.search();
+    } else if (hash.match(/^person/)) {
       Sparql.selectAuthor(key);
-    } else if (hash[1] === 'f') {
+    } else if (hash.match(/^affiliation/)) {
       Sparql.selectAffiliation(key);
-    } else {
+    } else if (hash.match(/\/paper\//)){
       Sparql.selectPaper(key);
     }
 

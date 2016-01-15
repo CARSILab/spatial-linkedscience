@@ -21,7 +21,7 @@ var Map = (function () {
     return L.map('map', {
       center: center,
       zoom: 2,
-      scrollWheelZoom: false
+      scrollWheelZoom: true
     });
   }
 
