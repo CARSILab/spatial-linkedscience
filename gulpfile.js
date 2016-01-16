@@ -91,6 +91,12 @@ gulp.task('icons', function(){
     .pipe(gulp.dest('dist/icons'));
 });
 
+// move favicon files over to build
+gulp.task('favicons', function(){
+  return gulp.src('src/assets/favicons/*.*')
+    .pipe(gulp.dest('dist/favicons'));
+});
+
 // Sync Task
 // runs browser-sync
 gulp.task('sync-proxy', function () {
@@ -129,7 +135,7 @@ gulp.task('default', ['html', 'icons', 'javascript', 'styles', 'sync-proxy', 'wa
 gulp.task('offline', ['html', 'icons', 'javascript', 'styles', 'sync-noproxy', 'watch']);
 
 // build task
-gulp.task('build', ['html', 'icons', 'javascript', 'styles', 'fonts', 'libs']);
+gulp.task('build', ['html', 'icons', 'favicons', 'javascript', 'styles', 'fonts', 'libs']);
 
 // var config = {
 //   stylelint: {
