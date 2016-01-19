@@ -8,7 +8,7 @@ var Dom = (function () {
   var $paperList = $('.paper-list');
   var $mainSearch = $('#main-search');
   var $navSearch = $('#nav-search');
-  var $conference = $('#conference');
+  var $conference = $('#dropdown-selection');
   var $belt = $('.belt');
 
   // clears all data off page

@@ -14,5 +14,36 @@
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.6"
+  },
+  "dependencies": {
+    "bootstrap": "git+https://github.com/twbs/bootstrap.git#v4-dev",
+    "jquery": "^2.2.0",
+    "leaflet": "^0.7.7"
+  },
+  "babel": {
+    "presets": ["es2015"]
+  },
+  "eslintConfig": {
+    "rules": {
+      "quotes": [2, "single"],
+      "linebreak-style": [2, "unix"],
+      "semi": [2, "always"],
+  		"no-console": 0,
+  		"no-unused-vars": 0
+    },
+    "env": {
+      "es6": true,
+      "browser": true,
+  		"node": true
+    },
+  	"globals": {
+  		"Dom": false,
+  		"Map": false,
+  		"Router": false,
+  		"Sparql": false,
+  		"$": false,
+  		"L": false
+  	},
+    "extends": "eslint:recommended"
   }
 }

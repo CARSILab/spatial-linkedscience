@@ -44,7 +44,7 @@ gulp.task('styles', function () {
     .pipe(plumber(onError))
     .pipe(sourcemaps.init())
       .pipe(sass())
-      .pipe(autoprefixer({ browsers: ['last 2 versions']}))
+      // .pipe(autoprefixer({ browsers: ['last 2 versions']}))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'))
     .pipe(reload({
@@ -72,9 +72,9 @@ gulp.task('javascript', function () {
 // move libraries and assets over to build
 gulp.task('libs', function(){
   return gulp.src([
-    'src/assets/libs/jquery/dist/jquery.min.js',
-    'src/assets/libs/bootstrap/dist/js/bootstrap.min.js',
-    'src/assets/libs/leaflet/dist/leaflet.js'
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
+    'node_modules/leaflet/dist/leaflet.js'
   ])
     .pipe(gulp.dest('dist/js'));
 });
