@@ -1,5 +1,3 @@
-var testObject = {'book': {'name': 'hello'}};
-
 var Sparql = (function () {
 
   // gotto be a way to maybe use templating to fill in data instead of jquery appending everything
@@ -208,6 +206,7 @@ var Sparql = (function () {
     var results = json.results.bindings;
     var conference_part = conference != 'null' ? `${conference}` : '';
     Dom.slide('right');
+    Dom.clear();
 
     // No Results:
     if (results.length === 0) {
@@ -392,46 +391,33 @@ var Sparql = (function () {
   // DOM BINDINGS
   $(document).ready(function () {
 
-    // TODO: implement both search bars
     // SEARCH BAR
     $('#main-form').bind('submit', function (event) {
       // stops form submission
       event.preventDefault();
 
-      var $text = $('#main-search').val();
-      var $conference = $('.conference').attr('data-value');
-      console.log($text);
-      if ($text.length > 1) {
-        Dom.slide('right');
-        search($text, $conference);
-        Dom.clear();
+      var $key = $('#main-search').val();
+      var $conf = $('#dropdown-selection').attr('data-value');
+
+      if ($key.length > 1) {
+        window.location.hash = `search?${$.param({key: $key,conf: $conf})}`;
       }
     });
 
+
+    // NAV BAR
+    // TODO: merge two together
     $('#nav-form').bind('submit', function (event) {
       // stops form submission
       event.preventDefault();
 
-      var $text = $('#nav-search').val();
-      console.log($text);
-      if ($text.length > 1) {
-        Dom.slide('right');
-        search($text, 'null');
-        Dom.clear();
+      var $key = $('#nav-search').val();
+      if ($key.length > 1) {
+        window.location.hash = `search?${$.param({key: $key,conf: 'null'})}`;
       }
     });
 
-    // bind test functions to buttons
-    // $('#testAuthor').click(function (event) {
-    //   event.preventDefault();
-    //   testAuthor();
-    // });
-    // $('#testPaper').click(function (event) {
-    //   event.preventDefault();
-    //   testPaper();
-    // });
   });
-
 
   return {
     // API

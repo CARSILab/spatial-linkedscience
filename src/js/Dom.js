@@ -50,17 +50,25 @@ var Dom = (function () {
 
     // dropdown selects
     $(document.body).on('click', '.dropdown-menu li', function (event) {
-      //event.preventDefault();
       var $target = $(event.currentTarget);
+      var data;
+
+      if ($target.attr('id') === 'dropdown-reset' ) {
+        data = 'null';
+      } else {
+        data = $target.data('value');
+      }
 
       $target
         .closest('.btn-group')
         .find('[data-bind="label"]')
         .text($target.text())
-        .attr('data-value', $target.data('value'))
+        .attr('data-value', data)
         .end()
         .children('.dropdown-toggle')
         .dropdown('toggle');
+
+        console.log($('#dropdown-selection').attr('data-value'));
       return false;
     });
 

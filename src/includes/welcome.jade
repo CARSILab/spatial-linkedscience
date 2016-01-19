@@ -11,14 +11,14 @@ section.welcome
         .input-group-btn
           .btn-group
             button.btn.dropdown-toggle.form-control(type="button", data-toggle="dropdown")
-              span#conference(data-bind="label", data-value="null") Conference
+              span#dropdown-selection(data-bind="label", data-value="null") Conference
             ul.dropdown-menu(role="menu")
-              li.conference(data-value="null") none
+              li#dropdown-reset.dropdown-item(data-value="null") none
               .dropdown-divider(role="separator")
-              li.conference(data-value="acmgis") ACM GIS
-              li.conference(data-value="agile") AGILE
-              li.conference(data-value="cosit") COSIT
-              li.conference(data-value="giscience") GIScience
+              li.dropdown-item(data-value="acmgis") ACM GIS
+              li.dropdown-item(data-value="agile") AGILE
+              li.dropdown-item(data-value="cosit") COSIT
+              li.dropdown-item(data-value="giscience") GIScience
           button.welcome-submit.btn.btn-secondaryp(type="submit")
             .icon.icon-search
               include ../assets/icons/search.svg
