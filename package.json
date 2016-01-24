@@ -8,6 +8,7 @@
     "gulp-babel": "^6.1.1",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^1.1.1",
+    "gulp-file-include": "^0.13.7",
     "gulp-jade": "^1.0.1",
     "gulp-plumber": "^1.0.1",
     "gulp-sass": "^2.0.4",
@@ -21,29 +22,40 @@
     "leaflet": "^0.7.7"
   },
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
   },
   "eslintConfig": {
     "rules": {
-      "quotes": [2, "single"],
-      "linebreak-style": [2, "unix"],
-      "semi": [2, "always"],
-  		"no-console": 0,
-  		"no-unused-vars": 0
+      "quotes": [
+        2,
+        "single"
+      ],
+      "linebreak-style": [
+        2,
+        "unix"
+      ],
+      "semi": [
+        2,
+        "always"
+      ],
+      "no-console": 0,
+      "no-unused-vars": 0
     },
     "env": {
       "es6": true,
       "browser": true,
-  		"node": true
+      "node": true
     },
-  	"globals": {
-  		"Dom": false,
-  		"Map": false,
-  		"Router": false,
-  		"Sparql": false,
-  		"$": false,
-  		"L": false
-  	},
+    "globals": {
+      "Dom": false,
+      "Map": false,
+      "Router": false,
+      "Sparql": false,
+      "$": false,
+      "L": false
+    },
     "extends": "eslint:recommended"
   }
 }

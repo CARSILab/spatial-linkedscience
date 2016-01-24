@@ -4,7 +4,7 @@ var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 // html task
-var jade = require('gulp-jade');
+var fileinclude = require('gulp-file-include');
 // styles task
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
@@ -26,11 +26,9 @@ function onError(error) {
 // HTML Task
 // Compiles Jade to HTML
 gulp.task('html', function () {
-  gulp.src('src/*.jade')
+  gulp.src('src/index.html')
     .pipe(plumber(onError))
-    .pipe(jade({
-      pretty: true
-    }))
+    .pipe(fileinclude())
     .pipe(gulp.dest('dist/'))
     .pipe(reload({
       stream: true

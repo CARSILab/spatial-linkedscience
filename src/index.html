@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @@include("./includes/favicons.html")
+
+    <title>spatial.linkedscience</title>
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    @@include("./includes/navbar.html")
+    <div id="map"></div>
+    <div class="belt">
+      @@include("./includes/welcome.html")
+      @@include("./includes/results.html")
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/bundle.js"></script>
+  </body>
+</html>
+<!-- nginx config file at /usr/local/etc/nginx/nginx.conf-->
