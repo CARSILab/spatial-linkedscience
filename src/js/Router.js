@@ -10,7 +10,7 @@ var Router = (function () {
 
     // for data URIs, will strip off redundant bits at the front
     } else {
-      window.location.hash = hash.slice(42, -1);
+      window.location.hash = hash.slice(41);
     }
 
   }
