@@ -5,6 +5,10 @@ var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 // html task
 var fileinclude = require('gulp-file-include');
+// svg task
+var svgstore = require('gulp-svgstore');
+var svgmin = require('gulp-svgmin');
+var inject = require('gulp-inject');
 // styles task
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
@@ -83,10 +87,11 @@ gulp.task('fonts', function(){
     .pipe(gulp.dest('dist/fonts'));
 });
 
-// move icon files over to build
-gulp.task('icons', function(){
-  return gulp.src('src/assets/icons/*.*')
-    .pipe(gulp.dest('dist/icons'));
+//
+gulp.task('svg', function(){
+  return gulp.src('src/assets/icons/*.svg')
+    .pipe(svgstore({inlineSvg: true}))
+    .pipe(gulp.dest('src/includes'));
 });
 
 // move favicon files over to build
@@ -121,19 +126,19 @@ gulp.task('sync-noproxy', function () {
 // Watches Jade, Sass, Javascript
 gulp.task('watch', function () {
   gulp.watch('src/**/*.{html,svg}', ['html']);
-  gulp.watch('src/assets/icons/*.*', ['icons']);
+  gulp.watch('src/assets/icons/*.*', ['svg']);
   gulp.watch('src/js/*.js', ['javascript']);
   gulp.watch('src/scss/**/*.scss', ['styles']);
 });
 
 // Default Task
-gulp.task('default', ['html', 'icons', 'javascript', 'styles', 'sync-proxy', 'watch']);
+gulp.task('default', ['svg', 'html', 'javascript', 'styles', 'sync-proxy', 'watch']);
 
 // Offline Task
-gulp.task('offline', ['html', 'icons', 'javascript', 'styles', 'sync-noproxy', 'watch']);
+gulp.task('offline', ['svg', 'html', 'javascript', 'styles', 'sync-noproxy', 'watch']);
 
 // build task
-gulp.task('build', ['html', 'icons', 'favicons', 'javascript', 'styles', 'fonts', 'libs']);
+gulp.task('build', ['svg', 'html', 'favicons', 'javascript', 'styles', 'fonts', 'libs']);
 
 // var config = {
 //   stylelint: {

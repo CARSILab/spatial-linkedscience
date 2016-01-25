@@ -9,3 +9,4 @@ oldFiles
 node_modules
 npm-debug.log
 dist
+src/includes/icons.svg

@@ -2,7 +2,10 @@
   <div class="welcome-container">
     <h1 class="welcome-header">
       spatial
-      <div class="icon icon-earth">@@include("../assets/icons/earth.svg")</div>
+      <!-- <div class="icon icon-earth">@@include("../assets/icons/earth.svg")</div> -->
+      <svg class="icon icon-earth">
+        <use xlink:href="#icon-earth" />
+      </svg>
        linkedscience
     </h1>
     <form id="main-form" class="welcome-form">
@@ -23,7 +26,9 @@
             </ul>
           </div>
           <button type="submit" class="welcome-submit btn btn-secondaryp">
-            <div class="icon icon-search">@@include("../assets/icons/search.svg")</div>
+            <svg class="icon icon-search">
+              <use xlink:href="#icon-search" />
+            </svg>
           </button>
         </div>
       </div>
