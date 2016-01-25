@@ -1,12 +1,13 @@
 var Map = (function () {
 
-  // PRIVATE
+  // Instantiates a map object
   const map = L.map('map', {
     center: $(window).width() < 700 ? [40, -95] : [22, -7],
     zoom: 2,
     scrollWheelZoom: true
   });
 
+  // Icon class for rendering a marker
   const pin = L.icon({
     iconUrl: 'icons/place.svg',
     iconSize: [20, 20],
@@ -14,26 +15,35 @@ var Map = (function () {
     className: 'map-marker'
   });
 
+
   let markers = [];
 
-  // might need to doc ready this
+  // Load and display tile layers on the map
   L.tileLayer(
     'http://a.tiles.mapbox.com/v4/amaldare93.mbpl53l0/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYW1hbGRhcmU5MyIsImEiOiJGdEFlcHpZIn0.0WX3tspKb0IXCJbdGMLmNQ', {
     attribution: 'Map tiles by <a href="https://www.mapbox.com/">Mapbox</a>'
   }).addTo(map);
 
 
+
   // CREATE MAP PIN FOR AN AFFILIATION
   function setAffiliation(data) {
     console.log(data);
+
     // extract lat and long
-    const latlong = data.latlong.value.split(' ');
+    const latlong = data.latlong.value.split(' ').map(parseFloat);
+
     // create map marker
     const marker = L.marker(
-      [parseFloat(latlong[0]), parseFloat(latlong[1])], {
+      latlong, {
         icon: pin,
         title: data.name.value
       }).addTo(map);
+
+    // // Set map to location
+    // map.setView(
+    //   latlong
+    // );
 
     // selectAffiliation
     $(marker).click(function () {
@@ -46,7 +56,7 @@ var Map = (function () {
 
   // CREATE MAP PINS FOR AN AUTHOR
   function setAuthorPins(data) {
-    console.log(data);
+    // console.log(data);
     // // extract lat and long
     // var latlong = data.latlong.value.split(' ');
     // // create map marker
@@ -65,9 +75,17 @@ var Map = (function () {
     // markers.push(marker);
   }
 
+  function clearMap(){
+    markers.forEach((marker) => {
+      map.removeLayer(marker);
+    });
+    markers.length = 0;
+  }
+
   return {
     // API
-    setAffiliation: setAffiliation,
-    setAuthorPins: setAuthorPins
+    setAffiliation,
+    setAuthorPins,
+    clearMap
   };
 })();

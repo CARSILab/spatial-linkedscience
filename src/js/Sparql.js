@@ -194,7 +194,7 @@ var Sparql = (function () {
           # get all members of affiliation
           # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-          ${affiliation} 'foaf:member ?members .
+          ${affiliation} foaf:member ?members .
           ?members foaf:name ?name .
         }
       }

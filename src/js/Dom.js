@@ -13,7 +13,7 @@ var Dom = (function () {
 
   // clears all data off page
   function clear() {
-
+    console.log('calling Dom.clear()');
     $title.empty();
     $peopleHeader.empty();
     $paperHeader.empty();
@@ -23,10 +23,7 @@ var Dom = (function () {
     $navSearch.val('');
     $conference.text('Conference');
     $conference.attr('data-value', 'null');
-    for (var i in Map.markers) {
-      Map.removeLayer(Map.markers[i]);
-    }
-    Map.markers = [];
+    Map.clearMap();
   }
 
   function slide(direction){
