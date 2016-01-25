@@ -89,9 +89,9 @@ gulp.task('move', function(){
   gulp.src('src/assets/favicons/*.*')
     .pipe(gulp.dest('dist/favicons'));
 
-  // images / icons
-  gulp.src('src/assets/images/*.*')
-    .pipe(gulp.dest('dist/images'));
+  // leaflet marker icon
+  gulp.src('src/assets/icons/icon-place.svg')
+    .pipe(gulp.dest('dist/icons'));
 });
 
 // generate svg sprite sheet
