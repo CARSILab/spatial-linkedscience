@@ -26,7 +26,7 @@ var Router = (function () {
       Dom.slide('left');
 
     } else if (hash.match(/^search/)) {
-      var key = hash.match(/key=([^&]+)/)[1];
+      var key = decodeURIComponent(hash.match(/key=([^&]+)/)[1].replace(/\+/g, ' '));
       var conf = hash.match(/conf=([^&]+)/)[1];
       Sparql.search(key, conf);
 

@@ -1,8 +1,9 @@
 var Map = (function () {
 
   // Instantiates a map object
+  const center = $(window).width() < 700 ? [40, -95] : [22, -7];
   const map = L.map('map', {
-    center: $(window).width() < 700 ? [40, -95] : [22, -7],
+    center: center,
     zoom: 2,
     scrollWheelZoom: true
   });
@@ -28,7 +29,6 @@ var Map = (function () {
 
   // CREATE MAP PIN FOR AN AFFILIATION
   function setAffiliation(data) {
-    console.log(data);
 
     // extract lat and long
     const latlong = data.latlong.value.split(' ').map(parseFloat);
@@ -39,11 +39,6 @@ var Map = (function () {
         icon: pin,
         title: data.name.value
       }).addTo(map);
-
-    // // Set map to location
-    // map.setView(
-    //   latlong
-    // );
 
     // selectAffiliation
     $(marker).click(function () {
@@ -56,36 +51,50 @@ var Map = (function () {
 
   // CREATE MAP PINS FOR AN AUTHOR
   function setAuthorPins(data) {
-    // console.log(data);
-    // // extract lat and long
-    // var latlong = data.latlong.value.split(' ');
-    // // create map marker
-    // var marker = L.marker(
-    //   [parseFloat(latlong[0]), parseFloat(latlong[1])], {
-    //     icon: pin,
-    //     title: data.name.value
-    //   }).addTo(map);
+    console.log(data);
+    // extract lat and long
+    var latlong = data.latlong.value.split(' ');
+    // create map marker
+    var marker = L.marker(
+      [parseFloat(latlong[0]), parseFloat(latlong[1])], {
+        icon: pin,
+        title: data.name.value
+      }).addTo(map);
 
-    // // selectAffiliation
-    // $(marker).click(function () {
-    //   Router.setHash(data.link.value);
-    // });
+    // selectAffiliation
+    $(marker).click(function () {
+      Router.setHash(data.link.value);
+    });
 
-    // // push marker into array (for later deletion)
-    // markers.push(marker);
+    // push marker into array (for later deletion)
+    markers.push(marker);
   }
 
-  function clearMap(){
+  function zoomTo(latlong){
+    map.setView(
+      latlong.split(' ').map(parseFloat), 10, {
+        animate: true
+      }
+    );
+  }
+
+  function clearPins(){
     markers.forEach((marker) => {
       map.removeLayer(marker);
     });
     markers.length = 0;
   }
 
+  function resetMap(){
+    clearPins();
+    map.setView(center, 2);
+  }
+
   return {
     // API
     setAffiliation,
     setAuthorPins,
-    clearMap
+    zoomTo,
+    resetMap
   };
 })();

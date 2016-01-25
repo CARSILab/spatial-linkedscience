@@ -23,7 +23,7 @@ var Dom = (function () {
     $navSearch.val('');
     $conference.text('Conference');
     $conference.attr('data-value', 'null');
-    Map.clearMap();
+    Map.resetMap();
   }
 
   function slide(direction){

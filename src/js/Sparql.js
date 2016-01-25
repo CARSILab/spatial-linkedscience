@@ -24,6 +24,8 @@ var Sparql = (function () {
   var $paperList = $('.paper-list');
 
   // generate SPARQL query strings
+  // TODO: allow searches using special characters ie: '+' and '/'
+  // TODO: make sure subject search is working
   function searchQuery(input, conference) {
     var conference_seg = conference != 'null' ? `spatial:${conference}` : '?g';
 
@@ -100,9 +102,10 @@ var Sparql = (function () {
             ${author}
               foaf:name ?name ;
               foaf:publications ?paper .
-            ?paper dc:title ?title .
-            ?paper dc:date ?year .
-            ?paper rdf:type ?type .
+            ?paper
+              dc:title ?title ;
+              dc:date ?year ;
+              rdf:type ?type .
           }
           UNION
           {
@@ -111,9 +114,10 @@ var Sparql = (function () {
             # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
             ${author} foaf:knows ?knows .
-            ?knows foaf:name ?coname .
-            ?knows foaf:familyName ?lastName .
-            ?knows rdf:type ?type .
+            ?knows
+              foaf:name ?coname ;
+              foaf:familyName ?lastName ;
+              rdf:type ?type .
           }
           UNION
           {
@@ -243,7 +247,7 @@ var Sparql = (function () {
   }
 
   function renderAuthor(json) {
-    var results = json.results.bindings;
+    const results = json.results.bindings;
 
     Dom.clear();
     Dom.slide('right');
@@ -252,7 +256,7 @@ var Sparql = (function () {
     $paperHeader.html('Papers');
     $peopleHeader.html('Co-authors/-editors');
 
-    Map.setAuthorPins(results);
+    Map.setAuthorPins(results.filter(result => result.type.value === 'http://xmlns.com/foaf/0.1/Organization'));
 
     $.each(results, function (i) {
       if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
@@ -272,7 +276,7 @@ var Sparql = (function () {
           </li>
         `);
       } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Organization') {
-        Map.setAffiliation(results[i]);
+        // Map.setAffiliation(results[i]);
       }
     });
   }
@@ -307,12 +311,14 @@ var Sparql = (function () {
 
   function renderAffiliation(json) {
     var results = json.results.bindings;
+    // console.log(results);
 
     Dom.clear();
     Dom.slide('right');
+    Map.setAffiliation(results[0]);
+    Map.zoomTo(results[0].latlong.value);
 
-    var data = results;
-    $title.html(`<strong>${data[0].name.value}</strong>`);
+    $title.html(`<strong>${results[0].name.value}</strong>`);
     $peopleHeader.html('Members');
     $paperHeader.html('Affiliation Info');
 
