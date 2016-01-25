@@ -22,7 +22,6 @@ var Router = (function () {
     var uri = `<http://spatial.linkedscience.org/context/${hash}>`;
 
     if (hash.length < 3) {
-      Dom.clear();
       Dom.slide('left');
 
     } else if (hash.match(/^search/)) {

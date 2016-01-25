@@ -210,7 +210,6 @@ var Sparql = (function () {
     var results = json.results.bindings;
     var conference_part = conference != 'null' ? `${conference}` : '';
     Dom.slide('right');
-    Dom.clear();
 
     // No Results:
     if (results.length === 0) {
@@ -249,14 +248,13 @@ var Sparql = (function () {
   function renderAuthor(json) {
     const results = json.results.bindings;
 
-    Dom.clear();
     Dom.slide('right');
 
     $title.html('<b>' + results[0].name.value + '</b>');
     $paperHeader.html('Papers');
     $peopleHeader.html('Co-authors/-editors');
 
-    Map.setAuthorPins(results.filter(result => result.type.value === 'http://xmlns.com/foaf/0.1/Organization'));
+    // Map.setAuthorPins(results.filter(result => result.type.value === 'http://xmlns.com/foaf/0.1/Organization'));
 
     $.each(results, function (i) {
       if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
@@ -285,7 +283,6 @@ var Sparql = (function () {
 
     var results = json.results.bindings;
 
-    Dom.clear();
     Dom.slide('right');
 
     $title.html('<b>' + results[0].title.value + '</b>');
@@ -313,7 +310,6 @@ var Sparql = (function () {
     var results = json.results.bindings;
     // console.log(results);
 
-    Dom.clear();
     Dom.slide('right');
     Map.setAffiliation(results[0]);
     Map.zoomTo(results[0].latlong.value);

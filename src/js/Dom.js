@@ -35,6 +35,7 @@ var Dom = (function () {
       $belt.css('left', '-100%');
       $navSearch.show();
     }
+    clear();
   }
 
   // DOM BINDINGS
@@ -75,7 +76,6 @@ var Dom = (function () {
   });
 
   return {
-    clear: clear,
-    slide: slide
+    slide
   };
 })();
