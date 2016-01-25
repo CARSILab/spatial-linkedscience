@@ -71,33 +71,34 @@ gulp.task('javascript', function () {
     }));
 });
 
-// move libraries and assets over to build
-gulp.task('libs', function(){
-  return gulp.src([
+// move assets over to dist folder
+gulp.task('move', function(){
+  // node modules
+  gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/leaflet/dist/leaflet.js'
   ])
     .pipe(gulp.dest('dist/js'));
-});
 
-// move font files over to build
-gulp.task('fonts', function(){
-  return gulp.src('src/assets/fonts/*.*')
+  // font files
+  gulp.src('src/assets/fonts/*.*')
     .pipe(gulp.dest('dist/fonts'));
+
+  // favicons
+  gulp.src('src/assets/favicons/*.*')
+    .pipe(gulp.dest('dist/favicons'));
+
+  // images / icons
+  gulp.src('src/assets/images/*.*')
+    .pipe(gulp.dest('dist/images'));
 });
 
-//
+// generate svg sprite sheet
 gulp.task('svg', function(){
   return gulp.src('src/assets/icons/*.svg')
     .pipe(svgstore({inlineSvg: true}))
     .pipe(gulp.dest('src/includes'));
-});
-
-// move favicon files over to build
-gulp.task('favicons', function(){
-  return gulp.src('src/assets/favicons/*.*')
-    .pipe(gulp.dest('dist/favicons'));
 });
 
 // Sync Task
@@ -125,8 +126,8 @@ gulp.task('sync-noproxy', function () {
 // Watch Task
 // Watches Jade, Sass, Javascript
 gulp.task('watch', function () {
-  gulp.watch('src/**/*.{html,svg}', ['html']);
-  gulp.watch('src/assets/icons/*.*', ['svg']);
+  gulp.watch('src/**/*.{html}', ['html']);
+  gulp.watch('src/assets/icons/*.svg', ['svg', 'html']);
   gulp.watch('src/js/*.js', ['javascript']);
   gulp.watch('src/scss/**/*.scss', ['styles']);
 });
@@ -138,7 +139,7 @@ gulp.task('default', ['svg', 'html', 'javascript', 'styles', 'sync-proxy', 'watc
 gulp.task('offline', ['svg', 'html', 'javascript', 'styles', 'sync-noproxy', 'watch']);
 
 // build task
-gulp.task('build', ['svg', 'html', 'favicons', 'javascript', 'styles', 'fonts', 'libs']);
+gulp.task('build', ['svg', 'html', 'javascript', 'styles', 'move']);
 
 // var config = {
 //   stylelint: {

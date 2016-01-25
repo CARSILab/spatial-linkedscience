@@ -10,7 +10,7 @@ var Map = (function () {
 
   // Icon class for rendering a marker
   const pin = L.icon({
-    iconUrl: 'icons/place.svg',
+    iconUrl: 'images/place.svg',
     iconSize: [20, 20],
     iconAnchor: [10, 20],
     className: 'map-marker'
