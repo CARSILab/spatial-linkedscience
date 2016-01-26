@@ -42,7 +42,7 @@ var Map = (function () {
 
     // selectAffiliation
     $(marker).click(function () {
-      Router.setHash(data.link.value);
+      window.location.hash = data.link.value.slice(41);
     });
 
     // push marker into array (for later deletion)
@@ -63,7 +63,7 @@ var Map = (function () {
 
     // selectAffiliation
     $(marker).click(function () {
-      Router.setHash(data.link.value);
+      window.location.hash = data.link.value.slice(41);
     });
 
     // push marker into array (for later deletion)

@@ -1,20 +1,5 @@
 var Router = (function () {
 
-  // Sets the hash string
-  // Input: hash (string)
-  function setHash(hash) {
-
-    // for search queries
-    if(hash.match(/^search/)){
-      window.location.hash = hash;
-
-    // for data URIs, will strip off redundant bits at the front
-    } else {
-      window.location.hash = hash.slice(41);
-    }
-
-  }
-
   // checks hash and calls appropriate function
   function checkHash(){
 
@@ -49,7 +34,7 @@ var Router = (function () {
   });
 
   return {
-    setHash: setHash
+
   };
 
 })();
