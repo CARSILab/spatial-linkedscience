@@ -1,6 +1,6 @@
 var Sparql = (function () {
 
-  const infoIcon = '<svg class="icon icon-earth"><use xlink:href="#icon-info_outline" /></svg>';
+  const infoIcon = '<svg class="icon icon-info"><use xlink:href="#icon-info_outline" /></svg>';
 
   // PRIVATE
   var prefixes = `
@@ -359,66 +359,6 @@ var Sparql = (function () {
       renderAffiliation(json);
     });
   }
-
-  // Render Offline Test Data
-  // function testSearch() {
-  //   $.getJSON('../src/testData/sample-search.json', function (json) {
-  //     Dom.slide('right');
-  //     renderSearch(json);
-  //   });
-  // }
-  //
-  // function testAuthor() {
-  //   $.getJSON('../src/testData/sample-author.json', function (json) {
-  //     Dom.slide('right');
-  //     renderAuthor(json);
-  //   });
-  // }
-  //
-  // function testPaper() {
-  //   $.getJSON('../src/testData/sample-paper.json', function (json) {
-  //     Dom.slide('right');
-  //     renderPaper(json);
-  //   });
-  // }
-  //
-  // function testAffiliation() {
-  //   $.getJSON('../src/testData/sample-affiliation.json', function (json) {
-  //     Dom.slide('right');
-  //     renderAffiliation(json);
-  //   });
-  // }
-
-  // DOM BINDINGS
-  $(document).ready(function () {
-
-    // SEARCH BAR
-    $('#main-form').bind('submit', function (event) {
-      // stops form submission
-      event.preventDefault();
-
-      var $key = $('#main-search').val();
-      var $conf = $('#dropdown-selection').attr('data-value');
-
-      if ($key.length > 1) {
-        window.location.hash = `search?${$.param({key: $key,conf: $conf})}`;
-      }
-    });
-
-
-    // NAV BAR
-    // TODO: merge two together
-    $('#nav-form').bind('submit', function (event) {
-      // stops form submission
-      event.preventDefault();
-
-      var $key = $('#nav-search').val();
-      if ($key.length > 1) {
-        window.location.hash = `search?${$.param({key: $key,conf: 'null'})}`;
-      }
-    });
-
-  });
 
   return {
     // API

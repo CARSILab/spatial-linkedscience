@@ -1,19 +1,18 @@
-var Dom = (function () {
+const Dom = (function () {
 
   // DOM CACHING
-  var $title = $('.title');
-  var $peopleHeader = $('.people-header');
-  var $paperHeader = $('.paper-header');
-  var $peopleList = $('.people-list');
-  var $paperList = $('.paper-list');
-  var $mainSearch = $('#main-search');
-  var $navSearch = $('#nav-search');
-  var $conference = $('#dropdown-selection');
-  var $belt = $('.belt');
+  const $title = $('.title');
+  const $peopleHeader = $('.people-header');
+  const $paperHeader = $('.paper-header');
+  const $peopleList = $('.people-list');
+  const $paperList = $('.paper-list');
+  const $mainSearch = $('#main-search');
+  const $navSearch = $('#nav-search');
+  const $conference = $('#dropdown-selection');
+  const $belt = $('.belt');
 
-  // clears all data off page
+  // Clears all data from the page and resets the map
   function clear() {
-    console.log('calling Dom.clear()');
     $title.empty();
     $peopleHeader.empty();
     $paperHeader.empty();
@@ -26,11 +25,13 @@ var Dom = (function () {
     Map.resetMap();
   }
 
+  // Switches between the landing page and the results page by sliding the 'conveyor belt' across the viewport
+  // then calls clear()
   function slide(direction){
     if(direction === 'left'){
       $belt.css('left', '0%');
-      window.location.hash = '';
       $navSearch.hide();
+      window.location.hash = '';
     } else if (direction === 'right') {
       $belt.css('left', '-100%');
       $navSearch.show();
@@ -39,18 +40,37 @@ var Dom = (function () {
   }
 
   // DOM BINDINGS
-  $(document).ready(function () {
+  $(() => {
 
-    // onclick  for home page
-    $('.navbar-brand').click(function () {
+    // Hide the navSearch bar by default
+    $navSearch.hide();
+
+    // Clicking the logo in the navbar will bring you to the landing page
+    $('.navbar-brand').on('click',() => {
       slide('left');
     });
 
-    // dropdown selects
-    $(document.body).on('click', '.dropdown-menu li', function (event) {
-      var $target = $(event.currentTarget);
-      var data;
+    // SEARCH BAR
+    $('#main-form, #nav-form').on('submit', (event) => {
+      // Stops form submission
+      event.preventDefault();
 
+      const selector = `#${$(event.currentTarget).attr('id').replace('form', 'search')}`;
+      const key = $(selector).val();
+      const conf = $('#dropdown-selection').attr('data-value');
+
+      if (key.length > 1) {
+        window.location.hash = `search?${$.param({key, conf})}`;
+      }
+    });
+
+    // Clicking a dropdown item will show the selection text in the button and pass it to the form once it is submitted
+    // ** Got this from the internet and tweaked **
+    $('.dropdown-item').on('click', (event) => {
+      let data;
+      const $target = $(event.currentTarget);
+
+      // Properly resets value when 'none is selected'
       if ($target.attr('id') === 'dropdown-reset' ) {
         data = 'null';
       } else {
@@ -66,12 +86,9 @@ var Dom = (function () {
         .children('.dropdown-toggle')
         .dropdown('toggle');
 
-        console.log($('#dropdown-selection').attr('data-value'));
+      // Same as calling event.preventDefault and event.stopPropagation
       return false;
     });
-
-    // initially hide navSearch
-    $navSearch.hide();
 
   });
 

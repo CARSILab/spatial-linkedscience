@@ -41,7 +41,7 @@ var Map = (function () {
       }).addTo(map);
 
     // selectAffiliation
-    $(marker).click(function () {
+    $(marker).on('click', () => {
       window.location.hash = data.link.value.slice(41);
     });
 
@@ -62,7 +62,7 @@ var Map = (function () {
       }).addTo(map);
 
     // selectAffiliation
-    $(marker).click(function () {
+    $(marker).on('click', () => {
       window.location.hash = data.link.value.slice(41);
     });
 
