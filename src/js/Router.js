@@ -1,17 +1,14 @@
-var Router = (function () {
+const Router = (function () {
 
-  // checks hash and calls appropriate function
+  // Checks hash and calls appropriate function
   function checkHash(){
 
-    var hash = window.location.hash.slice(1);
-    var uri = `<http://spatial.linkedscience.org/context/${hash}>`;
+    const hash = window.location.hash.slice(1);
+    const uri = `<http://spatial.linkedscience.org/context/${hash}>`;
 
-    if (hash.length < 3) {
-      Dom.slide('left');
-
-    } else if (hash.match(/^search/)) {
-      var key = decodeURIComponent(hash.match(/key=([^&]+)/)[1].replace(/\+/g, ' '));
-      var conf = hash.match(/conf=([^&]+)/)[1];
+    if (hash.match(/^search/)) {
+      const key = decodeURIComponent(hash.match(/key=([^&]+)/)[1].replace(/\+/g, ' '));
+      const conf = hash.match(/conf=([^&]+)/)[1];
       Sparql.search(key, conf);
 
     } else if (hash.match(/^person/)) {
@@ -22,17 +19,20 @@ var Router = (function () {
 
     } else if (hash.match(/\/paper\//)){
       Sparql.selectPaper(uri);
+
+    } else {
+      Dom.slide('left');
     }
 
   }
 
-  $(document).ready(function () {
-
+  // Add event listener to window that will call checkHash whenever the hash is changed
+  $(() => {
     checkHash();
     window.addEventListener('hashchange', checkHash);
-
   });
 
+  // Public Methods
   return {
 
   };

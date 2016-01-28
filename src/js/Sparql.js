@@ -1,7 +1,6 @@
 var Sparql = (function () {
 
-  // gotto be a way to maybe use templating to fill in data instead of jquery appending everything
-
+  const infoIcon = '<svg class="icon icon-earth"><use xlink:href="#icon-info_outline" /></svg>';
 
   // PRIVATE
   var prefixes = `
@@ -227,7 +226,7 @@ var Sparql = (function () {
             <li class="author">
               <a href="#${results[i].link.value.slice(41)}">${results[i].name.value}</a>
               &nbsp;
-              <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].link.value}">&rarr;</a>
+              <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].link.value}">${infoIcon}</a>
             </li>
           `);
         } else if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
@@ -334,27 +333,27 @@ var Sparql = (function () {
     });
   }
 
-  function selectAuthor(input, conference) {
+  function selectAuthor(input) {
     $.getJSON('/sparql', {
-      query: authorQuery(input, conference),
+      query: authorQuery(input),
       format: 'json'
     }, function (json) {
       renderAuthor(json);
     });
   }
 
-  function selectPaper(input, conference) {
+  function selectPaper(input) {
     $.getJSON('/sparql', {
-      query: paperQuery(input, conference),
+      query: paperQuery(input),
       format: 'json'
     }, function (json) {
       renderPaper(json);
     });
   }
 
-  function selectAffiliation(input, conference) {
+  function selectAffiliation(input) {
     $.getJSON('/sparql', {
-      query: affiliationQuery(input, conference),
+      query: affiliationQuery(input),
       format: 'json'
     }, function (json) {
       renderAffiliation(json);
