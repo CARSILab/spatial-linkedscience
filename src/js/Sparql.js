@@ -1,9 +1,15 @@
-var Sparql = (function () {
+const Sparql = (function () {
 
   const infoIcon = '<svg class="icon icon-info"><use xlink:href="#icon-info_outline" /></svg>';
 
+  const types = {
+    person: 'http://xmlns.com/foaf/0.1/Person',
+    paper: 'http://purl.org/ontology/bibo/Chapter',
+    affiliation: 'http://xmlns.com/foaf/0.1/Organization'
+  };
+
   // PRIVATE
-  var prefixes = `
+  const prefixes = `
     prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
     prefix dc: <http://purl.org/dc/terms/>
@@ -16,23 +22,21 @@ var Sparql = (function () {
     `;
 
   // DOM CACHING
-  var $title = $('.results-title');
-  var $peopleHeader = $('.people-header');
-  var $paperHeader = $('.paper-header');
-  var $peopleList = $('.people-list');
-  var $paperList = $('.paper-list');
+  const $title = $('.results-title');
+  const $peopleHeader = $('.people-header');
+  const $paperHeader = $('.paper-header');
+  const $peopleList = $('.people-list');
+  const $paperList = $('.paper-list');
 
   // generate SPARQL query strings
   // TODO: allow searches using special characters ie: '+' and '/'
   // TODO: make sure subject search is working
   function searchQuery(input, conference) {
-    var conference_seg = conference != 'null' ? `spatial:${conference}` : '?g';
-
     return `
       ${prefixes}
       SELECT DISTINCT ?type ?link ?name ?year ?latlong
       {
-        GRAPH ${conference_seg}
+        GRAPH ${conference != 'null' ? `spatial:${conference}` : '?g'}
         {
           {
             # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -206,9 +210,9 @@ var Sparql = (function () {
 
   // Display results to page
   function renderSearch(json, input, conference) {
-    var results = json.results.bindings;
-    var conference_part = conference != 'null' ? `${conference}` : '';
-    Dom.slide('right');
+    const results = json.results.bindings;
+    const conference_part = conference != 'null' ? `${conference}` : '';
+
 
     // No Results:
     if (results.length === 0) {
@@ -221,7 +225,7 @@ var Sparql = (function () {
 
       // fill page with data
       $.each(results, function (i) {
-        if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
+        if (results[i].type.value === types.person) {
           $peopleList.append(`
             <li class="author">
               <a href="#${results[i].link.value.slice(41)}">${results[i].name.value}</a>
@@ -229,7 +233,7 @@ var Sparql = (function () {
               <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].link.value}">${infoIcon}</a>
             </li>
           `);
-        } else if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
+        } else if (results[i].type.value === types.paper) {
           $paperList.append(`
             <li class="paper">(${results[i].year.value})
               <a href="#${results[i].link.value.slice(41)}"> ${results[i].name.value}</a>
@@ -237,7 +241,7 @@ var Sparql = (function () {
               <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].link.value}">&rarr;</a>
             </li>
           `);
-        } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Organization') {
+        } else if (results[i].type.value === types.affiliation) {
           Map.setAffiliation(results[i]);
         }
       });
@@ -247,7 +251,6 @@ var Sparql = (function () {
   function renderAuthor(json) {
     const results = json.results.bindings;
 
-    Dom.slide('right');
 
     $title.html('<b>' + results[0].name.value + '</b>');
     $paperHeader.html('Papers');
@@ -256,7 +259,7 @@ var Sparql = (function () {
     // Map.setAuthorPins(results.filter(result => result.type.value === 'http://xmlns.com/foaf/0.1/Organization'));
 
     $.each(results, function (i) {
-      if (results[i].type.value == 'http://purl.org/ontology/bibo/Chapter') {
+      if (results[i].type.value === types.paper) {
         $paperList.append(`
           <li class="paper">(${results[i].year.value})
             <a href="#${results[i].paper.value.slice(41)}">${results[i].title.value}</a>
@@ -264,7 +267,7 @@ var Sparql = (function () {
             <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].paper.value}">&rarr;</a>
           </li>
         `);
-      } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Person') {
+      } else if (results[i].type.value === types.person) {
         $peopleList.append(`
           <li class="author">
             <a href="#${results[i].knows.value.slice(41)}">${results[i].coname.value}</a>
@@ -272,7 +275,7 @@ var Sparql = (function () {
             <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].knows.value}">&rarr;</a>
           </li>
         `);
-      } else if (results[i].type.value == 'http://xmlns.com/foaf/0.1/Organization') {
+      } else if (results[i].type.value === types.affiliation) {
         // Map.setAffiliation(results[i]);
       }
     });
@@ -282,7 +285,6 @@ var Sparql = (function () {
 
     var results = json.results.bindings;
 
-    Dom.slide('right');
 
     $title.html('<b>' + results[0].title.value + '</b>');
     $peopleHeader.html('Authors/Co-authors');
@@ -309,7 +311,6 @@ var Sparql = (function () {
     var results = json.results.bindings;
     // console.log(results);
 
-    Dom.slide('right');
     Map.setAffiliation(results[0]);
     Map.zoomTo(results[0].latlong.value);
 
