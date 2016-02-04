@@ -1,8 +1,6 @@
 .results {
-  color: black;
 
   &-container {
-
     @include make-container();
   }
 
@@ -14,10 +12,15 @@
 
 .people,
 .papers {
+
   @include make-col();
   @include make-col-span(6);
 }
 
 .paper {
 
+}
+
+.rawdata {
+  float: right;
 }

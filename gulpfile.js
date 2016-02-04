@@ -140,17 +140,3 @@ gulp.task('offline', ['svg', 'html', 'javascript', 'styles', 'sync-noproxy', 'wa
 
 // build task
 gulp.task('build', ['svg', 'html', 'javascript', 'styles', 'move']);
-
-// var config = {
-//   stylelint: {
-//     'rules': {
-//       'string-quotes': 'double',
-//       'color-hex-case': 'lower',
-//       'color-hex-length': 'long',
-//       'color-no-invalid-hex': true,
-//       'number-leading-zero': 'always',
-//       'declaration-colon-space-after': 'always',
-//       'max-empty-lines': 2
-//     }
-//   }
-// };

@@ -1,6 +1,13 @@
 const Sparql = (function () {
 
-  const infoIcon = '<svg class="icon icon-info"><use xlink:href="#icon-info_outline" /></svg>';
+  const icons = {
+    info: '<svg class="icon icon-info"><use xlink:href="#icon-info_outline" /></svg>',
+    paper: '<svg class="icon icon-paper"><use xlink:href="#icon-paper" /></svg>',
+    person: '<svg class="icon icon-person"><use xlink:href="#icon-person" /></svg>',
+    people: '<svg class="icon icon-people"><use xlink:href="#icon-people" /></svg>',
+    place: '<svg class="icon icon-place"><use xlink:href="#icon-place" /></svg>',
+    school: '<svg class="icon icon-school"><use xlink:href="#icon-school" /></svg>'
+  };
 
   const types = {
     person: 'http://xmlns.com/foaf/0.1/Person',
@@ -220,25 +227,23 @@ const Sparql = (function () {
     } else {
       $title.html(`Showing results for: <b>${input} ${conference_part}</b>`);
 
-      $peopleHeader.html('<span class="icon-user">Authors</span>');
-      $paperHeader.html('Papers');
+      $peopleHeader.html(`${icons.person} Authors`);
+      $paperHeader.html(`${icons.paper} Papers`);
 
       // fill page with data
       $.each(results, function (i) {
         if (results[i].type.value === types.person) {
           $peopleList.append(`
-            <li class="author">
+            <li class="list-group-item author">
               <a href="#${results[i].link.value.slice(41)}">${results[i].name.value}</a>
-              &nbsp;
-              <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].link.value}">${infoIcon}</a>
+              <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].link.value}">${icons.info}</a>
             </li>
           `);
         } else if (results[i].type.value === types.paper) {
           $paperList.append(`
-            <li class="paper">(${results[i].year.value})
+            <li class="list-group-item paper">(${results[i].year.value})
               <a href="#${results[i].link.value.slice(41)}"> ${results[i].name.value}</a>
-              &nbsp;
-              <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].link.value}">&rarr;</a>
+              <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].link.value}">${icons.info}</a>
             </li>
           `);
         } else if (results[i].type.value === types.affiliation) {
@@ -253,26 +258,24 @@ const Sparql = (function () {
 
 
     $title.html('<b>' + results[0].name.value + '</b>');
-    $paperHeader.html('Papers');
-    $peopleHeader.html('Co-authors/-editors');
+    $peopleHeader.html(`${icons.people} Co-authors / -editors`);
+    $paperHeader.html(`${icons.paper} Papers`);
 
     // Map.setAuthorPins(results.filter(result => result.type.value === 'http://xmlns.com/foaf/0.1/Organization'));
 
     $.each(results, function (i) {
       if (results[i].type.value === types.paper) {
         $paperList.append(`
-          <li class="paper">(${results[i].year.value})
-            <a href="#${results[i].paper.value.slice(41)}">${results[i].title.value}</a>
-            &nbsp;
-            <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].paper.value}">&rarr;</a>
+          <li class="list-group-item paper">(${results[i].year.value})
+            <a href="#${results[i].paper.value.slice(41)}">${results[i].title.value}</a
+            <a class="rawdata" target="_blank" title="Raw data for this paper" href="${results[i].paper.value}">${icons.info}</a>
           </li>
         `);
       } else if (results[i].type.value === types.person) {
         $peopleList.append(`
-          <li class="author">
-            <a href="#${results[i].knows.value.slice(41)}">${results[i].coname.value}</a>
-            &nbsp;
-            <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].knows.value}">&rarr;</a>
+          <li class="list-group-item author">
+            <a href="#${results[i].knows.value.slice(41)}">${results[i].coname.value}</a
+            <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].knows.value}">${icons.info}</a>
           </li>
         `);
       } else if (results[i].type.value === types.affiliation) {
@@ -297,9 +300,8 @@ const Sparql = (function () {
     $.each(results, function (i) {
       if (i > 0) {
         $peopleList.append(`
-          <li class="author">
-            <a href="#${results[i].coauthor.value.slice(41)}">${results[i].name.value}</a>
-            &nbsp;
+          <li class="list-group-item author">
+            <a href="#${results[i].coauthor.value.slice(41)}">${results[i].name.value}</a
             <a class="rawdata" target="_blank" title="Raw data for this author" href="${results[i].coauthor.value}>&rarr;</a>
           </li>
         `);
