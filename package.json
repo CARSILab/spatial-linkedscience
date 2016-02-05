@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "bootstrap": "git+https://github.com/twbs/bootstrap.git#v4-dev",
+    "hogan.js": "^3.0.2",
     "jquery": "^2.2.0",
     "leaflet": "^0.7.7"
   },
@@ -51,6 +52,7 @@
       "node": true
     },
     "globals": {
+      "App": false,
       "Dom": false,
       "Map": false,
       "Router": false,

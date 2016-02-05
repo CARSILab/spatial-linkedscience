@@ -11,19 +11,19 @@ const Router = (function () {
       const conf = hash.match(/conf=([^&]+)/)[1];
 
       Dom.slide('right');
-      Sparql.search(key, conf);
+      App.search(key, conf);
 
     } else if (hash.match(/^person/)) {
       Dom.slide('right');
-      Sparql.selectAuthor(uri);
+      App.selectAuthor(uri);
 
     } else if (hash.match(/^affiliation/)) {
       Dom.slide('right');
-      Sparql.selectAffiliation(uri);
+      App.selectAffiliation(uri);
 
     } else if (hash.match(/\/paper\//)){
       Dom.slide('right');
-      Sparql.selectPaper(uri);
+      App.selectPaper(uri);
 
     } else {
       Dom.slide('left');

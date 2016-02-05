@@ -1,38 +1,16 @@
 // Shared Dependencies
 var gulp = require('gulp');
-var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
-// html task
-var fileinclude = require('gulp-file-include');
-// svg task
-var svgstore = require('gulp-svgstore');
-var svgmin = require('gulp-svgmin');
-var inject = require('gulp-inject');
-// styles task
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
-// javascript task
-var babel = require('gulp-babel');
-var concat = require('gulp-concat');
-var eslint = require('gulp-eslint');
-// sync task
+// browserSync
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-// On error
-function onError(error) {
-  gutil.beep();
-  gutil.log(gutil.colors.red(error.message));
-  this.emit('end');
-}
-
 // HTML Task
-// Compiles Jade to HTML
 gulp.task('html', function () {
-  gulp.src('src/index.html')
-    .pipe(plumber(onError))
-    .pipe(fileinclude())
+  return gulp.src('src/index.html')
+    .pipe(plumber())
+    .pipe(require('gulp-file-include')())
     .pipe(gulp.dest('dist/'))
     .pipe(reload({
       stream: true
@@ -43,10 +21,10 @@ gulp.task('html', function () {
 // Compiles Sass to CSS
 gulp.task('styles', function () {
   return gulp.src('src/scss/main.scss')
-    .pipe(plumber(onError))
+    .pipe(plumber())
     .pipe(sourcemaps.init())
-      .pipe(sass())
-      .pipe(autoprefixer({ browsers: ['last 2 versions']}))
+      .pipe(require('gulp-sass')())
+      .pipe(require('gulp-autoprefixer')({ browsers: ['last 2 versions']}))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'))
     .pipe(reload({
@@ -56,13 +34,14 @@ gulp.task('styles', function () {
 
 // Javascript Task
 gulp.task('javascript', function () {
+  var eslint = require('gulp-eslint');
   return gulp.src('src/js/*.js')
-    .pipe(plumber(onError))
+    .pipe(plumber())
     .pipe(sourcemaps.init())
       .pipe(eslint())
       .pipe(eslint.format())
-      .pipe(babel())
-      .pipe(concat('bundle.js'))
+      .pipe(require('gulp-babel')())
+      .pipe(require('gulp-concat')('bundle.js'))
       //.pipe(uglify())
     .pipe(sourcemaps.write(''))
     .pipe(gulp.dest('dist/js'))
@@ -76,7 +55,7 @@ gulp.task('move', function(){
   // node modules
   gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/bootstrap/dist/js/bootstrap.min.js',
+    'node_modules/hogan.js/dist/hogan-3.0.2.min.js',
     'node_modules/leaflet/dist/leaflet.js'
   ])
     .pipe(gulp.dest('dist/js'));
@@ -97,7 +76,7 @@ gulp.task('move', function(){
 // generate svg sprite sheet
 gulp.task('svg', function(){
   return gulp.src('src/assets/icons/*.svg')
-    .pipe(svgstore({inlineSvg: true}))
+    .pipe(require('gulp-svgstore')({inlineSvg: true}))
     .pipe(gulp.dest('src/includes'));
 });
 
