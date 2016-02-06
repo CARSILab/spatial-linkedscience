@@ -44,7 +44,8 @@
         "always"
       ],
       "no-console": 0,
-      "no-unused-vars": 0
+      "no-unused-vars": 0,
+      "no-undef": 0
     },
     "env": {
       "es6": true,
@@ -55,7 +56,7 @@
       "App": false,
       "Dom": false,
       "Map": false,
-      "Router": false,
+      "Template": false,
       "Sparql": false,
       "$": false,
       "L": false

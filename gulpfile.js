@@ -56,6 +56,7 @@ gulp.task('move', function(){
   gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/hogan.js/dist/hogan-3.0.2.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/leaflet/dist/leaflet.js'
   ])
     .pipe(gulp.dest('dist/js'));
