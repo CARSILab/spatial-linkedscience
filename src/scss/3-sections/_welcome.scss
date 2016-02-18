@@ -1,0 +1,50 @@
+.welcome {
+
+  &-container {
+    margin: auto;
+    max-width: 600px;
+    width: 90%;
+  }
+
+  &-header {
+    text-align: center;
+    font-size: 7vw;
+    font-family: 'XXIIGeom-Regular';
+    font-weight: bold;
+
+    @media (min-width: 667px) {
+      font-size: 48px
+    }
+  }
+
+  &-form {
+    margin: 20px 0;
+  }
+
+  &-submit {
+    height: 40px;
+    color: white;
+    background-color: $gray-dark;
+    border-color: $gray-dark;
+
+
+  }
+}
+
+.form-control {
+  border: solid $gray-dark 2px;
+  // border-color: $gray-dark;
+}
+
+.dropdown-item {
+  padding-left: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($brand-primary, .25);
+  }
+}
+
+.icon-search {
+  @include size(1.5rem);
+}

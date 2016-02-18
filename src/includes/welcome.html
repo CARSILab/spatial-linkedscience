@@ -1,0 +1,40 @@
+<section class="welcome">
+  <div class="welcome-container">
+    <h1 class="welcome-header">
+      spatial
+      <!-- <div class="icon icon-earth">@@include("../assets/icons/earth.svg")</div> -->
+      <svg class="icon icon-earth">
+        <use xlink:href="#icon-earth" />
+      </svg>
+       linkedscience
+    </h1>
+    <form id="main-form" class="welcome-form">
+      <div class="input-group">
+        <input id="main-search" type="search" placeholder="Search" autocomplete="off" autofocus="autofocus" class="form-control"/>
+        <div class="input-group-btn">
+          <div class="btn-group">
+            <button type="button" data-toggle="dropdown" class="btn dropdown-toggle form-control">
+              <span id="dropdown-selection" data-bind="label" data-value="null">Conference</span>
+            </button>
+            <ul role="menu" class="dropdown-menu">
+              <li id="dropdown-reset" data-value="null" class="dropdown-item">none</li>
+              <div role="separator" class="dropdown-divider"></div>
+              <li data-value="acmgis" class="dropdown-item">ACM GIS</li>
+              <li data-value="agile" class="dropdown-item">AGILE</li>
+              <li data-value="cosit" class="dropdown-item">COSIT</li>
+              <li data-value="giscience" class="dropdown-item">GIScience</li>
+            </ul>
+          </div>
+          <button type="submit" class="welcome-submit btn btn-secondaryp">
+            <svg class="icon icon-search">
+              <use xlink:href="#icon-search" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class="welcome-blurb">
+      <p>Cat ipsum dolor sit amet, burrow under covers yet knock dis off table head butt cant eat out of my own dish. Burrow under covers hiss at vacuum cleaner chase ball of string has closed eyes but still sees you and intently stare at the same spot attack feet. Chew iPad power cord intently sniff hand. Inspect anything brought into the house pooping rainbow while flying in a toasted bread costume in space then cats take over the world fall over dead (not really but gets sypathy) stand in front of the computer screen play riveting piece on synthesizer keyboard. Chew foot intently stare at the same spot poop in litter box, scratch the walls.</p>
+    </div>
+  </div>
+</section>

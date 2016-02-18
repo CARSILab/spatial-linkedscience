@@ -1,0 +1,13 @@
+.DS_Store
+
+### Sass ###
+.sass-cache
+*.css.map
+
+### Custom ###
+oldFiles
+node_modules
+npm-debug.log
+dist
+src/includes/icons.svg
+server.sh

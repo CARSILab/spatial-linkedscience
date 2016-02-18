@@ -1,0 +1,37 @@
+html, body {
+  overflow-x:hidden;
+  height: 100%;
+}
+
+body {
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  color: $gray-dark;
+}
+
+.icon {
+	display: inline-block;
+	fill: currentColor;
+
+  @include size(1em);
+}
+
+.icon-earth {
+  position: relative;
+  display: inline;
+  top: .15em;
+}
+
+.belt {
+  width: 200%;
+  position: relative;
+  left: 0;
+
+  transition: all, 800ms;
+}
+
+.welcome, .results {
+  width: 50%;
+  float: left;
+}

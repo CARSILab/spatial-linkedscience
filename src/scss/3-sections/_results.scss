@@ -1,0 +1,26 @@
+.results {
+
+  &-container {
+    @include make-container();
+  }
+
+  &-title {
+    text-align: center;
+  }
+
+}
+
+.people,
+.papers {
+
+  @include make-col();
+  @include make-col-span(6);
+}
+
+.paper {
+
+}
+
+.rawdata {
+  float: right;
+}
