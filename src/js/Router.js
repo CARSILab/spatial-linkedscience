@@ -1,4 +1,5 @@
 const Router = (function () {
+  'use strict';
 
   // Checks hash and calls appropriate function
   function checkHash(){

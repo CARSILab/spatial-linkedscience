@@ -1,4 +1,5 @@
 const App = (function() {
+  'use strict';
 
   const types = {
     person: 'http://xmlns.com/foaf/0.1/Person',

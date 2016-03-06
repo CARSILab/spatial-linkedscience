@@ -14,10 +14,13 @@
 .papers {
 
   @include make-col(6);
+
+
 }
 
-.paper {
-
+.people-container,
+.paper-container {
+  overflow-y: auto;
 }
 
 .rawdata {

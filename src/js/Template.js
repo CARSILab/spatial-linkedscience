@@ -1,4 +1,5 @@
 const Template = (function() {
+  'use strict';
 
   const icons = {
     info: '<svg class="icon icon-info"><use xlink:href="#icon-info_outline" /></svg>',

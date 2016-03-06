@@ -1,4 +1,5 @@
 const Sparql = (function () {
+  'use strict';
 
   // PRIVATE
   const prefixes = `
