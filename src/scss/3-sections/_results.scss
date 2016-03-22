@@ -13,12 +13,14 @@
 .people,
 .papers {
 
-  @include make-col();
-  @include make-col-span(6);
+  @include make-col(6);
+
+
 }
 
-.paper {
-
+.people-container,
+.paper-container {
+  overflow-y: auto;
 }
 
 .rawdata {

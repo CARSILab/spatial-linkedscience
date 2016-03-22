@@ -1,5 +1,6 @@
 var Map = (function () {
-
+  'use strict';
+  
   // Instantiates a map object
   const center = $(window).width() < 700 ? [40, -95] : [22, -7];
   const map = L.map('map', {
