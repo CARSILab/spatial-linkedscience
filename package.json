@@ -19,7 +19,7 @@
     "gulp-util": "^3.0.6"
   },
   "dependencies": {
-    "bootstrap": "git+https://github.com/twbs/bootstrap.git#v4-dev",
+    "bootstrap": "^4.0.0-alpha.2",
     "hogan.js": "^3.0.2",
     "jquery": "^2.2.0",
     "leaflet": "^0.7.7"
