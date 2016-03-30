@@ -13,9 +13,23 @@
 .people,
 .papers {
 
-  @include make-col(6);
+  @include media-breakpoint-up(md) {
 
+    @include make-col();
+    @include make-col-span(6);
+  }
 
+  @include media-breakpoint-up(lg) {
+
+    @include make-col-span(5);
+    @include make-col-push(1);
+  }
+
+  @include media-breakpoint-up(xl) {
+    
+    @include make-col-span(4);
+    @include make-col-push(2);
+  };
 }
 
 .people-container,
