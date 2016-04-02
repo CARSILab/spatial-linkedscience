@@ -4,9 +4,9 @@ const Dom = (function () {
   // DOM CACHING
   const $title = $('.results-title');
   const $peopleHeader = $('.people-header');
-  const $paperHeader = $('.paper-header');
+  const $paperHeader = $('.papers-header');
   const $peopleList = $('.people-list');
-  const $paperList = $('.paper-list');
+  const $paperList = $('.papers-list');
   const $mainSearch = $('#main-search');
   const $navSearch = $('#nav-search');
   const $conference = $('#dropdown-selection');
@@ -94,7 +94,7 @@ const Dom = (function () {
   }
 
   function initResults() {
-    const $results = $('.people-container, .paper-container');
+    const $results = $('.people-container, .papers-container');
     const topPos = $results.offset().top;
     const windowHeight = $(window).height();
     const bottomPadding = 10;
