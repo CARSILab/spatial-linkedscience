@@ -5,11 +5,14 @@ var sourcemaps = require('gulp-sourcemaps');
 // browserSync
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
-
+var onError = function(err) {
+  console.log(err);
+  this.emit('end')
+};
 // HTML Task
 gulp.task('html', function () {
   return gulp.src('src/index.html')
-    .pipe(plumber())
+    .pipe(plumber({errorHandler: onError}))
     .pipe(require('gulp-file-include')())
     .pipe(gulp.dest('dist/'))
     .pipe(reload({
@@ -21,7 +24,7 @@ gulp.task('html', function () {
 // Compiles Sass to CSS
 gulp.task('styles', function () {
   return gulp.src('src/scss/main.scss')
-    .pipe(plumber())
+    .pipe(plumber({errorHandler: onError}))
     .pipe(sourcemaps.init())
       .pipe(require('gulp-sass')())
       .pipe(require('gulp-autoprefixer')({ browsers: ['last 2 versions']}))
@@ -36,7 +39,7 @@ gulp.task('styles', function () {
 gulp.task('javascript', function () {
   var eslint = require('gulp-eslint');
   return gulp.src('src/js/*.js')
-    .pipe(plumber())
+    .pipe(plumber({errorHandler: onError}))
     .pipe(sourcemaps.init())
       .pipe(eslint())
       .pipe(eslint.format())
