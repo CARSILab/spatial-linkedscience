@@ -12,7 +12,8 @@ body {
 
 .icon {
 	display: inline-block;
-	fill: currentColor;
+	vertical-align: top;
+  fill: currentColor;
 
   @include size(1em);
 }
@@ -20,6 +21,7 @@ body {
 .icon-earth {
   position: relative;
   display: inline;
+  vertical-align: inherit;
   top: .15em;
 }
 
