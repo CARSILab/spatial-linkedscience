@@ -109,7 +109,7 @@ gulp.task('sync-noproxy', function () {
 // Watch Task
 // Watches Jade, Sass, Javascript
 gulp.task('watch', function () {
-  gulp.watch('src/**/*.{html}', ['html']);
+  gulp.watch('src/**/*.html', ['html']);
   gulp.watch('src/assets/icons/*.svg', ['svg', 'html']);
   gulp.watch('src/js/*.js', ['javascript']);
   gulp.watch('src/scss/**/*.scss', ['styles']);
