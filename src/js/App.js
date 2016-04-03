@@ -7,7 +7,6 @@ const App = (function() {
     affiliation: 'http://xmlns.com/foaf/0.1/Organization'
   };
 
-
   // DOM CACHING
   const $title = $('.results-title');
   const $peopleHeader = $('.people-header');
@@ -121,10 +120,36 @@ const App = (function() {
     $paperHeader.html('Affiliation Info');
 
   }
+  // const funcKey = {
+  //   search: {
+  //     query: Sparql.searchQuery,
+  //     render: renderSearch
+  //   },
+  //   author: {
+  //     query: Sparql.authorQuery,
+  //     render: renderAuthor
+  //   },
+  //   paper: {
+  //     query: Sparql.paperQuery,
+  //     render: renderPaper
+  //   },
+  //   affiliation: {
+  //     query: Sparql.affiliationQuery,
+  //     render: renderAffiliation
+  //   }
+  // };
+  // // Public
+  // // TODO: refactor into one func with params for diff searches
+  // function getStuff(type, input) {
+  //   Dom.slide('right');
+  //   $.getJSON('/sparql', {
+  //     query: funcKey[type](input),
+  //     format: 'json'
+  //   }, function (json) {
+  //     funcKey[type](json, input);
+  //   });
+  // }
 
-  // Public
-  // TODO: refactor into one func with params for diff searches
-  // function getStuff(type, input)
   function search(input, conference) {
     $.getJSON('/sparql', {
       query: Sparql.searchQuery(input, conference),
@@ -162,10 +187,8 @@ const App = (function() {
   }
 
   return {
-    search,
-    selectAuthor,
-    selectPaper,
-    selectAffiliation
+    // getStuff,
+    search
   };
 
 
