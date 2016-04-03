@@ -36,22 +36,37 @@ gulp.task('styles', function () {
 });
 
 // Javascript Task
-gulp.task('javascript', function () {
-  var eslint = require('gulp-eslint');
-  return gulp.src('src/js/*.js')
-    .pipe(plumber({errorHandler: onError}))
-    .pipe(sourcemaps.init())
-      .pipe(eslint())
-      .pipe(eslint.format())
-      .pipe(require('gulp-babel')())
-      .pipe(require('gulp-concat')('bundle.js'))
-      //.pipe(uglify())
-    .pipe(sourcemaps.write(''))
-    .pipe(gulp.dest('dist/js'))
-    .pipe(reload({
-      stream: true
-    }));
+gulp.task('javascript', function(){
+  return require('rollup').rollup({
+    entry: 'src/js/index.js',
+    plugins: [
+      require('rollup-plugin-babel')({
+        exclude: 'node_modules/**'
+      })
+    ]
+  }).then(function (bundle){
+    return bundle.write({
+      format: 'iife',
+      dest: 'dist/js/bundle.js'
+    });
+  });
 });
+// gulp.task('javascript', function () {
+//   var eslint = require('gulp-eslint');
+//   return gulp.src('src/js/*.js')
+//     .pipe(plumber({errorHandler: onError}))
+//     .pipe(sourcemaps.init())
+//       .pipe(eslint())
+//       .pipe(eslint.format())
+//       .pipe(require('gulp-babel')())
+//       .pipe(require('gulp-concat')('bundle.js'))
+//       //.pipe(uglify())
+//     .pipe(sourcemaps.write(''))
+//     .pipe(gulp.dest('dist/js'))
+//     .pipe(reload({
+//       stream: true
+//     }));
+// });
 
 // move assets over to dist folder
 gulp.task('move', function(){
