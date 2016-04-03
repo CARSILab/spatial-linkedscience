@@ -15,15 +15,15 @@
           <div class="btn-group">
             <button type="button" data-toggle="dropdown" class="btn dropdown-toggle form-control">
               <span id="dropdown-selection" data-bind="label" data-value="null">Conference</span>
+              <ul role="menu" class="dropdown-menu">
+                <li id="dropdown-reset" data-value="null" class="dropdown-item">none</li>
+                <div role="separator" class="dropdown-divider"></div>
+                <li data-value="acmgis" class="dropdown-item">ACM GIS</li>
+                <li data-value="agile" class="dropdown-item">AGILE</li>
+                <li data-value="cosit" class="dropdown-item">COSIT</li>
+                <li data-value="giscience" class="dropdown-item">GIScience</li>
+              </ul>
             </button>
-            <ul role="menu" class="dropdown-menu">
-              <li id="dropdown-reset" data-value="null" class="dropdown-item">none</li>
-              <div role="separator" class="dropdown-divider"></div>
-              <li data-value="acmgis" class="dropdown-item">ACM GIS</li>
-              <li data-value="agile" class="dropdown-item">AGILE</li>
-              <li data-value="cosit" class="dropdown-item">COSIT</li>
-              <li data-value="giscience" class="dropdown-item">GIScience</li>
-            </ul>
           </div>
           <button type="submit" class="welcome-submit btn btn-secondaryp">
             <svg class="icon icon-search">

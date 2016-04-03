@@ -36,19 +36,27 @@
   // border-color: $gray-dark;
 }
 
-.btn.dropdown-toggle {
-  width: 8rem;
-}
+.dropdown {
+  &-toggle.btn {
+    width: 8rem;
+  }
 
-.dropdown-item {
+  &-menu {
+
+    &.isActive {
+      display: block;
+    }
+  }
+
+  &-item {
   padding-left: 1rem;
   cursor: pointer;
 
-  &:hover {
-    background-color: rgba($brand-primary, .25);
+    &:hover {
+      background-color: rgba($brand-primary, .25);
+    }
   }
 }
-
 .icon-search {
   @include size(1.5rem);
 }
