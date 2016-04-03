@@ -2,6 +2,7 @@ const Dom = (function () {
   'use strict';
 
   // DOM CACHING
+  const $resultsContainer = $('.results-container');
   const $title = $('.results-title');
   const $peopleHeader = $('.people-header');
   const $paperHeader = $('.papers-header');
@@ -11,6 +12,7 @@ const Dom = (function () {
   const $navSearch = $('#nav-search');
   const $conference = $('#dropdown-selection');
   const $belt = $('.belt');
+  const $spinner = $('.icon-spinner');
 
   // Clears all data from the page and resets the map
   function clear() {
@@ -100,7 +102,6 @@ const Dom = (function () {
     const bottomPadding = 10;
     const resultsHeight = windowHeight - topPos - bottomPadding;
 
-
     console.log($title.height());
     console.log($peopleHeader.height());
     console.log($paperHeader.height());
@@ -111,6 +112,15 @@ const Dom = (function () {
     });
   }
 
+  function startLoad() {
+    $resultsContainer.hide();
+    $spinner.show();
+  }
+
+  function stopLoad() {
+    $spinner.hide();
+    $resultsContainer.show();
+  }
 
   // DOM BINDINGS
   $(function() {
@@ -121,6 +131,8 @@ const Dom = (function () {
   });
 
   return {
-    slide
+    slide,
+    startLoad,
+    stopLoad
   };
 })();

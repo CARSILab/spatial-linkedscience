@@ -123,6 +123,8 @@ const App = (function() {
   }
 
   // Public
+  // TODO: refactor into one func with params for diff searches
+  // function getStuff(type, input)
   function search(input, conference) {
     $.getJSON('/sparql', {
       query: Sparql.searchQuery(input, conference),
