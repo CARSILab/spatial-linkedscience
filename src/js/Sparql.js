@@ -15,7 +15,6 @@ const prefixes = `
 // TODO: allow searches using special characters ie: '+' and '/'
 // TODO: make sure subject search is working
 function searchQuery(input, conference) {
-  console.log(conference);
   return `
     ${prefixes}
     SELECT DISTINCT ?type ?link ?name ?year ?latlong

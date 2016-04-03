@@ -1,15 +1,16 @@
-console.log("running Map code");
+import $ from 'jquery';
+import Leaflet from 'leaflet';
 
 // Instantiates a map object
 const center = $(window).width() < 700 ? [40, -95] : [22, -7];
-const map = L.map('map', {
+const map = Leaflet.map('map', {
   center: center,
   zoom: 2,
   scrollWheelZoom: true
 });
 
 // Icon class for rendering a marker
-const pin = L.icon({
+const pin = Leaflet.icon({
   iconUrl: 'icons/icon-place.svg',
   iconSize: [20, 20],
   iconAnchor: [10, 20],
@@ -19,7 +20,7 @@ const pin = L.icon({
 let markers = [];
 
 // Load and display tile layers on the map
-L.tileLayer(
+Leaflet.tileLayer(
   'http://a.tiles.mapbox.com/v4/amaldare93.mbpl53l0/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYW1hbGRhcmU5MyIsImEiOiJGdEFlcHpZIn0.0WX3tspKb0IXCJbdGMLmNQ', {
   attribution: 'Map tiles by <a href="https://www.mapbox.com/">Mapbox</a>'
 }).addTo(map);
@@ -33,7 +34,7 @@ function setAffiliation(data) {
   const latlong = data.latlong.value.split(' ').map(parseFloat);
 
   // create map marker
-  const marker = L.marker(
+  const marker = Leaflet.marker(
     latlong, {
       icon: pin,
       title: data.name.value
@@ -54,7 +55,7 @@ function setAuthorPins(data) {
   // extract lat and long
   var latlong = data.latlong.value.split(' ');
   // create map marker
-  var marker = L.marker(
+  var marker = Leaflet.marker(
     [parseFloat(latlong[0]), parseFloat(latlong[1])], {
       icon: pin,
       title: data.name.value

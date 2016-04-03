@@ -1,9 +1,9 @@
+import $ from 'jquery';
 import Dom from './Dom';
 import Map from './Map';
 import Sparql from './Sparql';
 import Templates from './Templates'
 
-console.log('running App code');
 
 const types = {
   person: 'http://xmlns.com/foaf/0.1/Person',

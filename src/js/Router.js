@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { slide } from './Dom';
 import App from './App';
 

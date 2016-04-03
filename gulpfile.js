@@ -40,9 +40,11 @@ gulp.task('javascript', function(){
   return require('rollup').rollup({
     entry: 'src/js/index.js',
     plugins: [
+      require('rollup-plugin-node-resolve')({jsnext: true}),
+      require('rollup-plugin-commonjs')(),
       require('rollup-plugin-babel')({
         exclude: 'node_modules/**'
-      })
+      }),
     ]
   }).then(function (bundle){
     return bundle.write({
@@ -51,31 +53,13 @@ gulp.task('javascript', function(){
     });
   });
 });
-// gulp.task('javascript', function () {
-//   var eslint = require('gulp-eslint');
-//   return gulp.src('src/js/*.js')
-//     .pipe(plumber({errorHandler: onError}))
-//     .pipe(sourcemaps.init())
-//       .pipe(eslint())
-//       .pipe(eslint.format())
-//       .pipe(require('gulp-babel')())
-//       .pipe(require('gulp-concat')('bundle.js'))
-//       //.pipe(uglify())
-//     .pipe(sourcemaps.write(''))
-//     .pipe(gulp.dest('dist/js'))
-//     .pipe(reload({
-//       stream: true
-//     }));
-// });
 
 // move assets over to dist folder
 gulp.task('move', function(){
   // node modules
   gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/hogan.js/dist/hogan-3.0.2.min.js',
-    'node_modules/bootstrap/dist/js/bootstrap.min.js',
-    'node_modules/leaflet/dist/leaflet.js'
+    'node_modules/bootstrap/dist/js/bootstrap.min.js'
   ])
     .pipe(gulp.dest('dist/js'));
 

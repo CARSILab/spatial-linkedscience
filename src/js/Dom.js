@@ -1,6 +1,5 @@
+import $ from 'jquery';
 import { resetMap } from './Map.js';
-
-console.log("running Dom code");
 
 // DOM CACHING
 const $resultsContainer = $('.results-container');

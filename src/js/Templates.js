@@ -1,3 +1,5 @@
+import Hogan from 'hogan.js';
+
 const icons = {
   info: '<svg class="icon icon-info"><use xlink:href="#icon-info_outline" /></svg>',
   paper: '<svg class="icon icon-paper"><use xlink:href="#icon-paper" /></svg>',
