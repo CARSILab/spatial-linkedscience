@@ -56,13 +56,6 @@ gulp.task('javascript', function(){
 
 // move assets over to dist folder
 gulp.task('move', function(){
-  // node modules
-  gulp.src([
-    'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/bootstrap/dist/js/bootstrap.min.js'
-  ])
-    .pipe(gulp.dest('dist/js'));
-
   // font files
   gulp.src('src/assets/fonts/*.*')
     .pipe(gulp.dest('dist/fonts'));

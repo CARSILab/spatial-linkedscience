@@ -71,8 +71,8 @@ function initSearch() {
 // ** Got this from the internet and tweaked **
 function initDropdown() {
   $('.dropdown-item').on('click', function(event) {
-    let data;
     const $target = $(event.currentTarget);
+    let data;
 
     // Properly resets value when 'none is selected'
     if ($target.attr('id') === 'dropdown-reset' ) {
