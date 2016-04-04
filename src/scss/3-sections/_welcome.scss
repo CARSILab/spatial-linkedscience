@@ -41,20 +41,23 @@
     width: 8rem;
   }
 
-  &-menu {
+  &-item {
+    padding-left: 1rem;
+    cursor: pointer;
 
-    &.isActive {
+    &:focus,
+    &:hover {
+      background-color: rgba($brand-primary, .25);
+    }
+  }
+  &.isActive {
+    .dropdown-menu {
       display: block;
     }
   }
 
-  &-item {
-  padding-left: 1rem;
-  cursor: pointer;
-
-    &:hover {
-      background-color: rgba($brand-primary, .25);
-    }
+  input {
+    display: none;
   }
 }
 .icon-search {

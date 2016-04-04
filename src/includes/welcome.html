@@ -12,20 +12,35 @@
       <div class="input-group">
         <input id="main-search" type="search" placeholder="Search" autocomplete="off" autofocus="autofocus" class="form-control"/>
         <div class="input-group-btn">
-          <div class="btn-group">
+          <div class="btn-group dropdown">
             <button type="button" data-toggle="dropdown" class="btn dropdown-toggle form-control">
               <span id="dropdown-selection" data-bind="label" data-value="null">Conference</span>
-              <ul role="menu" class="dropdown-menu">
-                <li id="dropdown-reset" data-value="null" class="dropdown-item">none</li>
-                <div role="separator" class="dropdown-divider"></div>
-                <li data-value="acmgis" class="dropdown-item">ACM GIS</li>
-                <li data-value="agile" class="dropdown-item">AGILE</li>
-                <li data-value="cosit" class="dropdown-item">COSIT</li>
-                <li data-value="giscience" class="dropdown-item">GIScience</li>
-              </ul>
             </button>
+            <fieldset role="menu" class="dropdown-menu">
+              <label class="dropdown-item" data-value="null">
+                <input type="radio" name="conference" />
+                none
+              </label>
+              <div role="separator" class="dropdown-divider"></div>
+              <label class="dropdown-item" data-value="acmgis">
+                <input type="radio" name="conference" />
+                ACM GIS
+              </label>
+              <label class="dropdown-item" data-value="agile">
+                <input type="radio" name="conference" />
+                Agile
+              </label>
+              <label class="dropdown-item" data-value="cosit">
+                <input type="radio" name="conference" />
+                Cosit
+              </label>
+              <label class="dropdown-item" data-value="giscience">
+                <input type="radio" name="conference" />
+                GIScience
+              </label>
+            </fieldset>
           </div>
-          <button type="submit" class="welcome-submit btn btn-secondaryp">
+          <button type="submit" class="welcome-submit btn">
             <svg class="icon icon-search">
               <use xlink:href="#icon-search" />
             </svg>

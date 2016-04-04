@@ -68,40 +68,34 @@ function initSearch() {
 }
 
 // Clicking a dropdown item will show the selection text in the button and pass it to the form once it is submitted
-// ** Got this from the internet and tweaked **
+
 function initDropdown() {
   $('.dropdown-toggle').on('click', onDropdownToggle);
   $('.dropdown-item').on('click', onDropdownItem);
 
   function onDropdownToggle(event) {
     const $target  = $(event.target);
-
-    $target
-      .closest('.dropdown-toggle')
-        .toggleClass('isActive')
-        .find('.dropdown-menu')
-          .toggleClass('isActive');
+    $target.closest('.dropdown').toggleClass('isActive');
   }
 
   function onDropdownItem(event) {
     const $target = $(event.target);
     let data;
-
+    console.log($target.text());
+    console.log($target.closest('.dropdown').find('[data-bind="label"]'))
     // Properly resets value when 'none is selected'
-    if ($target.attr('id') === 'dropdown-reset' ) {
+    if ($target.attr('data-value') === 'null' ) {
       data = 'null';
     } else {
       data = $target.data('value');
     }
 
     $target
-      .closest('.dropdown-menu')
+      .closest('.dropdown')
         .removeClass('isActive')
-        .closest('.dropdown-toggle')
-          .removeClass('isActive')
-          .find('[data-bind="label"]')
-            .text($target.text())
-            .attr('data-value', data);
+        .find('[data-bind="label"]')
+          .text($target.text())
+          .attr('data-value', data);
 
     return false;
   }
