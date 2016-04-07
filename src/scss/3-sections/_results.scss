@@ -52,6 +52,8 @@
 
     @include scrollbars(5px, red, pink);
   }
+
+
 }
 
 // overriding bootstrap
@@ -68,6 +70,19 @@
   }
 }
 
+.icon-spinner {
+  display: none;
+
+  margin: auto;
+  height: 100px;
+  width: 50px;
+
+
+  &.isSpinning {
+    display: block;
+    animation: spin 1s linear infinite;
+  }
+}
 
 .rawdata {
   float: right;

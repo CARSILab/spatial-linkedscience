@@ -142,20 +142,24 @@ const funcKey = {
 // TODO: refactor into one func with params for diff searches
 function search(input, conference) {
   Dom.slide('right');
+  Dom.startLoad();
   $.getJSON('/sparql', {
     query: Sparql.searchQuery(input, conference),
     format: 'json'
   }, function (json) {
     renderSearch(json, input, conference);
+    Dom.stopLoad();
   });
 }
 function select(type, input) {
   Dom.slide('right');
+  Dom.startLoad();
   $.getJSON('/sparql', {
     query: funcKey[type].query(input),
     format: 'json'
   }, function (json) {
     funcKey[type].render(json);
+    Dom.stopLoad();
   });
 }
 

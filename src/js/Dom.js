@@ -84,7 +84,6 @@ function initSearch() {
 }
 
 // Clicking a dropdown item will show the selection text in the button and pass it to the form once it is submitted
-
 function initDropdown() {
 	$('.dropdown-toggle').on('click', onDropdownToggle);
 	$('.dropdown-item').on('click', onDropdownItem);
@@ -131,11 +130,11 @@ function initResults() {
 
 function startLoad() {
 	$resultsContainer.hide();
-	$spinner.show();
+	$spinner.addClass('isSpinning');
 }
 
 function stopLoad() {
-	$spinner.hide();
+	$spinner.removeClass('isSpinning');
 	$resultsContainer.show();
 }
 
