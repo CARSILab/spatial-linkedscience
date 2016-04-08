@@ -70,7 +70,7 @@ Now you should have everything you need to get started!
 
 
 ## Spinning Up The Server
-Whenever you want to start working, just go navigate to the project directory and 
+Whenever you want to start working, just go navigate to the project directory and
 
 Start up the server and database with:
 ```shell

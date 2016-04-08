@@ -1,65 +1,65 @@
 .welcome {
 
-	&-container {
-		margin: auto;
-		max-width: 600px;
-		width: 90%;
-	}
+  &-container {
+    margin: auto;
+    max-width: 600px;
+    width: 90%;
+  }
 
-	&-header {
-		text-align: center;
-		font-size: 7vw;
-		font-family: 'XXIIGeom-Regular';
-		font-weight: bold;
+  &-header {
+    text-align: center;
+    font-size: 7vw;
+    font-family: 'XXIIGeom-Regular';
+    font-weight: bold;
 
-		@media (min-width: 667px) {
-			font-size: 48px
-		}
-	}
+    @media (min-width: 667px) {
+      font-size: 48px
+    }
+  }
 
-	&-form {
-		margin: 20px 0;
-	}
+  &-form {
+    margin: 20px 0;
+  }
 
-	&-submit {
-		height: 40px;
-		color: white;
-		background-color: $gray-dark;
-		border-color: $gray-dark;
+  &-submit {
+    height: 40px;
+    color: white;
+    background-color: $gray-dark;
+    border-color: $gray-dark;
 
 
-	}
+  }
 }
 
 .welcome-form .form-control {
-	border: solid $gray-dark 2px;
-	// border-color: $gray-dark;
+  border: solid $gray-dark 2px;
+  // border-color: $gray-dark;
 }
 
 .dropdown {
-	&-toggle.btn {
-		width: 8rem;
-	}
+  &-toggle.btn {
+    width: 8rem;
+  }
 
-	&-item {
-		padding-left: 1rem;
-		cursor: pointer;
+  &-item {
+    padding-left: 1rem;
+    cursor: pointer;
 
-		&:focus,
-		&:hover {
-			background-color: rgba($brand-primary, .25);
-		}
-	}
-	&.isActive {
-		.dropdown-menu {
-			display: block;
-		}
-	}
+    &:focus,
+    &:hover {
+      background-color: rgba($brand-primary, .25);
+    }
+  }
+  &.isActive {
+    .dropdown-menu {
+      display: block;
+    }
+  }
 
-	input {
-		display: none;
-	}
+  input {
+    display: none;
+  }
 }
 .icon-search {
-	@include size(1.5rem);
+  @include size(1.5rem);
 }
