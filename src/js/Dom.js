@@ -3,6 +3,7 @@ import { resetMap } from './Map.js';
 
 // DOM CACHING
 const $resultsContainer = $('.results-container');
+const $containers = $('.papers, .people');
 const $title = $('.results-title');
 const $peopleHeader = $('.people-header');
 const $paperHeader = $('.papers-header');
@@ -128,6 +129,14 @@ function initResults() {
   });
 }
 
+function hideEmpty(){
+  $containers.each(function(index, $container){
+    if ($($container).find('.list-group').is(':empty')) {
+      $($container).addClass('isHidden');
+    }
+  });
+}
+
 function startLoad() {
   $resultsContainer.hide();
   $spinner.addClass('isSpinning');
@@ -152,5 +161,6 @@ export { slide };
 export default {
   slide,
   startLoad,
-  stopLoad
+  stopLoad,
+  hideEmpty
 };

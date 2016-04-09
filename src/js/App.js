@@ -139,7 +139,6 @@ const funcKey = {
   }
 };
 // Public
-// TODO: refactor into one func with params for diff searches
 function search(input, conference) {
   Dom.slide('right');
   Dom.startLoad();
@@ -148,6 +147,7 @@ function search(input, conference) {
     format: 'json'
   }, function (json) {
     renderSearch(json, input, conference);
+    Dom.hideEmpty();
     Dom.stopLoad();
   });
 }
@@ -159,6 +159,7 @@ function select(type, input) {
     format: 'json'
   }, function (json) {
     funcKey[type].render(json);
+    Dom.hideEmpty();
     Dom.stopLoad();
   });
 }
