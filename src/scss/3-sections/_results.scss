@@ -1,7 +1,24 @@
 .results {
 
   &-container {
-    @include make-container();
+    // @include make-container();
+    display: flex;
+    justify-content: space-around;
+    background: papayawhip;
+    margin: auto;
+    max-width: 1000px;
+
+    @include media-breakpoint-up(md) {
+
+    }
+
+    @include media-breakpoint-up(lg) {
+
+    }
+
+    @include media-breakpoint-up(xl) {
+
+    }
   }
 
   &-title {
@@ -14,23 +31,14 @@
 .people,
 .papers {
 
-  @include media-breakpoint-up(md) {
+  flex-basis: 48%;
+  flex-grow: 1;
+  flex-shrink: 1;
 
-    @include make-col();
-    @include make-col-span(6);
+  @include media-breakpoint-up(sm) {
+    flex-grow: 0;
   }
 
-  @include media-breakpoint-up(lg) {
-
-    @include make-col-span(5);
-    @include make-col-push(1);
-  }
-
-  @include media-breakpoint-up(xl) {
-
-    @include make-col-span(4);
-    @include make-col-push(2);
-  };
 
   &-header {
     padding-left: 20px;
@@ -49,16 +57,20 @@
     //   right: 40px;
     //   top: 34px;
     // }
-
-    @include scrollbars(5px, red, pink);
   }
+  &.isSingle {
 
+  }
 
 }
 
 // overriding bootstrap
 .list-group-item {
   border: 0;
+
+  &:nth-child(even) {
+    background-color: whitesmoke;
+  }
 
   &:first-child {
     border-top: 2px solid $gray-dark;

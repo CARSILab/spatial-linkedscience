@@ -1,2 +1,2 @@
-import './Router';
-import './App';
+import './Router'
+import './App'

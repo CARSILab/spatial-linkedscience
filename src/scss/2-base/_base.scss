@@ -41,3 +41,5 @@ body {
 .isHidden {
   display: none;
 }
+
+@include scrollbars(5px, black, white);
