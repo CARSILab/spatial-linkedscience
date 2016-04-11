@@ -124,7 +124,7 @@ function initResults () {
   const resultsHeight = windowHeight - topPos - bottomPadding
 
   $results.each(function () {
-    $(this).css('height', resultsHeight)
+    $(this).css('max-height', resultsHeight)
   })
 }
 
@@ -132,10 +132,8 @@ function hideEmpty () {
   $containers.each(function (index, container) {
     let $container = $(container)
     if ($container.find('.list-group').is(':empty')) {
-      console.log('hiding', container)
       $container.addClass('isHidden')
     } else {
-      console.log('showing', container)
       $container.removeClass('isHidden')
     }
   })
