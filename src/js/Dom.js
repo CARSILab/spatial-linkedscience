@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { resetMap } from './Map.js'
+import { resetMap } from './Plot.js'
 
 // DOM CACHING
 const $resultsContainer = $('.results-container')

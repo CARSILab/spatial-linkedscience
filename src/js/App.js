@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import Dom from './Dom'
-import Map from './Map'
+import Plot from './Plot'
 import Sparql from './Sparql'
 import Templates from './Templates'
 
@@ -27,7 +27,6 @@ function renderSearch (json, input, conference) {
     $title.html(`There are no results for ${decodeURIComponent(input)} ${conference_part}, try searching again.`)
   } else {
     $title.html(`Showing results for: ${decodeURIComponent(input)} ${conference_part}`)
-
     $peopleHeader.html(`${Templates.icons.person} Authors`)
     $paperHeader.html(`${Templates.icons.paper} Papers`)
 
@@ -47,7 +46,7 @@ function renderSearch (json, input, conference) {
           year: result.year.value
         }))
       } else if (result.type.value === types.affiliation) {
-        Map.setAffiliation(result)
+        Plot.setAffiliation(result)
       }
     })
   }
@@ -55,12 +54,12 @@ function renderSearch (json, input, conference) {
 
 function renderAuthor (json) {
   const results = json.results.bindings
+  const affiliations = []
 
+  console.log(results);
   $title.html(results[0].name.value)
   $peopleHeader.html(`${Templates.icons.people} Co-authors / -editors`)
   $paperHeader.html(`${Templates.icons.paper} Papers`)
-
-  // Map.setAuthorPins(results.filter(result => result.type.value === 'http://xmlns.com/foaf/0.1/Organization'))
 
   $.each(results, function (i, result) {
     if (result.type.value === types.paper) {
@@ -77,9 +76,10 @@ function renderAuthor (json) {
         name: result.coname.value
       }))
     } else if (result.type.value === types.affiliation) {
-      // Map.setAffiliation(result)
+      affiliations.push(result)
     }
   })
+  Plot.setAuthorPins(affiliations)
 }
 
 function renderPaper (json) {
@@ -110,8 +110,8 @@ function renderAffiliation (json) {
   var results = json.results.bindings
   // console.log(results)
 
-  Map.setAffiliation(results[0])
-  Map.zoomTo(results[0].latlong.value)
+  Plot.setAffiliation(results[0])
+  Plot.zoomTo(results[0].latlong.value)
 
   $title.html(results[0].name.value)
   $peopleHeader.html('Members')

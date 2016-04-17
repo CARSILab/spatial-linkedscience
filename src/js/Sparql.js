@@ -74,6 +74,7 @@ function searchQuery (input, conference) {
 }
 
 function authorQuery (author) {
+
   return `
     ${prefixes}
     SELECT DISTINCT ?name ?paper ?title ?year ?knows ?coname ?type ?affiliation ?latlong
@@ -111,15 +112,20 @@ function authorQuery (author) {
           # get author's affiliations
           # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+          ?membership
+            rdfs:object ${author} ;
+            rdfs:predicate foaf:member ;
+            rdfs:subject ?affiliation ;
+            dc:date ?year .
+
           ?affiliation
-            foaf:member ${author} ;
             foaf:name ?name ;
             geo:lat_long ?latlong ;
             rdf:type ?type .
         }
       }
     }
-    ORDER BY DESC(?year) ?title ?lastName
+    ORDER BY ?type DESC(?year) ?title ?lastName
   `
 }
 

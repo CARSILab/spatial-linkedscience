@@ -24,6 +24,7 @@
     "rollup-plugin-node-resolve": "^1.5.0"
   },
   "dependencies": {
+    "arc": "^0.1.0",
     "bootstrap": "^4.0.0-alpha.2",
     "hogan.js": "^3.0.2",
     "jquery": "^2.2.0",

@@ -2,7 +2,7 @@ import $ from 'jquery'
 import Leaflet from 'leaflet'
 
 // Instantiates a map object
-const center = $(window).width() < 700 ? [40, -95] : [22, -7]
+const center = window.innerWidth < 700 ? [40, -95] : [22, -7]
 const map = Leaflet.map('map', {
   center: center,
   zoom: 2,
@@ -27,6 +27,8 @@ Leaflet.tileLayer(
 
 // CREATE MAP PIN FOR AN AFFILIATION
 function setAffiliation (data) {
+  console.log('setAffiliation');
+  console.log(data);
   // extract lat and long
   const latlong = data.latlong.value.split(' ').map(parseFloat)
 
@@ -48,23 +50,44 @@ function setAffiliation (data) {
 
 // CREATE MAP PINS FOR AN AUTHOR
 function setAuthorPins (data) {
+  console.log('setAuthorPins')
   console.log(data)
-  // extract lat and long
-  var latlong = data.latlong.value.split(' ')
-  // create map marker
-  var marker = Leaflet.marker(
-    [parseFloat(latlong[0]), parseFloat(latlong[1])], {
-      icon: pin,
-      title: data.name.value
-    }).addTo(map)
 
-  // selectAffiliation
-  $(marker).on('click', function () {
-    window.location.hash = data.link.value.slice(41)
+  let coords = []
+
+  // For Each affiliation
+  data.forEach(function (item) {
+    // extract lat and long
+    const latlong = item.latlong.value.split(' ').map(val => parseFloat(val))
+    console.log(latlong);
+    // create map marker
+    const marker = Leaflet.marker(latlong, {
+        icon: pin,
+        title: item.name.value
+      }).addTo(map)
+
+    // selectAffiliation
+    marker.on('click', function () {
+      window.location.hash = item.affiliation.value.slice(41)
+    })
+
+    markers.push(marker)
+    coords.push(latlong)
   })
 
-  // push marker into array (for later deletion)
-  markers.push(marker)
+  // coords = [[51.96005, 7.60731],[51.96377, 7.61319]]
+
+  // Create polyline between markers
+  const polyline = Leaflet.polyline(coords, {
+    color: '#FF0000',
+    opacity: 1
+  }).addTo(map)
+
+  // Zoom into markers
+  map.fitBounds(polyline.getBounds(), {
+    padding: [50, 50]
+  })
+
 }
 
 function zoomTo (latlong) {
