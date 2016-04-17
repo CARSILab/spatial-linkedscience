@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import Leaflet from 'leaflet'
+import 'leaflet.arc'
 
 // Instantiates a map object
 const center = window.innerWidth < 700 ? [40, -95] : [22, -7]
