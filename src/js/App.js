@@ -56,7 +56,6 @@ function renderAuthor (json) {
   const results = json.results.bindings
   const affiliations = []
 
-  console.log(results);
   $title.html(results[0].name.value)
   $peopleHeader.html(`${Templates.icons.people} Co-authors / -editors`)
   $paperHeader.html(`${Templates.icons.paper} Papers`)
@@ -108,7 +107,6 @@ function renderPaper (json) {
 
 function renderAffiliation (json) {
   var results = json.results.bindings
-  // console.log(results)
 
   Plot.setAffiliation(results[0])
   Plot.zoomTo(results[0].latlong.value)

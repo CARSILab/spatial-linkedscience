@@ -18,7 +18,8 @@ const pin = Leaflet.icon({
   className: 'map-marker'
 })
 
-let markers = []
+var markers = []
+var polyline
 
 // Load and display tile layers on the map
 Leaflet.tileLayer(
@@ -28,8 +29,6 @@ Leaflet.tileLayer(
 
 // CREATE MAP PIN FOR AN AFFILIATION
 function setAffiliation (data) {
-  console.log('setAffiliation');
-  console.log(data);
   // extract lat and long
   const latlong = data.latlong.value.split(' ').map(parseFloat)
 
@@ -51,44 +50,48 @@ function setAffiliation (data) {
 
 // CREATE MAP PINS FOR AN AUTHOR
 function setAuthorPins (data) {
-  console.log('setAuthorPins')
-  console.log(data)
-
-  let coords = []
-
   // For Each affiliation
-  data.forEach(function (item) {
+  data.forEach(function (item, index, arr) {
     // extract lat and long
-    const latlong = item.latlong.value.split(' ').map(val => parseFloat(val))
-    console.log(latlong);
+    var latlong = item.latlong.value.split(' ').map((val) => parseFloat(val))
     // create map marker
-    const marker = Leaflet.marker(latlong, {
+    markers.push(
+      Leaflet.marker(latlong, {
         icon: pin,
         title: item.name.value
+      })
+      .on('click', function () {
+        window.location.hash = item.affiliation.value.slice(41)
+      })
+      .addTo(map)
+    )
+
+    // Create Polyline
+    if (index === 1) {
+      let start = arr[0].latlong.value.split(' ').map((val) => parseFloat(val))
+      polyline = Leaflet.Polyline.Arc(start, latlong, {
+        color: '#EC5F67',
+        opacity: 1
       }).addTo(map)
-
-    // selectAffiliation
-    marker.on('click', function () {
-      window.location.hash = item.affiliation.value.slice(41)
-    })
-
-    markers.push(marker)
-    coords.push(latlong)
+    }
+    if (index > 1) {
+      polyline.addLatLng(latlong)
+    }
   })
-
-  // coords = [[51.96005, 7.60731],[51.96377, 7.61319]]
-
-  // Create polyline between markers
-  const polyline = Leaflet.polyline(coords, {
-    color: '#FF0000',
-    opacity: 1
-  }).addTo(map)
 
   // Zoom into markers
-  map.fitBounds(polyline.getBounds(), {
-    padding: [50, 50]
-  })
-
+  if (polyline) {
+    map.fitBounds(polyline.getBounds(), {
+      padding: [50, 50],
+      animate: true
+    })
+  } else {
+    map.setView(
+      markers[0].getLatLng(), 10, {
+        animate: true
+      }
+    )
+  }
 }
 
 function zoomTo (latlong) {
@@ -99,7 +102,11 @@ function zoomTo (latlong) {
   )
 }
 
-function clearPins () {
+function clearLayers () {
+  if (polyline) {
+    map.removeLayer(polyline)
+    polyline = null
+  }
   markers.forEach(function (marker) {
     map.removeLayer(marker)
   })
@@ -107,7 +114,7 @@ function clearPins () {
 }
 
 function resetMap () {
-  clearPins()
+  clearLayers()
   map.setView(center, 2)
 }
 

@@ -24,7 +24,7 @@
     "rollup-plugin-node-resolve": "^1.5.0"
   },
   "dependencies": {
-    "arc": "github:amaldare93/arc.js#gh-pages",
+    "arc": "github:springmeyer/arc.js#gh-pages",
     "bootstrap": "^4.0.0-alpha.2",
     "hogan.js": "^3.0.2",
     "jquery": "^2.2.0",

@@ -74,7 +74,6 @@ function searchQuery (input, conference) {
 }
 
 function authorQuery (author) {
-
   return `
     ${prefixes}
     SELECT DISTINCT ?name ?paper ?title ?year ?knows ?coname ?type ?affiliation ?latlong

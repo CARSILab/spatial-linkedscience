@@ -96,8 +96,6 @@ function initDropdown () {
   function onDropdownItem (event) {
     const $target = $(event.target)
     let data
-    console.log($target.text())
-    console.log($target.closest('.dropdown').find('[data-bind="label"]'))
     // Properly resets value when 'none is selected'
     if ($target.attr('data-value') === 'null') {
       data = 'null'

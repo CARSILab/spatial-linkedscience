@@ -47,7 +47,8 @@ gulp.task('javascript', function () {
   }).then(function (bundle) {
     return bundle.write({
       format: 'iife',
-      dest: 'dist/js/bundle.js'
+      dest: 'dist/js/bundle.js',
+      sourceMap: true
     })
   })
 })
