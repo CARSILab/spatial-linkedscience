@@ -3,15 +3,24 @@ import Leaflet from 'leaflet'
 import 'leaflet.arc'
 
 // Instantiates a map object
-const center = window.innerWidth < 700 ? [40, -95] : [22, -7]
-const map = Leaflet.map('map', {
+var center = window.innerWidth < 700 ? [40, -95] : [22, -7]
+var map = Leaflet.map('map', {
   center: center,
   zoom: 2,
-  scrollWheelZoom: true
+  scrollWheelZoom: true,
+  attributionControl: false
 })
 
+Leaflet.control.attribution({position: 'topright'}).addTo(map);
+
+// Load and display tile layers on the map
+Leaflet.tileLayer(
+  'http://a.tiles.mapbox.com/v4/amaldare93.mbpl53l0/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYW1hbGRhcmU5MyIsImEiOiJGdEFlcHpZIn0.0WX3tspKb0IXCJbdGMLmNQ', {
+    attribution: 'Map tiles by <a href="https://www.mapbox.com/">Mapbox</a>'
+  }).addTo(map)
+
 // Icon class for rendering a marker
-const pin = Leaflet.icon({
+var pin = Leaflet.icon({
   iconUrl: 'icons/icon-dot_solid.svg',
   iconSize: [15, 15],
   // iconAnchor: [10, 20],
@@ -21,19 +30,13 @@ const pin = Leaflet.icon({
 var markers = []
 var polyline
 
-// Load and display tile layers on the map
-Leaflet.tileLayer(
-  'http://a.tiles.mapbox.com/v4/amaldare93.mbpl53l0/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYW1hbGRhcmU5MyIsImEiOiJGdEFlcHpZIn0.0WX3tspKb0IXCJbdGMLmNQ', {
-    attribution: 'Map tiles by <a href="https://www.mapbox.com/">Mapbox</a>'
-  }).addTo(map)
-
 // CREATE MAP PIN FOR AN AFFILIATION
 function setAffiliation (data) {
   // extract lat and long
-  const latlong = data.latlong.value.split(' ').map(parseFloat)
+  var latlong = data.latlong.value.split(' ').map(parseFloat)
 
   // create map marker
-  const marker = Leaflet.marker(
+  var marker = Leaflet.marker(
     latlong, {
       icon: pin,
       title: data.name.value
