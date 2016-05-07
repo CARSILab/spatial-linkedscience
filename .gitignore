@@ -10,6 +10,5 @@ node_modules
 npm-debug.log
 dist
 src/includes/icons.svg
-server.sh
 
 src/js/leaflet.arc.js

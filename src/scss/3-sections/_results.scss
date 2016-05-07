@@ -7,17 +7,6 @@
     margin: auto;
     max-width: 1000px;
 
-    @include media-breakpoint-up(md) {
-
-    }
-
-    @include media-breakpoint-up(lg) {
-
-    }
-
-    @include media-breakpoint-up(xl) {
-
-    }
   }
 
   &-title {
@@ -37,24 +26,19 @@
     flex-grow: 0;
   }
 
-
   &-header {
     padding-left: 20px;
   }
 
   &-container {
     overflow-y: auto;
-    border-right: 2px solid $gray-dark;
-    border-top: 2px solid $gray-dark;
-
-
+    border: 2px solid $gray-dark;
   }
-
 }
 
 // overriding bootstrap
 .list-group-item {
-  border: 0;
+  border-bottom: 1px solid #ddd;
 
   &:nth-child(even) {
     background-color: whitesmoke;
@@ -66,6 +50,10 @@
   &:last-child {
     border-radius: 0;
   }
+}
+
+.rawdata {
+  float: right;
 }
 
 .icon-spinner {
@@ -82,6 +70,3 @@
   }
 }
 
-.rawdata {
-  float: right;
-}

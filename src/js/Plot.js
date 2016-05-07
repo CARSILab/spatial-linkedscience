@@ -12,9 +12,9 @@ const map = Leaflet.map('map', {
 
 // Icon class for rendering a marker
 const pin = Leaflet.icon({
-  iconUrl: 'icons/icon-place.svg',
-  iconSize: [20, 20],
-  iconAnchor: [10, 20],
+  iconUrl: 'icons/icon-dot_solid.svg',
+  iconSize: [15, 15],
+  // iconAnchor: [10, 20],
   className: 'map-marker'
 })
 
