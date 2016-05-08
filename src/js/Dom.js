@@ -2,6 +2,7 @@ import $ from 'jquery'
 import { resetMap } from './Plot.js'
 
 // DOM CACHING
+const $results = $('.results')
 const $resultsContainer = $('.results-container')
 const $containers = $('.papers, .people')
 const $title = $('.results-title')
@@ -18,16 +19,16 @@ const $spinner = $('.icon-spinner')
 
 // Clears all data from the page and resets the map
 function clear () {
-  $title.empty()
-  $peopleHeader.empty()
-  $paperHeader.empty()
-  $peopleList.empty()
-  $paperList.empty()
   $mainSearch.val('')
   $navSearch.val('')
   $conference.text('Conference')
   $conference.attr('data-value', 'null')
   resetMap()
+}
+
+function clearLists () {
+  $peopleList.empty()
+  $paperList.empty()
 }
 
 // Switches between the landing page and the results page by sliding the 'conveyor belt' across the viewport
@@ -138,13 +139,13 @@ function hideEmpty () {
 }
 
 function startLoad () {
-  $resultsContainer.hide()
+  $results.addClass('isLoading')
   $spinner.addClass('isSpinning')
 }
 
 function stopLoad () {
   $spinner.removeClass('isSpinning')
-  $resultsContainer.show()
+  $results.removeClass('isLoading')
 }
 
 // DOM BINDINGS
@@ -160,6 +161,7 @@ export { slide }
 
 export default {
   slide,
+  clearLists,
   startLoad,
   stopLoad,
   hideEmpty

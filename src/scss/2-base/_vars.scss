@@ -4,14 +4,14 @@ $land-color: #E8E0D8;
 $gray-dark: #373a3c;
 $brand-primary: #0275d8;
 
-@keyframes spin {
+@keyframes spin-with-offset {
   0% {
-    transform: rotate(0deg);
+    transform: translate(-50%) rotate(0deg);
   }
   50% {
-    transform: rotate(180deg);
+    transform: translate(-50%) rotate(180deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: translate(-50%) rotate(360deg);
   }
 }

@@ -78,7 +78,9 @@ function renderAuthor (json) {
       affiliations.push(result)
     }
   })
-  Plot.setAuthorPins(affiliations)
+  if (affiliations.length) {
+    Plot.setAuthorPins(affiliations)
+  }
 }
 
 function renderPaper (json) {
@@ -138,6 +140,7 @@ function search (input, conference) {
     query: Sparql.searchQuery(input, conference),
     format: 'json'
   }, function (json) {
+    Dom.clearLists()
     renderSearch(json, input, conference)
     Dom.hideEmpty()
     Dom.stopLoad()
@@ -150,6 +153,7 @@ function select (type, input) {
     query: funcKey[type].query(input),
     format: 'json'
   }, function (json) {
+    Dom.clearLists()
     funcKey[type].render(json)
     Dom.hideEmpty()
     Dom.stopLoad()
