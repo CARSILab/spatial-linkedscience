@@ -10,19 +10,19 @@ const $peopleHeader = $('.people-header')
 const $paperHeader = $('.papers-header')
 const $peopleList = $('.people-list')
 const $paperList = $('.papers-list')
-const $mainSearch = $('#main-search')
+const $homeSearch = $('#home-search')
 const $navSearch = $('#nav-search')
 const $navInputGroup = $('#navInputGroup')
-const $conference = $('#dropdown-selection')
+const $conference = $('#home-conf')
 const $belt = $('.belt')
 const $spinner = $('.icon-spinner')
 
 // Clears all data from the page and resets the map
 function clear () {
-  $mainSearch.val('')
+  $homeSearch.val('')
   $navSearch.val('')
   $conference.text('Conference')
-  $conference.attr('data-value', 'null')
+  $conference.data('value', 'null')
   resetMap()
 }
 
@@ -70,13 +70,18 @@ function initNavInput () {
 
 //
 function initSearch () {
-  $('#main-form, #nav-form').on('submit', function (event) {
+  $('#home-form, #nav-form').on('submit', function (event) {
     event.preventDefault()
 
     // Hide the navSearch bar by default
-    const selector = `#${$(event.currentTarget).attr('id').replace('form', 'search')}`
-    const key = encodeURIComponent($(selector).val())
-    const conf = $('#dropdown-selection').attr('data-value')
+    // Name of form we are currently working with
+    //   ie: 'home' or 'nav'
+    var currentForm = $(event.currentTarget).attr('id').split('-')[0]
+    var searchSelector = '#' + currentForm + '-search'
+    var confSelector = '#' + currentForm + '-conf'
+    
+    var key = encodeURIComponent($(searchSelector).val())
+    var conf = $(confSelector).data('value')
 
     if (key.length > 1) {
       window.location.hash = `search?${$.param({key, conf})}`
@@ -85,34 +90,59 @@ function initSearch () {
 }
 
 // Clicking a dropdown item will show the selection text in the button and pass it to the form once it is submitted
-function initDropdown () {
-  $('.dropdown-toggle').on('click', onDropdownToggle)
-  $('.dropdown-item').on('click', onDropdownItem)
+// function initDropdown () {
+//   $('.dropdown-toggle').on('click', onDropdownToggle)
+//   $('.dropdown-item').on('click', onDropdownItem)
+// 
+//   function onDropdownToggle (event) {
+//     const $target = $(event.target)
+//     $target.closest('.dropdown').toggleClass('isActive')
+//   }
+// 
+//   function onDropdownItem (event) {
+//     const $target = $(event.target)
+//     let data
+//     // Properly resets value when 'none is selected'
+//     if ($target.attr('data-value') === 'null') {
+//       data = 'null'
+//     } else {
+//       data = $target.data('value')
+//     }
+// 
+//     $target
+//       .closest('.dropdown')
+//         .removeClass('isActive')
+//         .find('[data-bind="label"]')
+//           .text($target.text())
+//           .attr('data-value', data)
+// 
+//     return false
+//   }
+// }
+function initDropdown ($dd) {
+  var $label = $dd.find('.js-dd-label')
+  var $menu = $dd.find('.js-dd-menu').children()
+  
+  // Toggle Dropdown Menu
+  $dd.on('click', function (e) {
+    e.stopPropagation()
+    $(this).toggleClass('isActive')
+    console.log('click')
+  })
 
-  function onDropdownToggle (event) {
-    const $target = $(event.target)
-    $target.closest('.dropdown').toggleClass('isActive')
-  }
+  // Select Option
+  $menu.on('click', function (e) {
+    e.stopPropagation()
+    var $this = $(this)
+    console.log(this)
+    $label.text($this.text())
+    $label.data('value', $this.data('value'))
+  })
 
-  function onDropdownItem (event) {
-    const $target = $(event.target)
-    let data
-    // Properly resets value when 'none is selected'
-    if ($target.attr('data-value') === 'null') {
-      data = 'null'
-    } else {
-      data = $target.data('value')
-    }
-
-    $target
-      .closest('.dropdown')
-        .removeClass('isActive')
-        .find('[data-bind="label"]')
-          .text($target.text())
-          .attr('data-value', data)
-
-    return false
-  }
+  // Close dropdown menu when clicking anywhere else
+  $(document).on('click', function () {
+    $dd.removeClass('isActive')
+  })
 }
 
 function initResults () {
@@ -148,11 +178,11 @@ function stopLoad () {
   $results.removeClass('isLoading')
 }
 
-// DOM BINDINGS
+// Init All the Doms
 $(function () {
   initBrand()
   initSearch()
-  initDropdown()
+  initDropdown($('#home-dropdown'))
   initNavInput()
   initResults()
 })
