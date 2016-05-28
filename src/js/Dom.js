@@ -1,13 +1,11 @@
 import $ from 'jquery'
 import { resetMap } from './Plot.js'
+import Templates from './Templates.js'
+import Sparql from './Sparql.js'
 
 // DOM CACHING
 const $results = $('.results')
-const $resultsContainer = $('.results-container')
 const $containers = $('.papers, .people')
-const $title = $('.results-title')
-const $peopleHeader = $('.people-header')
-const $paperHeader = $('.papers-header')
 const $peopleList = $('.people-list')
 const $paperList = $('.papers-list')
 const $homeSearch = $('#home-search')
@@ -79,7 +77,7 @@ function initSearch () {
     var currentForm = $(event.currentTarget).attr('id').split('-')[0]
     var searchSelector = '#' + currentForm + '-search'
     var confSelector = '#' + currentForm + '-conf'
-    
+
     var key = encodeURIComponent($(searchSelector).val())
     var conf = $(confSelector).data('value')
 
@@ -89,54 +87,34 @@ function initSearch () {
   })
 }
 
-// Clicking a dropdown item will show the selection text in the button and pass it to the form once it is submitted
-// function initDropdown () {
-//   $('.dropdown-toggle').on('click', onDropdownToggle)
-//   $('.dropdown-item').on('click', onDropdownItem)
-// 
-//   function onDropdownToggle (event) {
-//     const $target = $(event.target)
-//     $target.closest('.dropdown').toggleClass('isActive')
-//   }
-// 
-//   function onDropdownItem (event) {
-//     const $target = $(event.target)
-//     let data
-//     // Properly resets value when 'none is selected'
-//     if ($target.attr('data-value') === 'null') {
-//       data = 'null'
-//     } else {
-//       data = $target.data('value')
-//     }
-// 
-//     $target
-//       .closest('.dropdown')
-//         .removeClass('isActive')
-//         .find('[data-bind="label"]')
-//           .text($target.text())
-//           .attr('data-value', data)
-// 
-//     return false
-//   }
-// }
 function initDropdown ($dd) {
   var $label = $dd.find('.js-dd-label')
-  var $menu = $dd.find('.js-dd-menu').children()
-  
-  // Toggle Dropdown Menu
-  $dd.on('click', function (e) {
-    e.stopPropagation()
-    $(this).toggleClass('isActive')
-    console.log('click')
+  var $menu = $dd.find('.js-dd-menu')
+
+  // ASYNC Get Conferences
+  // $.getJSON('/sparql', {
+  //   query: Sparql.conferenceQuery,
+  //   format: 'json'
+  // })
+  $.when(Sparql.conferenceQuery())
+  .then(function (confs) {
+    console.log(JSON.stringify(confs, null, 4))
+    // Render Dropdown Menu
+    $menu.append(Templates.dropdownItems.render({confs}))
+
+    // Select Option
+    $menu.children().on('click', function (e) {
+      e.stopPropagation()
+      var $this = $(this)
+      $label.text($this.text())
+      $label.data('value', $this.data('value'))
+    })
   })
 
-  // Select Option
-  $menu.on('click', function (e) {
+  // Toggle Dropdown Menu
+  $dd.on('click focus blur', function (e) {
     e.stopPropagation()
-    var $this = $(this)
-    console.log(this)
-    $label.text($this.text())
-    $label.data('value', $this.data('value'))
+    $(this).toggleClass('isActive')
   })
 
   // Close dropdown menu when clicking anywhere else

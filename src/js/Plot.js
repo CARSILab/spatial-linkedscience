@@ -11,7 +11,7 @@ var map = Leaflet.map('map', {
   attributionControl: false
 })
 
-Leaflet.control.attribution({position: 'topright'}).addTo(map);
+Leaflet.control.attribution({position: 'topright'}).addTo(map)
 
 // Load and display tile layers on the map
 Leaflet.tileLayer(

@@ -33,9 +33,19 @@ const paperInfo = Hogan.compile(`
   </li>
 `)
 
+const dropdownItems = Hogan.compile(`
+  {{#confs}}
+    <label class="dropdown__option" data-value="{{value}}">
+      <input type="radio" name="conference" />
+      {{name}}
+    </label>
+  {{/confs}}
+`)
+
 export default {
   author,
   paper,
   paperInfo,
-  icons
+  icons,
+  dropdownItems
 }

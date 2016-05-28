@@ -196,9 +196,28 @@ function affiliationQuery (affiliation) {
     `
 }
 
+// TODO: query db for conferences
+function conferenceQuery () {
+  var query = `
+    SELECT DISTINCT ?g
+    {
+      GRAPH ?g { ?s ?p ?o . }
+    }
+    `
+  var hardCode = [
+    { name: 'ACM GIS', value: 'acmgis' },
+    { name: 'Agile', value: 'agile' },
+    { name: 'Cosit', value: 'cosit' },
+    { name: 'GIScience', value: 'giscience' }
+  ]
+  
+  return hardCode
+}
+
 export default {
   searchQuery,
   authorQuery,
   paperQuery,
-  affiliationQuery
+  affiliationQuery,
+  conferenceQuery
 }

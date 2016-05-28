@@ -12,28 +12,15 @@
       <input id="home-search" class="home-form__search" type="search" placeholder="Search">
       <div id="home-dropdown" class="home-form__dropdown dropdown">
         <span id="home-conf" class="dropdown__label js-dd-label">Label</span>
+        <svg class="icon dropdown__icon">
+          <use xlink:href="#icon-dropdown" />
+        </svg>
         <fieldset class="dropdown__menu js-dd-menu" role="menu">
           <label class="dropdown__option" data-value="null">
             <input type="radio" name="conference" />
             none
           </label>
-          <div role="separator" class="dropdown-divider"></div>
-          <label class="dropdown__option" data-value="acmgis">
-            <input type="radio" name="conference" />
-            ACM GIS
-          </label>
-          <label class="dropdown__option" data-value="agile">
-            <input type="radio" name="conference" />
-            Agile
-          </label>
-          <label class="dropdown__option" data-value="cosit">
-            <input type="radio" name="conference" />
-            Cosit
-          </label>
-          <label class="dropdown__option" data-value="giscience">
-            <input type="radio" name="conference" />
-            GIScience
-          </label>
+          <!-- Rest appended via javascript -->
         </fieldset>
       </div>
       <button class="home-form__submit" type="submit" name="button">

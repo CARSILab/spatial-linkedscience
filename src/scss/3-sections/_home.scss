@@ -14,49 +14,59 @@
 
     @media (min-width: 667px) {
       font-size: 48px
-    }
+    } 
   }
 
-  // &-submit {
-  //   height: 40px;
-  //   color: white;
-  //   background-color: $gray-dark;
-  //   border-color: $gray-dark;
-  // }
-}
-
-.home-form {
-  display: flex;
-  border: $border;
-  border-radius: 5px;
-  overflow-y: visible;
-  
-  &__search {
-    flex: 1;
-    padding: 0.5em;
-    border: none;
+  &-form {
+    display: flex;
+    margin: 1.5em 0;
+    border: $border;
     border-radius: 5px;
-  }
-  
-  &__dropdown {
-    border-left: $border;
-  }
-  
-  &__submit {
-    padding: 0.5em;
-    background: $gray-dark;
-    border: none;
-    color: white;
+    overflow-y: visible;
+    
+    &__search {
+      flex: 1;
+      padding: 0.5em;
+      border: none;
+      border-radius: 5px;
+    }
+    
+    &__dropdown {
+      border-left: $border;
+    }
+    
+    &__submit {
+      padding: 0.5em;
+      background: $gray-dark;
+      border: none;
+      color: white;
+    }
   }
 }
 
 .dropdown {
   position: relative;
-  width: 100px;
   padding: 0.5em;
+  
   cursor: pointer;
   user-select: none;
+  font-weight: 500;
+  
 
+  &__label {
+  }
+  
+  &__icon {
+    @include size(1.5em);
+    
+    vertical-align: bottom;
+    transform: rotate3d(0, 0, 0, 0deg);
+    transition: all ease-in-out 200ms;
+  }
+  &.isActive &__icon {
+    transform: rotate3d(1, 0, 0, 180deg);
+  }
+  
   &__menu {
     position: absolute;
     top: 100%;
@@ -73,37 +83,24 @@
     opacity: 1;
     pointer-events: auto;
   }
+  
+  &__option {
+    width: 100%;
+    padding: 0.25em 1em;
+    margin: 0;
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+      background-color: rgba($brand-primary, .25);
+    }
+    
+    input {
+      display: none;
+    }
+  }
 }
 
-// .home-form .form-control {
-//   border: solid $gray-dark 2px;
-//   // border-color: $gray-dark;
-// }
-// 
-// .dropdown {
-//   &-toggle.btn {
-//     width: 8rem;
-//   }
-// 
-//   &-item {
-//     padding-left: 1rem;
-//     cursor: pointer;
-// 
-//     &:focus,
-//     &:hover {
-//       background-color: rgba($brand-primary, .25);
-//     }
-//   }
-//   &.isActive {
-//     .dropdown-menu {
-//       display: block;
-//     }
-//   }
-// 
-//   input {
-//     display: none;
-//   }
-// }
 .icon-search {
   @include size(1.5rem);
 }

@@ -11,6 +11,7 @@ const onError = function (err) {
   console.log(err)
   this.emit('end')
 }
+
 // HTML Task
 gulp.task('html', function () {
   return gulp.src('src/index.html')
@@ -105,7 +106,7 @@ gulp.task('sync-proxy', function () {
 gulp.task('sync-noproxy', function () {
   browserSync({
     server: {
-      baseDir: './'
+      baseDir: 'dist/'
     },
     online: false,
     notify: false
