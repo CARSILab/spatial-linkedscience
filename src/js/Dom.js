@@ -96,7 +96,7 @@ function initDropdown ($dd) {
   //   query: Sparql.conferenceQuery,
   //   format: 'json'
   // })
-  $.when(Sparql.conferenceQuery())
+  $.when(Sparql.conferenceHardCode())
   .then(function (confs) {
     console.log(JSON.stringify(confs, null, 4))
     // Render Dropdown Menu
