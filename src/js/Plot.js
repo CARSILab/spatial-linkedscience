@@ -95,6 +95,11 @@ function setAuthorPins (data) {
       }
     )
   }
+
+  /**
+   *  Test cases:
+   *   Max J. Egenhofer
+   */
 }
 
 function zoomTo (latlong) {

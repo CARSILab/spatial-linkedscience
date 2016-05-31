@@ -1,46 +1,50 @@
+$results-offset: -2em;
+
 .results {
   position: relative;
-
-  &-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 0.5em auto;
-    max-width: 1000px;
-  }
-
-  &-title {
-    position: relative;
-    top: -2em;
-    left: 50%;
-    transform: translate(-50%);
-
-    margin: 0 1rem;
-    padding: 0.3em 0.5em;
-
-    background: white;
-    border: 2px solid $gray-dark;
-
-    font-family: $geom;
-    font-size: 2rem;
-    text-align: center;
-  }
-
-  &.isLoading > *:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    background: rgba(255, 255, 255, 0.5);
-    background-origin: border-box;
-  }
 }
+
+.results__container {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  top: $results-offset;
+  margin: 0 auto $results-offset;
+  max-width: 1000px;
+}
+
+.results__title {
+  position: relative;
+  top: $results-offset;
+  left: 50%;
+  transform: translate(-50%);
+
+  max-width: 90%;
+  padding: 0.3em 0.5em;
+  margin-bottom: 0;
+
+  background: white;
+  border: 2px solid $gray-dark;
+
+  font-family: $geom;
+  font-size: 2rem;
+  text-align: center;
+}
+
+// .results.isLoading > *:before {
+//   content: '';
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   z-index: 2;
+//   background: rgba(255, 255, 255, 0.5);
+//   background-origin: border-box;
+// }
 
 .people,
 .papers {
-
   flex-basis: 48%;
   flex-grow: 1;
   flex-shrink: 1;
@@ -48,34 +52,36 @@
   @include media-breakpoint-up(sm) {
     flex-grow: 0;
   }
+}
 
-  &-header {
-    padding-left: 20px;
-    font-family: $geom;
+.people-header,
+.papers-header {
+  padding-left: 20px;
+  font-family: $geom;
 
-  }
+}
 
-  &-container {
-    overflow-y: auto;
-    border: 2px solid $gray-dark;
-    min-height: 3.7em;
-  }
+.people-container,
+.papers-container {
+  overflow-y: auto;
+  border: 2px solid $gray-dark;
+  min-height: 3.7em;
 }
 
 // overriding bootstrap
 .list-group-item {
   border-bottom: 1px solid #ddd;
+}
 
-  &:nth-child(even) {
-    background-color: whitesmoke;
-  }
+.list-group-item:nth-child(even) {
+  background-color: whitesmoke;
+}
 
-  &:first-child {
-    border-radius: 0;
-  }
-  &:last-child {
-    border-radius: 0;
-  }
+.list-group-item:first-child {
+  border-radius: 0;
+}
+.list-group-item:last-child {
+  border-radius: 0;
 }
 
 .rawdata {
@@ -90,8 +96,9 @@
   height: 100px;
   width: 50px;
 
-  &.isSpinning {
-    display: block;
-    animation: spin-with-offset 1s linear infinite;
-  }
+}
+
+.icon-spinner.isSpinning {
+  display: block;
+  animation: spin-with-offset 1s linear infinite;
 }

@@ -5,6 +5,8 @@ $gray-dark: #373a3c;
 $brand-primary: #0275d8;
 $border: 2px solid $gray-dark;
 
+$navbar-height: 50px;
+
 @mixin size($size) {
   height: $size;
   width: $size;

@@ -14,7 +14,7 @@
 
     @media (min-width: 667px) {
       font-size: 48px
-    } 
+    }
   }
 
   &-form {
@@ -23,18 +23,18 @@
     border: $border;
     border-radius: 5px;
     overflow-y: visible;
-    
+
     &__search {
       flex: 1;
       padding: 0.5em;
       border: none;
       border-radius: 5px;
     }
-    
+
     &__dropdown {
       border-left: $border;
     }
-    
+
     &__submit {
       padding: 0.5em;
       background: $gray-dark;
@@ -47,18 +47,18 @@
 .dropdown {
   position: relative;
   padding: 0.5em;
-  
+
   cursor: pointer;
   user-select: none;
   font-weight: 500;
-  
+
 
   &__label {
   }
-  
+
   &__icon {
     @include size(1.5em);
-    
+
     vertical-align: bottom;
     transform: rotate3d(0, 0, 0, 0deg);
     transition: all ease-in-out 200ms;
@@ -66,7 +66,7 @@
   &.isActive &__icon {
     transform: rotate3d(1, 0, 0, 180deg);
   }
-  
+
   &__menu {
     position: absolute;
     top: 100%;
@@ -74,7 +74,7 @@
     right: 0;
     border: $border;
     background: white;
-    
+
     // Hidden
     opacity: 0;
     pointer-events: none;
@@ -83,7 +83,7 @@
     opacity: 1;
     pointer-events: auto;
   }
-  
+
   &__option {
     width: 100%;
     padding: 0.25em 1em;
@@ -94,7 +94,7 @@
     &:hover {
       background-color: rgba($brand-primary, .25);
     }
-    
+
     input {
       display: none;
     }

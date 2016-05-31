@@ -11,11 +11,11 @@ const types = {
 }
 
 // DOM CACHING
-const $title = $('.results-title')
-const $peopleHeader = $('.people-header')
-const $paperHeader = $('.papers-header')
-const $peopleList = $('.people-list')
-const $paperList = $('.papers-list')
+const $title = $('#results-title')
+const $peopleHeader = $('#people-header')
+const $paperHeader = $('#papers-header')
+const $peopleList = $('#people-list')
+const $paperList = $('#papers-list')
 
 // Display results to page
 function renderSearch (json, input, conference) {

@@ -220,5 +220,6 @@ export default {
   authorQuery,
   paperQuery,
   affiliationQuery,
-  conferenceQuery
+  conferenceQuery,
+  conferenceHardCode
 }

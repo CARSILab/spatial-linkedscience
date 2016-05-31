@@ -3,19 +3,19 @@ import { resetMap } from './Plot.js'
 import Templates from './Templates.js'
 import Sparql from './Sparql.js'
 
-// DOM CACHING
-const $results = $('.results')
+// DOM Caching
+const $results = $('#results')
 const $containers = $('.papers, .people')
-const $peopleList = $('.people-list')
-const $paperList = $('.papers-list')
+const $peopleList = $('#people-list')
+const $paperList = $('#papers-list')
 const $homeSearch = $('#home-search')
 const $navSearch = $('#nav-search')
 const $navInputGroup = $('#navInputGroup')
 const $conference = $('#home-conf')
-const $belt = $('.belt')
-const $spinner = $('.icon-spinner')
+const $belt = $('#belt')
+const $spinner = $('#loading-spinner')
 
-// Clears all data from the page and resets the map
+// Clears all input values and resets map
 function clear () {
   $homeSearch.val('')
   $navSearch.val('')
@@ -24,13 +24,13 @@ function clear () {
   resetMap()
 }
 
+// Clear results
 function clearLists () {
   $peopleList.empty()
   $paperList.empty()
 }
 
 // Switches between the landing page and the results page by sliding the 'conveyor belt' across the viewport
-// then calls clear()
 function slide (direction) {
   if (direction === 'left') {
     $belt.css('left', '0%')
@@ -42,21 +42,15 @@ function slide (direction) {
   clear()
 }
 
-// Clicking the logo in the navbar will bring you to the landing page
-function initBrand () {
-  $('.navbar-brand').on('click', function () {
-    slide('left')
-  })
-}
-
+// Expands and collapses navbar search
 function initNavInput () {
   $navInputGroup.on('click', expand)
   $navSearch.on('focus', expand)
   $navSearch.on('blur', collapse)
 
-  function expand () {
+  function expand (e) {
     $navInputGroup.removeClass('isCollapsed')
-    if (!$navSearch.is(':focus')) {
+    if (e.type === 'click') {
       $navSearch.focus()
     }
   }
@@ -66,12 +60,11 @@ function initNavInput () {
   }
 }
 
-//
+// Override forms to make custom API calls
 function initSearch () {
   $('#home-form, #nav-form').on('submit', function (event) {
     event.preventDefault()
 
-    // Hide the navSearch bar by default
     // Name of form we are currently working with
     //   ie: 'home' or 'nav'
     var currentForm = $(event.currentTarget).attr('id').split('-')[0]
@@ -79,7 +72,7 @@ function initSearch () {
     var confSelector = '#' + currentForm + '-conf'
 
     var key = encodeURIComponent($(searchSelector).val())
-    var conf = $(confSelector).data('value')
+    var conf = $(confSelector).data('value') || 'null'
 
     if (key.length > 1) {
       window.location.hash = `search?${$.param({key, conf})}`
@@ -87,6 +80,7 @@ function initSearch () {
   })
 }
 
+// Custom dropdown
 function initDropdown ($dd) {
   var $label = $dd.find('.js-dd-label')
   var $menu = $dd.find('.js-dd-menu')
@@ -96,7 +90,7 @@ function initDropdown ($dd) {
   //   query: Sparql.conferenceQuery,
   //   format: 'json'
   // })
-  $.when(Sparql.conferenceHardCode())
+  $.when(Sparql.conferenceHardCode()) // hard code values until I figure out API call
   .then(function (confs) {
     console.log(JSON.stringify(confs, null, 4))
     // Render Dropdown Menu
@@ -123,18 +117,20 @@ function initDropdown ($dd) {
   })
 }
 
+// Sets height of result containers to that the page wont scroll
 function initResults () {
-  const $results = $('.people-container, .papers-container')
-  const topPos = $results.offset().top
+  const $containers = $('#people-container, #papers-container')
+  const topPos = $containers.offset().top
   const windowHeight = $(window).height()
   const bottomPadding = 10
   const resultsHeight = windowHeight - topPos - bottomPadding
 
-  $results.each(function () {
+  $containers.each(function () {
     $(this).css('max-height', resultsHeight)
   })
 }
 
+// Hide results container if empty
 function hideEmpty () {
   $containers.each(function (index, container) {
     let $container = $(container)
@@ -146,19 +142,20 @@ function hideEmpty () {
   })
 }
 
+// Show loading spinner
 function startLoad () {
   $results.addClass('isLoading')
   $spinner.addClass('isSpinning')
 }
 
+// Hide loading spinner
 function stopLoad () {
   $spinner.removeClass('isSpinning')
   $results.removeClass('isLoading')
 }
 
-// Init All the Doms
+// Init all the DOM stuff on load
 $(function () {
-  initBrand()
   initSearch()
   initDropdown($('#home-dropdown'))
   initNavInput()
