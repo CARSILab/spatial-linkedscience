@@ -1,8 +1,25 @@
 <section class="results" id="results">
   <svg class="icon icon-spinner" id="loading-spinner"><use xlink:href="#icon-spinner" /></svg>
-  <h1 class="results__title" id="results-title">Results</h1>
-  <div class="results__container">
-    <div class="people">
+
+  <h1 class="results-title" id="results-title">Results</h1>
+  <div class="tabbed-container" id="results-container">
+    <nav class="tabbed-container__nav">
+      <div class="tabbed-container__tab js-tab" id="people-header" data-tab="people">People</div>
+      <div class="tabbed-container__tab js-tab" id="papers-header" data-tab="papers">Papers</div>
+    </nav>
+
+    <div class="tabbed-container__panels">
+      <section class="tabbed-container__panel js-panel" data-panel="people">
+        <ul class="list-group" id="people-list"></ul>
+      </section>
+      <section class="tabbed-container__panel js-panel" data-panel="papers">
+        <ul class="list-group" id="papers-list"></ul>
+      </section>
+    </div>
+  </div>
+
+    <!-- old markup -->
+    <!-- <div class="people">
       <h2 class="people-header" id="people-header">
         <svg class="icon icon-earth"><use xlink:href="#icon-earth" /></svg>
         Authors
@@ -19,6 +36,5 @@
       <div class="papers-container" id="papers-container">
         <ul class="papers-list list-group" id="papers-list"></ul>
       </div>
-    </div>
-  </div>
+    </div> -->
 </section>

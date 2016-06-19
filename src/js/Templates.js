@@ -36,7 +36,7 @@ const paperInfo = Hogan.compile(`
 const dropdownItems = Hogan.compile(`
   {{#confs}}
     <label class="dropdown__option" data-value="{{value}}">
-      <input type="radio" name="conference" />
+      <input type="radio" name="conference" tabindex="0"/>
       {{name}}
     </label>
   {{/confs}}

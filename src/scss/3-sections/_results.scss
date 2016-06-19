@@ -4,16 +4,7 @@ $results-offset: -2em;
   position: relative;
 }
 
-.results__container {
-  display: flex;
-  justify-content: space-around;
-  position: relative;
-  top: $results-offset;
-  margin: 0 auto $results-offset;
-  max-width: 1000px;
-}
-
-.results__title {
+.results-title {
   position: relative;
   top: $results-offset;
   left: 50%;
@@ -31,42 +22,111 @@ $results-offset: -2em;
   text-align: center;
 }
 
-// .results.isLoading > *:before {
-//   content: '';
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   bottom: 0;
-//   left: 0;
-//   z-index: 2;
-//   background: rgba(255, 255, 255, 0.5);
-//   background-origin: border-box;
-// }
 
-.people,
-.papers {
-  flex-basis: 48%;
-  flex-grow: 1;
-  flex-shrink: 1;
+.tabbed-container {
+  position: relative;
+  top: -4em;
+  margin: auto;
 
-  @include media-breakpoint-up(sm) {
-    flex-grow: 0;
+  &__nav {
+    display: flex;
+  }
+
+  &__tab {
+    flex-grow: 1;
+    border-top: 2px solid $gray-dark;
+    background: whitesmoke;
+    padding: 1em;
+
+    text-align: center;
+
+    &.isActive {
+      background: white;
+    }
+  }
+
+  &__panel {
+    position: absolute;
+    width: 100%;
+
+    visibility: hidden;
+    pointer-events: none;
+
+    &.isActive {
+      visibility: visible;
+      pointer-events: auto;
+    }
   }
 }
 
-.people-header,
-.papers-header {
-  padding-left: 20px;
-  font-family: $geom;
+@media (min-width: 600px) {
+  .tabbed-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: $results-offset;
+    margin: 0 auto $results-offset;
+    max-width: 1000px;
 
+    &__nav {
+      width: 100%;
+    }
+
+    &__tab {
+      background: white;
+    }
+
+    &__panels {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    &__panel {
+      position: relative;
+      width: 45%;
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
 }
 
-.people-container,
-.papers-container {
-  overflow-y: auto;
-  border: 2px solid $gray-dark;
-  min-height: 3.7em;
-}
+
+// // .results.isLoading > *:before {
+// //   content: '';
+// //   position: absolute;
+// //   top: 0;
+// //   right: 0;
+// //   bottom: 0;
+// //   left: 0;
+// //   z-index: 2;
+// //   background: rgba(255, 255, 255, 0.5);
+// //   background-origin: border-box;
+// // }
+//
+// .people,
+// .papers {
+//
+//   // Tab Layout
+//   position: absolute;
+//
+//   @include media-breakpoint-up(sm) {
+
+//   }
+// }
+//
+// .people-header,
+// .papers-header {
+//   padding-left: 20px;
+//   font-family: $geom;
+//
+// }
+//
+// .people-container,
+// .papers-container {
+//   overflow-y: auto;
+//   border: 2px solid $gray-dark;
+//   min-height: 3.7em;
+// }
 
 // overriding bootstrap
 .list-group-item {

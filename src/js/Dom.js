@@ -86,35 +86,38 @@ function initDropdown ($dd) {
   var $menu = $dd.find('.js-dd-menu')
 
   // ASYNC Get Conferences
-  // $.getJSON('/sparql', {
-  //   query: Sparql.conferenceQuery,
-  //   format: 'json'
-  // })
+  // $.getJSON('/sparql', {query: Sparql.conferenceQuery,format: 'json'})
   $.when(Sparql.conferenceHardCode()) // hard code values until I figure out API call
   .then(function (confs) {
-    console.log(JSON.stringify(confs, null, 4))
+    // console.log(JSON.stringify(confs, null, 4))
     // Render Dropdown Menu
     $menu.append(Templates.dropdownItems.render({confs}))
+  })
 
-    // Select Option
-    $menu.children().on('click', function (e) {
-      e.stopPropagation()
-      var $this = $(this)
-      $label.text($this.text())
-      $label.data('value', $this.data('value'))
-    })
+  // Select Option
+  $menu.children().on('click', function (e) {
+    e.stopPropagation()
+    var $this = $(this)
+    $label.text($this.text())
+    $label.data('value', $this.data('value'))
+    closeDropdown()
   })
 
   // Toggle Dropdown Menu
-  $dd.on('click focus blur', function (e) {
+  $dd.on('click focus blur', openDropdown)
+
+  // Opens the Dropdown Menu
+  function openDropdown (e) {
     e.stopPropagation()
     $(this).toggleClass('isActive')
-  })
+    $(document).on('click', closeDropdown)
+  }
 
-  // Close dropdown menu when clicking anywhere else
-  $(document).on('click', function () {
+  // Closes the Dropdown Menu
+  function closeDropdown () {
     $dd.removeClass('isActive')
-  })
+    $(document).off('click', closeDropdown)
+  }
 }
 
 // Sets height of result containers to that the page wont scroll
@@ -127,6 +130,23 @@ function initResults () {
 
   $containers.each(function () {
     $(this).css('max-height', resultsHeight)
+  })
+}
+
+//
+function initTabbedContainer () {
+  var $tabs = $('.js-tab')
+  var $panels = $('.js-panel')
+
+  $tabs.on('click', function (e) {
+    var $target = $(e.currentTarget)
+    var tabName = $target.data('tab')
+
+    $tabs.removeClass('isActive')
+    $panels.removeClass('isActive')
+
+    $target.addClass('isActive')
+    $(`[data-panel=${tabName}]`).addClass('isActive')
   })
 }
 
@@ -159,7 +179,8 @@ $(function () {
   initSearch()
   initDropdown($('#home-dropdown'))
   initNavInput()
-  initResults()
+  // initResults()
+  initTabbedContainer()
 })
 
 export { slide }

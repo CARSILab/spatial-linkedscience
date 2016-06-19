@@ -1,48 +1,47 @@
-.home {
+.home-container {
+  margin: auto;
+  max-width: 600px;
+  width: 90%;
+}
 
-  &-container {
-    margin: auto;
-    max-width: 600px;
-    width: 90%;
-  }
+.home-header {
+  text-align: center;
+  font-size: 7vw;
+  font-family: 'XXIIGeom-Regular';
+  font-weight: bold;
 
-  &-header {
-    text-align: center;
-    font-size: 7vw;
-    font-family: 'XXIIGeom-Regular';
-    font-weight: bold;
-
-    @media (min-width: 667px) {
-      font-size: 48px
-    }
-  }
-
-  &-form {
-    display: flex;
-    margin: 1.5em 0;
-    border: $border;
-    border-radius: 5px;
-    overflow-y: visible;
-
-    &__search {
-      flex: 1;
-      padding: 0.5em;
-      border: none;
-      border-radius: 5px;
-    }
-
-    &__dropdown {
-      border-left: $border;
-    }
-
-    &__submit {
-      padding: 0.5em;
-      background: $gray-dark;
-      border: none;
-      color: white;
-    }
+  @media (min-width: 667px) {
+    font-size: 48px
   }
 }
+
+.home-form {
+  display: flex;
+  margin: 1.5em 0;
+  border: $border;
+  border-radius: 5px;
+  overflow-y: visible;
+
+  &__search {
+    flex: 1;
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    width: 0; // chrome bug, input not properly shrinking
+  }
+
+  &__dropdown {
+    border-left: $border;
+  }
+
+  &__submit {
+    padding: 0.5em;
+    background: $gray-dark;
+    border: none;
+    color: white;
+  }
+}
+
 
 .dropdown {
   position: relative;
@@ -54,6 +53,7 @@
 
 
   &__label {
+    width: 100%;
   }
 
   &__icon {
@@ -70,8 +70,7 @@
   &__menu {
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    right: -2px; // border width
     border: $border;
     background: white;
 
@@ -96,7 +95,8 @@
     }
 
     input {
-      display: none;
+      position: absolute;
+      left: -300vw
     }
   }
 }

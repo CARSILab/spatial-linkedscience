@@ -7,8 +7,9 @@
   &-brand {
     font-family: $geom;
     cursor: pointer;
-    &:hover {
-      // gotto target the inner span i guess
+
+    &-text {
+      display: none;
     }
   }
   &-nav {
@@ -41,8 +42,12 @@
   }
 }
 
-
-
 .nav-link {
   color: white;
+}
+
+@media (min-width: 600px) {
+  .navbar-brand-text {
+    display: inline;
+  }
 }
