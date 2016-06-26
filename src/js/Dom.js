@@ -100,23 +100,41 @@ function initDropdown ($dd) {
     var $this = $(this)
     $label.text($this.text())
     $label.data('value', $this.data('value'))
-    closeDropdown()
+    // closeDropdown(e)
   })
 
-  // Toggle Dropdown Menu
-  $dd.on('click focus blur', openDropdown)
+
+  $dd.on('focusin', openDropdown)
+  $dd.on('focusout', closeDropdown)
+  $dd.on('click', toggleDropdown)
 
   // Opens the Dropdown Menu
   function openDropdown (e) {
+    console.log('opening dropdown');
     e.stopPropagation()
-    $(this).toggleClass('isActive')
-    $(document).on('click', closeDropdown)
+    $dd.addClass('isActive')
+    // $(document).on('click', closeDropdown)
+    $dd.on('focusout', closeDropdown)
+    $dd.off('focusin', openDropdown)
   }
 
   // Closes the Dropdown Menu
-  function closeDropdown () {
+  function closeDropdown (e) {
+    console.log('closing dropdown');
+    e.stopPropagation()
     $dd.removeClass('isActive')
-    $(document).off('click', closeDropdown)
+    // $(document).off('click', closeDropdown)
+    $dd.off('focusout', closeDropdown)
+    $dd.on('focusin', openDropdown)
+  }
+
+  function toggleDropdown (e) {
+    console.log('toggleDropdown');
+    if ($dd.hasClass('isActive')) {
+      closeDropdown(e)
+    } else {
+      openDropdown(e)
+    }
   }
 }
 
