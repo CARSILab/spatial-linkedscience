@@ -21,7 +21,7 @@ Leaflet.tileLayer(
 
 // Icon class for rendering a marker
 var pin = Leaflet.icon({
-  iconUrl: 'icons/icon-dot_solid.svg',
+  iconUrl: 'icons/icon-map-marker.svg',
   iconSize: [15, 15],
   // iconAnchor: [10, 20],
   className: 'map-marker'

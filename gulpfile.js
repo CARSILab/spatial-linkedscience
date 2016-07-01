@@ -65,11 +65,7 @@ gulp.task('move', function () {
     .pipe(gulp.dest('dist/favicons'))
 
   // leaflet marker icon
-  gulp.src([
-    'src/assets/icons/icon-place.svg',
-    'src/assets/icons/icon-dot_solid.svg',
-    'src/assets/icons/icon-dot_dotted.svg',
-    'src/assets/icons/icon-dot_empty.svg'])
+  gulp.src('src/assets/icons/icon-map-marker.svg')
     .pipe(gulp.dest('dist/icons'))
 })
 

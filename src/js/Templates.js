@@ -1,12 +1,11 @@
 import Hogan from 'hogan.js'
 
 const icons = {
-  info: '<svg class="icon icon-info"><use xlink:href="#icon-info_outline" /></svg>',
-  paper: '<svg class="icon icon-paper"><use xlink:href="#icon-paper" /></svg>',
-  person: '<svg class="icon icon-person"><use xlink:href="#icon-person" /></svg>',
-  people: '<svg class="icon icon-people"><use xlink:href="#icon-people" /></svg>',
-  place: '<svg class="icon icon-place"><use xlink:href="#icon-place" /></svg>',
-  school: '<svg class="icon icon-school"><use xlink:href="#icon-school" /></svg>'
+  info: '<svg class="icon icon-info"><use xlink:href="#icon-right" /></svg>',
+  paper: '<svg class="icon icon-paper"><use xlink:href="#icon-papers" /></svg>',
+  person: '<svg class="icon icon-person"><use xlink:href="#icon-user" /></svg>',
+  place: '<svg class="icon icon-place"><use xlink:href="#icon-map-marker" /></svg>',
+  school: '<svg class="icon icon-school"><use xlink:href="#icon-book" /></svg>'
 }
 
 const author = Hogan.compile(`
