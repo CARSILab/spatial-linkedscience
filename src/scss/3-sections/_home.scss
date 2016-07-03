@@ -60,11 +60,11 @@
     @include size(1.5em);
 
     vertical-align: bottom;
-    transform: rotate3d(0, 0, 0, 0deg);
+    transform: rotateZ(90deg) rotateY(0deg);
     transition: all ease-in-out 200ms;
   }
   &.isActive &__icon {
-    transform: rotate3d(1, 0, 0, 180deg);
+    transform: rotateZ(90deg) rotateY(180deg);
   }
 
   &__menu {
