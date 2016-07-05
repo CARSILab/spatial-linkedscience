@@ -100,7 +100,7 @@ function initDropdown ($dd) {
     var $this = $(this)
     $label.text($this.text())
     $label.data('value', $this.data('value'))
-    // closeDropdown(e)
+    closeDropdown(e)
   })
 
 

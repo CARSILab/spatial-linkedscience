@@ -93,11 +93,11 @@
     &:hover {
       background-color: rgba($brand-primary, .25);
     }
-
-    input {
-      position: absolute;
-      // left: -300vw;
-    }
+  }
+  
+  &__input {
+    position: absolute;
+    left: -300vw;
   }
 }
 
