@@ -28,7 +28,7 @@
     "arc": "github:springmeyer/arc.js#gh-pages",
     "bootstrap": "^4.0.0-alpha.2",
     "hogan.js": "^3.0.2",
-    "jquery": "^2.2.0",
+    "jquery": "^3.5.0",
     "leaflet": "^0.7.7",
     "leaflet.arc": "git+https://github.com/amaldare93/Leaflet.Arc.git#gh-pages"
   },
